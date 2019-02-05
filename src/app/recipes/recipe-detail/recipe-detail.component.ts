@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Recipe } from '../recipe.model';
+import { RecipeService } from '../recipe.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -7,13 +8,26 @@ import { Recipe } from '../recipe.model';
   styleUrls: ['./recipe-detail.component.css']
 })
 export class RecipeDetailComponent implements OnInit, OnChanges {
-  @Input() recipe: Recipe;
+  @Input('recipeItem') recipe: Recipe;
+  @Input('recipeItemId') id: number;
 
-  constructor() { }
+  constructor(private recipeService: RecipeService) { }
 
   ngOnInit() {
   }
 
   ngOnChanges(data) {
+  }
+
+  addToShopingList(event) {
+    this.recipeService.addIngridientsToShopingList(this.id);
+  }
+
+  editRecipe(event) {
+    
+  }
+
+  deleteRecipe(event) {
+    this.recipeService.deleteRecipe(this.id);
   }
 }

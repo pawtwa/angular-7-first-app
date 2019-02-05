@@ -16,20 +16,25 @@
           class="btn btn-primary dropdown-toggle"
         >Manage Recipe <span class="caret"></span></button>
         <ul class="dropdown-menu">
-          <li><a href="#">Add Ingridients to Shopping List</a></li>
-          <li><a href="#">Edit Recipe</a></li>
-          <li><a href="#">Delete Recipe</a></li>
+          <li><a href="#" (click)="addToShopingList($event)">Add Ingridients to Shopping List</a></li>
+          <li><a href="#" (click)="editRecipe($event)">Edit Recipe</a></li>
+          <li><a href="#" (click)="deleteRecipe($event)">Delete Recipe</a></li>
         </ul>
       </div>
     </div>
 </div>
 <div class="row">
     <div class="col-xs-12">
-      {{ recipe.description }}
+      <p><em>{{ recipe.description }}</em></p>
     </div>
   </div>
 <div class="row">
   <div class="col-xs-12">
-    Ingridients
+    <ul class="list-group">
+      <li 
+        class="list-group-item"
+        *ngFor="let ingridient of recipe.ingridients; let i = index"
+      >{{ingridient.name}}: {{ingridient.amount}}</li>
+    </ul>>
   </div>
 </div>
