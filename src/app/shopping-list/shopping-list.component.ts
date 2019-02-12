@@ -23,6 +23,7 @@ export class ShoppingListComponent implements OnInit {
   }
 
   onClick(id, event) {
+    event.preventDefault();
     this.shoppingListService.setSelectedIngridientId(id);
   }
 }

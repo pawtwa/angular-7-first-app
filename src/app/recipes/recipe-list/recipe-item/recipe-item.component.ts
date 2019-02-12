@@ -16,7 +16,8 @@ export class RecipeItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSelected() {
+  onSelected(event: UIEvent) {
+    event.preventDefault();
     this.recipeService.setRecipeCurrentId(this.id);
   }
 }

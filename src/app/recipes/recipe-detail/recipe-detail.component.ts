@@ -19,15 +19,15 @@ export class RecipeDetailComponent implements OnInit, OnChanges {
   ngOnChanges(data) {
   }
 
-  addToShopingList(event) {
+  addToShopingList(event: UIEvent) {
     this.recipeService.addIngridientsToShopingList(this.id);
   }
 
-  editRecipe(event) {
+  editRecipe(event: UIEvent) {
     
   }
 
-  deleteRecipe(event) {
+  deleteRecipe(event: UIEvent) {
     this.recipeService.deleteRecipe(this.id);
   }
 }

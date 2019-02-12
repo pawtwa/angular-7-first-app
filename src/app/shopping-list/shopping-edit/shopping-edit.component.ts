@@ -19,15 +19,15 @@ export class ShoppingEditComponent implements OnInit {
   ngOnInit() {
   }
 
-  onDeleteClick(event) {
+  onDeleteClick(event: UIEvent) {
     this.shoppingListService.deleteSelectedIngridient();
   }
 
-  onClearClick(event) {
+  onClearClick(event: UIEvent) {
     this.shoppingListService.clearIngridients();
   }
 
-  onAddClick(event) {
+  onAddClick(event: UIEvent) {
     this.nameInputError = false;
     this.amountInputError = false;
     if (this.nameInput.nativeElement.value.trim().length && this.amountInput.nativeElement.value.length) {

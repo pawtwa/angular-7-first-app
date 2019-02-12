@@ -2,8 +2,9 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <app-recipes *ngIf="leadedFeature === 'recipe'"></app-recipes>
-      <app-shopping-list *ngIf="leadedFeature === 'shoppingList'"></app-shopping-list>
+        <router-outlet></router-outlet>
+      <!-- <app-recipes *ngIf="leadedFeature === 'recipe'"></app-recipes>
+      <app-shopping-list *ngIf="leadedFeature === 'shoppingList'"></app-shopping-list> -->
     </div>
   </div>
 </div>

@@ -22,8 +22,10 @@ export class ShoppingListService
     }
 
     deleteSelectedIngridient() {
-        this.ingridients.splice(this.selectedIngridientId, 1);
-        this.ingridientsChanged.emit(this.getIngridients());
+        if (this.selectedIngridientId >= 0) {
+            this.ingridients.splice(this.selectedIngridientId, 1);
+            this.ingridientsChanged.emit(this.getIngridients());
+        }
     }
 
     clearIngridients() {
