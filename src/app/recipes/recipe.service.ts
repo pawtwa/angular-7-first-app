@@ -33,7 +33,7 @@ export class RecipeService
     recipesChanged: EventEmitter<Recipe[]> = new EventEmitter();
     recipeSelected: EventEmitter<number> = new EventEmitter<number>();
 
-    private currentRecipeId: number = -1;
+    // private currentRecipeId: number = -1;
 
     getRecipes(): Recipe[] {
         return this.recipes.slice();
@@ -50,20 +50,20 @@ export class RecipeService
     deleteRecipe(id: number) {
         this.recipes.splice(id, 1);
         this.recipesChanged.emit(this.getRecipes());
-        if (this.currentRecipeId === id) {
-            this.currentRecipeId = -1;
-            this.recipeSelected.emit(this.currentRecipeId);
-        }
+        // if (this.currentRecipeId === id) {
+        //     this.currentRecipeId = -1;
+        //     this.recipeSelected.emit(this.currentRecipeId);
+        // }
     }
 
-    setRecipeCurrentId(id: number) {
-        this.currentRecipeId = id;
-        this.recipeSelected.emit(this.currentRecipeId);
-    }
+    // setRecipeCurrentId(id: number) {
+    //     this.currentRecipeId = id;
+    //     this.recipeSelected.emit(this.currentRecipeId);
+    // }
 
-    getRecipeCurrentId() {
-        return this.currentRecipeId;
-    }
+    // getRecipeCurrentId() {
+    //     return this.currentRecipeId;
+    // }
 
     addIngridientsToShopingList(id: number) {
         this.shoppingListService.addIngridients(this.getRecipes()[id].ingridients.slice())

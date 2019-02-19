@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -15,7 +15,11 @@ export class RecipeDetailComponent implements OnInit {
 
   private paramsSubscription: Subscription;
 
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute) { }
+  constructor(
+    private recipeService: RecipeService, 
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.paramsSubscription = this.route.params.subscribe((params: Params) => {
@@ -25,14 +29,20 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   addToShopingList(event: UIEvent) {
+    event.preventDefault();
     this.recipeService.addIngridientsToShopingList(this.id);
   }
 
   editRecipe(event: UIEvent) {
-    
+    event.preventDefault();
+    this.router.navigate(['edit'], {
+      relativeTo: this.route
+    });
   }
 
   deleteRecipe(event: UIEvent) {
+    event.preventDefault();
     this.recipeService.deleteRecipe(this.id);
+    this.router.navigate(['recipes']);
   }
 }
