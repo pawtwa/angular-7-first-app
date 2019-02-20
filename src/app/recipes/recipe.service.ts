@@ -31,7 +31,7 @@ export class RecipeService
     ]
 
     recipesChanged: EventEmitter<Recipe[]> = new EventEmitter();
-    recipeSelected: EventEmitter<number> = new EventEmitter<number>();
+    // recipeSelected: EventEmitter<number> = new EventEmitter<number>();
 
     // private currentRecipeId: number = -1;
 
