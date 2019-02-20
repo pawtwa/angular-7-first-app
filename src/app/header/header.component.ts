@@ -24,6 +24,6 @@ export class HeaderComponent implements OnInit {
 
   brandClick(event: UIEvent) {
     event.preventDefault();
-    this.router.navigate(['/recipes']);
+    this.router.navigate(['/']);
   }
 }
