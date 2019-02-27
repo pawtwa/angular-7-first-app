@@ -2,48 +2,49 @@ import {Ingridient} from '../shared/ingridient.model';
 import { EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
-export class ShoppingListService
-{
+export class ShoppingListService {
     ingridientsChanged: Subject<Ingridient[]> = new Subject();
+    ingridientListSelectedItem: Subject<number | null> = new Subject();
 
     private ingridients: Ingridient[] = [
         new Ingridient('Apples', 5),
         new Ingridient('Tomatos', 3)
     ];
 
-    private selectedIngridientId: number = -1;
+    ingridientListItemSelected(id: number | null): void {
+      this.ingridientListSelectedItem.next(id);
+    }
 
-    getIngridients() {
+    getIngridients(): Ingridient[] {
         return this.ingridients.slice();
     }
 
-    addIngridient(ingridient: Ingridient) {
-        this.ingridients.push(ingridient);
+    getIngridient(id: number): Ingridient {
+      return this.ingridients.slice()[id];
+    }
+
+    deleteSelectedIngridient(id: number | null): void {
+      if (id !== null) {
+        this.ingridients.splice(id, 1);
         this.ingridientsChanged.next(this.getIngridients());
+        this.ingridientListSelectedItem.next(null);
+      }
     }
 
-    deleteSelectedIngridient() {
-        if (this.selectedIngridientId >= 0) {
-            this.ingridients.splice(this.selectedIngridientId, 1);
-            this.ingridientsChanged.next(this.getIngridients());
-        }
-    }
-
-    clearIngridients() {
-        this.ingridients.splice(0, this.ingridients.length);
-        this.ingridientsChanged.next(this.getIngridients());
-    }
-
-    addIngridients(ingridients: Ingridient[]) {
+    addIngridients(ingridients: Ingridient[]): void {
         this.ingridients.push(...ingridients);
         this.ingridientsChanged.next(this.getIngridients());
     }
 
-    setSelectedIngridientId(id: number) {
-        this.selectedIngridientId = id;
-    }
+  addIngridient(ingridient: Ingridient) {
+    this.ingridients.push(ingridient);
+    this.ingridientsChanged.next(this.getIngridients());
+  }
 
-    getSelectedIngridientId() {
-        return this.selectedIngridientId;
+  editSelectedIngridient(ingridient: Ingridient, id: number) {
+    if (this.ingridients[id]) {
+      this.ingridients[id] = ingridient;
+      this.ingridientsChanged.next(this.getIngridients());
     }
+  }
 }
