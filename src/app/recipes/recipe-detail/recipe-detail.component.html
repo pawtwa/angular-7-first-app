@@ -16,7 +16,7 @@
           class="btn btn-primary dropdown-toggle"
         >Manage Recipe <span class="caret"></span></button>
         <ul class="dropdown-menu">
-          <li><a href="#" (click)="addToShopingList($event)">Add Ingridients to Shopping List</a></li>
+          <li><a href="#" (click)="addToShopingList($event)">Add Ingredients to Shopping List</a></li>
           <li><a href="#" (click)="editRecipe($event)">Edit Recipe</a></li>
           <li><a href="#" (click)="deleteRecipe($event)">Delete Recipe</a></li>
         </ul>
@@ -33,8 +33,8 @@
      <ul class="list-group">
       <li
         class="list-group-item"
-        *ngFor="let ingridient of recipe.ingridients; let i = index"
-      >{{ingridient.name}}: {{ingridient.amount}}</li>
+        *ngFor="let ingredient of recipe.ingredients; let i = index"
+      >{{ingredient.name}}: {{ingredient.amount}}</li>
     </ul>
   </div>
 </div>

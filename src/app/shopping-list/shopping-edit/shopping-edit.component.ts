@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, OnDestroy} from '@angular/core';
-import { Ingridient } from 'src/app/shared/ingridient.model';
+import { Ingredient } from 'src/app/shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list.service';
 import {FormGroup, NgForm} from '@angular/forms';
 import {Subscription} from 'rxjs';
@@ -18,8 +18,8 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   @ViewChild('f') form: NgForm;
 
-  ingridientListSelectedItemSubscription: Subscription;
-  ingridientListSelectedId: number | null;
+  ingredientListSelectedItemSubscription: Subscription;
+  ingredientListSelectedId: number | null;
 
   constructor(private shoppingListService: ShoppingListService) {
     // this.nameInputError = false;
@@ -27,58 +27,58 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.resetIngridientListSelected();
-    this.ingridientListSelectedItemSubscription = this.shoppingListService.ingridientListSelectedItem.subscribe(id => {
+    this.resetIngredientListSelected();
+    this.ingredientListSelectedItemSubscription = this.shoppingListService.ingredientListSelectedItem.subscribe(id => {
       if (id === null) {
-        this.resetIngridientListSelected();
+        this.resetIngredientListSelected();
       } else {
-        this.setIngridientListSelected(id, this.shoppingListService.getIngridient(id));
+        this.setIngredientListSelected(id, this.shoppingListService.getIngredient(id));
       }
     });
   }
 
-  setIngridientListSelected(id: number, ingridient: Ingridient) {
-    this.ingridientListSelectedId = id;
-    this.form.setValue(ingridient);
+  setIngredientListSelected(id: number, ingredient: Ingredient) {
+    this.ingredientListSelectedId = id;
+    this.form.setValue(ingredient);
   }
 
-  resetIngridientListSelected() {
-    this.ingridientListSelectedId = null;
+  resetIngredientListSelected() {
+    this.ingredientListSelectedId = null;
     this.form.reset();
   }
 
   ngOnDestroy(): void {
-    this.ingridientListSelectedItemSubscription.unsubscribe();
+    this.ingredientListSelectedItemSubscription.unsubscribe();
   }
 
   onDeleteClick(event: UIEvent): void {
-    this.shoppingListService.deleteSelectedIngridient(this.ingridientListSelectedId);
+    this.shoppingListService.deleteSelectedIngredient(this.ingredientListSelectedId);
   }
 
   onClearClick(event: UIEvent): void {
-    this.resetIngridientListSelected();
+    this.resetIngredientListSelected();
   }
 
   onAddEditItem(form: FormGroup): void {
     const value = form.value;
-    const ingridient = new Ingridient(value.name, value.amount);
-    if (this.ingridientListSelectedId !== null) {
-      this.shoppingListService.editSelectedIngridient(ingridient, this.ingridientListSelectedId);
+    const ingredient = new Ingredient(value.name, value.amount);
+    if (this.ingredientListSelectedId !== null) {
+      this.shoppingListService.editSelectedIngredient(ingredient, this.ingredientListSelectedId);
     } else {
-      this.shoppingListService.addIngridient(ingridient);
+      this.shoppingListService.addIngredient(ingredient);
     }
-    this.shoppingListService.ingridientListItemSelected(null);
+    this.shoppingListService.ingredientListItemSelected(null);
   }
 
   // onAddClick(event: UIEvent) {
   //   this.nameInputError = false;
   //   this.amountInputError = false;
   //   if (this.nameInput.nativeElement.value.trim().length && this.amountInput.nativeElement.value.length) {
-  //     const newIngridient: Ingridient = new Ingridient(
+  //     const newIngredient: Ingredient = new Ingredient(
   //       String(this.nameInput.nativeElement.value),
   //       Number(this.amountInput.nativeElement.value)
   //     );
-  //     this.shoppingListService.addIngridient(newIngridient);
+  //     this.shoppingListService.addIngredient(newIngredient);
   //     this.nameInput.nativeElement.value = null;
   //     this.amountInput.nativeElement.value = null;
   //   } else {

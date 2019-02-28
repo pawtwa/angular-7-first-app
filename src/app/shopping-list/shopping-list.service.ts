@@ -1,50 +1,50 @@
-import {Ingridient} from '../shared/ingridient.model';
+import {Ingredient} from '../shared/ingredient.model';
 import { EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
 export class ShoppingListService {
-    ingridientsChanged: Subject<Ingridient[]> = new Subject();
-    ingridientListSelectedItem: Subject<number | null> = new Subject();
+    ingredientsChanged: Subject<Ingredient[]> = new Subject();
+    ingredientListSelectedItem: Subject<number | null> = new Subject();
 
-    private ingridients: Ingridient[] = [
-        new Ingridient('Apples', 5),
-        new Ingridient('Tomatos', 3)
+    private ingredients: Ingredient[] = [
+        new Ingredient('Apples', 5),
+        new Ingredient('Tomatos', 3)
     ];
 
-    ingridientListItemSelected(id: number | null): void {
-      this.ingridientListSelectedItem.next(id);
+    ingredientListItemSelected(id: number | null): void {
+      this.ingredientListSelectedItem.next(id);
     }
 
-    getIngridients(): Ingridient[] {
-        return this.ingridients.slice();
+    getIngredients(): Ingredient[] {
+        return this.ingredients.slice();
     }
 
-    getIngridient(id: number): Ingridient {
-      return this.ingridients.slice()[id];
+    getIngredient(id: number): Ingredient {
+      return this.ingredients.slice()[id];
     }
 
-    deleteSelectedIngridient(id: number | null): void {
+    deleteSelectedIngredient(id: number | null): void {
       if (id !== null) {
-        this.ingridients.splice(id, 1);
-        this.ingridientsChanged.next(this.getIngridients());
-        this.ingridientListSelectedItem.next(null);
+        this.ingredients.splice(id, 1);
+        this.ingredientsChanged.next(this.getIngredients());
+        this.ingredientListSelectedItem.next(null);
       }
     }
 
-    addIngridients(ingridients: Ingridient[]): void {
-        this.ingridients.push(...ingridients);
-        this.ingridientsChanged.next(this.getIngridients());
+    addIngredients(ingredients: Ingredient[]): void {
+        this.ingredients.push(...ingredients);
+        this.ingredientsChanged.next(this.getIngredients());
     }
 
-  addIngridient(ingridient: Ingridient) {
-    this.ingridients.push(ingridient);
-    this.ingridientsChanged.next(this.getIngridients());
+  addIngredient(ingredient: Ingredient) {
+    this.ingredients.push(ingredient);
+    this.ingredientsChanged.next(this.getIngredients());
   }
 
-  editSelectedIngridient(ingridient: Ingridient, id: number) {
-    if (this.ingridients[id]) {
-      this.ingridients[id] = ingridient;
-      this.ingridientsChanged.next(this.getIngridients());
+  editSelectedIngredient(ingredient: Ingredient, id: number) {
+    if (this.ingredients[id]) {
+      this.ingredients[id] = ingredient;
+      this.ingredientsChanged.next(this.getIngredients());
     }
   }
 }

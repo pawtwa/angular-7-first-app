@@ -30,7 +30,7 @@ export class RecipeDetailComponent implements OnInit {
 
   addToShopingList(event: UIEvent) {
     event.preventDefault();
-    this.recipeService.addIngridientsToShopingList(this.id);
+    this.recipeService.addIngredientsToShopingList(this.id);
   }
 
   editRecipe(event: UIEvent) {

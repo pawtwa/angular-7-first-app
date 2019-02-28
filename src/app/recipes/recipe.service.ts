@@ -1,6 +1,6 @@
 import {Recipe} from './recipe.model';
 import { EventEmitter, Injectable } from '@angular/core';
-import { Ingridient } from '../shared/ingridient.model';
+import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 
 @Injectable()
@@ -14,8 +14,8 @@ export class RecipeService {
             'A super-tasty Schnitzel - just awesome!',
             '/assets/schnitzel.png',
             [
-                new Ingridient('Meat', 2),
-                new Ingridient('French Fries', 20)
+                new Ingredient('Meat', 2),
+                new Ingredient('French Fries', 20)
             ]
         ),
         new Recipe(
@@ -23,8 +23,8 @@ export class RecipeService {
             'What else you need to say?',
             '/assets/burger.png',
             [
-                new Ingridient('Buns', 2),
-                new Ingridient('Meat', 2)
+                new Ingredient('Buns', 2),
+                new Ingredient('Meat', 2)
             ]
         )
     ];
@@ -64,7 +64,7 @@ export class RecipeService {
     //     return this.currentRecipeId;
     // }
 
-    addIngridientsToShopingList(id: number) {
-        this.shoppingListService.addIngridients(this.getRecipes()[id].ingridients.slice())
+    addIngredientsToShopingList(id: number) {
+        this.shoppingListService.addIngredients(this.getRecipes()[id].ingredients.slice())
     }
 }
