@@ -3,7 +3,11 @@
     <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
       <div class="row">
         <div class="col-xs-12">
-          <button type="submit" class="btn btn-success pull-right">Save</button>
+          <button
+            type="submit"
+            class="btn btn-success pull-right"
+            [disabled]="recipeForm.invalid"
+          >Save</button>
           <button type="button" class="btn btn-danger pull-right">Cancel</button>
         </div>
       </div>
@@ -58,7 +62,7 @@
         >
           <div
             class="row"
-            *ngFor="let ingirdientControl of recipeForm.get('ingredients').controls; let i = index"
+            *ngFor="let ingirdientControl of getFormIngredients(); let i = index"
             [formGroupName]="i"
             style="margin-top: 10px;"
           >
