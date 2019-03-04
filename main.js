@@ -520,6 +520,18 @@ var RecipeEditComponent = /** @class */ (function () {
     };
     RecipeEditComponent.prototype.onSubmit = function () {
         console.log(this.recipeForm);
+        // const recipe = new Recipe(
+        //   this.recipeForm.value['name'],
+        //   this.recipeForm.value['description'],
+        //   this.recipeForm.value['imagePath'],
+        //   this.recipeForm.value['ingredients'],
+        // );
+        if (this.editMode) {
+            this.recipeService.updateRecipe(this.id, this.recipeForm.value);
+        }
+        else {
+            this.recipeService.addRecipe(this.recipeForm.value);
+        }
     };
     RecipeEditComponent.prototype.onAddIngredient = function () {
         this.recipeForm.get('ingredients').push(new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
@@ -806,6 +818,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _shared_ingredient_model__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/ingredient.model */ "./src/app/shared/ingredient.model.ts");
 /* harmony import */ var _shopping_list_shopping_list_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shopping-list/shopping-list.service */ "./src/app/shopping-list/shopping-list.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -819,9 +832,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var RecipeService = /** @class */ (function () {
+    // recipesChanged: EventEmitter<Recipe[]> = new EventEmitter();
+    // recipeSelected: EventEmitter<number> = new EventEmitter<number>();
+    // private currentRecipeId: number = -1;
     function RecipeService(shoppingListService) {
         this.shoppingListService = shoppingListService;
+        this.recipesChanged = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
         this.recipes = [
             new _recipe_model__WEBPACK_IMPORTED_MODULE_0__["Recipe"]('Tasty Schnitzel', 'A super-tasty Schnitzel - just awesome!', './assets/schnitzel.png', [
                 new _shared_ingredient_model__WEBPACK_IMPORTED_MODULE_2__["Ingredient"]('Meat', 3),
@@ -832,10 +850,7 @@ var RecipeService = /** @class */ (function () {
                 new _shared_ingredient_model__WEBPACK_IMPORTED_MODULE_2__["Ingredient"]('Meat', 2)
             ])
         ];
-        this.recipesChanged = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
     }
-    // recipeSelected: EventEmitter<number> = new EventEmitter<number>();
-    // private currentRecipeId: number = -1;
     RecipeService.prototype.getRecipes = function () {
         return this.recipes.slice();
     };
@@ -844,10 +859,16 @@ var RecipeService = /** @class */ (function () {
     };
     RecipeService.prototype.addRecipe = function (recipe) {
         this.recipes.push(recipe);
+        this.recipesChanged.next(this.getRecipes());
+    };
+    RecipeService.prototype.updateRecipe = function (index, recipe) {
+        this.recipes[index] = recipe;
+        this.recipesChanged.next(this.getRecipes());
     };
     RecipeService.prototype.deleteRecipe = function (id) {
         this.recipes.splice(id, 1);
-        this.recipesChanged.emit(this.getRecipes());
+        this.recipesChanged.next(this.getRecipes());
+        // this.recipesChanged.emit(this.getRecipes());
         // if (this.currentRecipeId === id) {
         //     this.currentRecipeId = -1;
         //     this.recipeSelected.emit(this.currentRecipeId);
