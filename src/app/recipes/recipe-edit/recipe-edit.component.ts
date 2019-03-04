@@ -1,28 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {RecipeService} from '../recipe.service';
 import {Recipe} from '../recipe.model';
 import {Ingredient} from '../../shared/ingredient.model';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-recipe-edit',
   templateUrl: './recipe-edit.component.html',
   styleUrls: ['./recipe-edit.component.css']
 })
-export class RecipeEditComponent implements OnInit {
+export class RecipeEditComponent implements OnInit, OnDestroy {
   id: number;
   editMode: boolean;
   editedRecipe: Recipe;
   recipeForm: FormGroup;
+  paramsSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.route.params.subscribe(
+    this.paramsSubscription = this.route.params.subscribe(
       (params: Params) => {
         this.id = +params['id'];
         this.editMode = !isNaN(this.id) && this.id >= 0;
@@ -32,6 +35,10 @@ export class RecipeEditComponent implements OnInit {
       }
     );
     this.initForm();
+  }
+
+  ngOnDestroy(): void {
+    this.paramsSubscription.unsubscribe();
   }
 
   private initForm() {
@@ -65,7 +72,11 @@ export class RecipeEditComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onCancel(event: Event): void {
+    this.router.navigate(['../'], {relativeTo: this.route});
+  }
+
+  onSubmit(event: Event) {
     console.log(this.recipeForm);
     // const recipe = new Recipe(
     //   this.recipeForm.value['name'],
@@ -78,6 +89,7 @@ export class RecipeEditComponent implements OnInit {
     } else {
       this.recipeService.addRecipe(this.recipeForm.value);
     }
+    this.onCancel(event);
   }
 
   onAddIngredient() {
