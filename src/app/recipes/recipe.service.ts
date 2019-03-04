@@ -14,7 +14,7 @@ export class RecipeService {
             'A super-tasty Schnitzel - just awesome!',
             './assets/schnitzel.png',
             [
-                new Ingredient('Meat', 2),
+                new Ingredient('Meat', 3),
                 new Ingredient('French Fries', 20)
             ]
         ),
