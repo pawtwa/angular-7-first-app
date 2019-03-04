@@ -95,6 +95,11 @@ export class RecipeEditComponent implements OnInit {
     );
   }
 
+  onDeleteIngredient(i: number, event: MouseEvent): void {
+    event.preventDefault();
+    (<FormArray>this.recipeForm.get('ingredients')).removeAt(i);
+  }
+
   getFormIngredients() {
     return (<FormArray>this.recipeForm.get('ingredients')).controls;
   }
