@@ -12,7 +12,7 @@ export class RecipeService {
         new Recipe(
             'Tasty Schnitzel',
             'A super-tasty Schnitzel - just awesome!',
-            '/assets/schnitzel.png',
+            'assets/schnitzel.png',
             [
                 new Ingredient('Meat', 2),
                 new Ingredient('French Fries', 20)
@@ -21,7 +21,7 @@ export class RecipeService {
         new Recipe(
             'Big Fat Burger',
             'What else you need to say?',
-            '/assets/burger.png',
+            'assets/burger.png',
             [
                 new Ingredient('Buns', 2),
                 new Ingredient('Meat', 2)
