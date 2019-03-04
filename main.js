@@ -202,12 +202,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
 /* harmony import */ var _recipes_recipe_start_recipe_start_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./recipes/recipe-start/recipe-start.component */ "./src/app/recipes/recipe-start/recipe-start.component.ts");
 /* harmony import */ var _recipes_recipe_edit_recipe_edit_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./recipes/recipe-edit/recipe-edit.component */ "./src/app/recipes/recipe-edit/recipe-edit.component.ts");
+/* harmony import */ var _recipes_recipe_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./recipes/recipe.service */ "./src/app/recipes/recipe.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -250,7 +252,7 @@ var AppModule = /** @class */ (function () {
                 _angular_http__WEBPACK_IMPORTED_MODULE_3__["HttpModule"],
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_14__["AppRoutingModule"]
             ],
-            providers: [_shopping_list_shopping_list_service__WEBPACK_IMPORTED_MODULE_13__["ShoppingListService"]],
+            providers: [_shopping_list_shopping_list_service__WEBPACK_IMPORTED_MODULE_13__["ShoppingListService"], _recipes_recipe_service__WEBPACK_IMPORTED_MODULE_17__["RecipeService"]],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
         })
     ], AppModule);
@@ -400,6 +402,9 @@ var RecipeDetailComponent = /** @class */ (function () {
             _this.recipe = _this.recipeService.getRecipeById(_this.id);
         });
     };
+    RecipeDetailComponent.prototype.ngOnDestroy = function () {
+        this.paramsSubscription.unsubscribe();
+    };
     RecipeDetailComponent.prototype.addToShopingList = function (event) {
         event.preventDefault();
         this.recipeService.addIngredientsToShopingList(this.id);
@@ -413,7 +418,7 @@ var RecipeDetailComponent = /** @class */ (function () {
     RecipeDetailComponent.prototype.deleteRecipe = function (event) {
         event.preventDefault();
         this.recipeService.deleteRecipe(this.id);
-        this.router.navigate(['recipes']);
+        this.router.navigate(['/recipes']);
     };
     RecipeDetailComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -450,7 +455,7 @@ module.exports = "input.ng-invalid.ng-touched,\r\ntextarea.ng-invalid.ng-touched
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\r\n  <div class=\"col-xs-12\">\r\n    <form [formGroup]=\"recipeForm\" (ngSubmit)=\"onSubmit()\">\r\n      <div class=\"row\">\r\n        <div class=\"col-xs-12\">\r\n          <button\r\n            type=\"submit\"\r\n            class=\"btn btn-success pull-right\"\r\n            [disabled]=\"recipeForm.invalid\"\r\n          >Save</button>\r\n          <button type=\"button\" class=\"btn btn-danger pull-right\">Cancel</button>\r\n        </div>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-xs-12\">\r\n          <div class=\"form-group\">\r\n            <label for=\"name\">Name</label>\r\n            <input\r\n              type=\"text\"\r\n              id=\"name\"\r\n              class=\"form-control\"\r\n              formControlName=\"name\"\r\n            />\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-xs-12\">\r\n          <div class=\"form-group\">\r\n            <label for=\"imagePath\">Image URL</label>\r\n            <input\r\n              type=\"text\"\r\n              id=\"imagePath\"\r\n              class=\"form-control\"\r\n              formControlName=\"imagePath\"\r\n            />\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-xs-12\">\r\n          <img src=\"\" class=\"img-responsive\">\r\n        </div>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-xs-12\">\r\n          <div class=\"form-group\">\r\n            <label for=\"description\">Descritpion</label>\r\n            <textarea\r\n              id=\"description\"\r\n              class=\"form-control\"\r\n              rows=\"6\"\r\n              formControlName=\"description\"\r\n            ></textarea>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div\r\n          class=\"col-xs-12\"\r\n          formArrayName=\"ingredients\"\r\n        >\r\n          <div\r\n            class=\"row\"\r\n            *ngFor=\"let ingirdientControl of getFormIngredients(); let i = index\"\r\n            [formGroupName]=\"i\"\r\n            style=\"margin-top: 10px;\"\r\n          >\r\n            <div class=\"col-xs-8\">\r\n              <input\r\n                type=\"text\"\r\n                class=\"form-control\"\r\n                formControlName=\"name\"\r\n              />\r\n            </div>\r\n            <div class=\"col-xs-2\">\r\n              <input\r\n                type=\"number\"\r\n                class=\"form-control\"\r\n                formControlName=\"amount\"\r\n              />\r\n            </div>\r\n            <div class=\"col-xs-2\">\r\n              <button type=\"button\" class=\"btn btn-danger btn-block\" (click)=\"onDeleteIngredient(i, $event)\">x</button>\r\n            </div>\r\n          </div>\r\n          <hr />\r\n          <div class=\"row\">\r\n            <div class=\"col-xs-2\">\r\n              <button\r\n                type=\"button\"\r\n                class=\"btn btn-success\"\r\n                (click)=\"onAddIngredient()\"\r\n              >Add ingredient</button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </form>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"row\">\r\n  <div class=\"col-xs-12\">\r\n    <form [formGroup]=\"recipeForm\" (ngSubmit)=\"onSubmit($event)\">\r\n      <div class=\"row\">\r\n        <div class=\"col-xs-12\">\r\n          <button\r\n            type=\"submit\"\r\n            class=\"btn btn-success pull-right\"\r\n            [disabled]=\"recipeForm.invalid\"\r\n          >Save</button>\r\n          <button\r\n            type=\"button\"\r\n            class=\"btn btn-danger pull-right\"\r\n            (click)=\"onCancel($event)\"\r\n          >Cancel</button>\r\n        </div>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-xs-12\">\r\n          <div class=\"form-group\">\r\n            <label for=\"name\">Name</label>\r\n            <input\r\n              type=\"text\"\r\n              id=\"name\"\r\n              class=\"form-control\"\r\n              formControlName=\"name\"\r\n            />\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-xs-12\">\r\n          <div class=\"form-group\">\r\n            <label for=\"imagePath\">Image URL</label>\r\n            <input\r\n              type=\"text\"\r\n              id=\"imagePath\"\r\n              class=\"form-control\"\r\n              formControlName=\"imagePath\"\r\n              #imagePath\r\n            />\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-xs-12\">\r\n          <img [src]=\"imagePath.value\" class=\"img-responsive\">\r\n        </div>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-xs-12\">\r\n          <div class=\"form-group\">\r\n            <label for=\"description\">Descritpion</label>\r\n            <textarea\r\n              id=\"description\"\r\n              class=\"form-control\"\r\n              rows=\"6\"\r\n              formControlName=\"description\"\r\n            ></textarea>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div\r\n          class=\"col-xs-12\"\r\n          formArrayName=\"ingredients\"\r\n        >\r\n          <div\r\n            class=\"row\"\r\n            *ngFor=\"let ingirdientControl of getFormIngredients(); let i = index\"\r\n            [formGroupName]=\"i\"\r\n            style=\"margin-top: 10px;\"\r\n          >\r\n            <div class=\"col-xs-8\">\r\n              <input\r\n                type=\"text\"\r\n                class=\"form-control\"\r\n                formControlName=\"name\"\r\n              />\r\n            </div>\r\n            <div class=\"col-xs-2\">\r\n              <input\r\n                type=\"number\"\r\n                class=\"form-control\"\r\n                formControlName=\"amount\"\r\n              />\r\n            </div>\r\n            <div class=\"col-xs-2\">\r\n              <button type=\"button\" class=\"btn btn-danger btn-block\" (click)=\"onDeleteIngredient(i, $event)\">x</button>\r\n            </div>\r\n          </div>\r\n          <hr />\r\n          <div class=\"row\">\r\n            <div class=\"col-xs-2\">\r\n              <button\r\n                type=\"button\"\r\n                class=\"btn btn-success\"\r\n                (click)=\"onAddIngredient()\"\r\n              >Add ingredient</button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </form>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -482,13 +487,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var RecipeEditComponent = /** @class */ (function () {
-    function RecipeEditComponent(route, recipeService) {
+    function RecipeEditComponent(route, recipeService, router) {
         this.route = route;
         this.recipeService = recipeService;
+        this.router = router;
     }
     RecipeEditComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.route.params.subscribe(function (params) {
+        this.paramsSubscription = this.route.params.subscribe(function (params) {
             _this.id = +params['id'];
             _this.editMode = !isNaN(_this.id) && _this.id >= 0;
             if (_this.editMode) {
@@ -496,6 +502,9 @@ var RecipeEditComponent = /** @class */ (function () {
             }
         });
         this.initForm();
+    };
+    RecipeEditComponent.prototype.ngOnDestroy = function () {
+        this.paramsSubscription.unsubscribe();
     };
     RecipeEditComponent.prototype.initForm = function () {
         var ingredients = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormArray"]([]);
@@ -518,7 +527,10 @@ var RecipeEditComponent = /** @class */ (function () {
             'ingredients': ingredients
         });
     };
-    RecipeEditComponent.prototype.onSubmit = function () {
+    RecipeEditComponent.prototype.onCancel = function (event) {
+        this.router.navigate(['../'], { relativeTo: this.route });
+    };
+    RecipeEditComponent.prototype.onSubmit = function (event) {
         console.log(this.recipeForm);
         // const recipe = new Recipe(
         //   this.recipeForm.value['name'],
@@ -532,6 +544,7 @@ var RecipeEditComponent = /** @class */ (function () {
         else {
             this.recipeService.addRecipe(this.recipeForm.value);
         }
+        this.onCancel(event);
     };
     RecipeEditComponent.prototype.onAddIngredient = function () {
         this.recipeForm.get('ingredients').push(new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
@@ -553,7 +566,8 @@ var RecipeEditComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./recipe-edit.component.css */ "./src/app/recipes/recipe-edit/recipe-edit.component.css")]
         }),
         __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
-            _recipe_service__WEBPACK_IMPORTED_MODULE_3__["RecipeService"]])
+            _recipe_service__WEBPACK_IMPORTED_MODULE_3__["RecipeService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], RecipeEditComponent);
     return RecipeEditComponent;
 }());
@@ -696,9 +710,12 @@ var RecipeListComponent = /** @class */ (function () {
     RecipeListComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.recipes = this.recipeService.getRecipes();
-        this.recipeService.recipesChanged.subscribe(function (recipes) {
+        this.recipesChangedSubscription = this.recipeService.recipesChanged.subscribe(function (recipes) {
             _this.recipes = recipes;
         });
+    };
+    RecipeListComponent.prototype.ngOnDestroy = function () {
+        this.recipesChangedSubscription.unsubscribe();
     };
     RecipeListComponent.prototype.newRecipe = function (event) {
         event.preventDefault();
@@ -932,7 +949,6 @@ module.exports = "<div class=\"row\">\r\n  <div class=\"col-md-5\">\r\n    <app-
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RecipesComponent", function() { return RecipesComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _recipe_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./recipe.service */ "./src/app/recipes/recipe.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -943,7 +959,8 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-
+// import { Recipe } from './recipe.model';
+// import { RecipeService } from './recipe.service';
 var RecipesComponent = /** @class */ (function () {
     // selectedRecipe: Recipe;
     // selectedRecipeId: number;
@@ -959,7 +976,6 @@ var RecipesComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-recipes',
             template: __webpack_require__(/*! ./recipes.component.html */ "./src/app/recipes/recipes.component.html"),
-            providers: [_recipe_service__WEBPACK_IMPORTED_MODULE_1__["RecipeService"]],
             styles: [__webpack_require__(/*! ./recipes.component.css */ "./src/app/recipes/recipes.component.css")]
         }),
         __metadata("design:paramtypes", [])
