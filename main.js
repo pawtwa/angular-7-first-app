@@ -823,11 +823,11 @@ var RecipeService = /** @class */ (function () {
     function RecipeService(shoppingListService) {
         this.shoppingListService = shoppingListService;
         this.recipes = [
-            new _recipe_model__WEBPACK_IMPORTED_MODULE_0__["Recipe"]('Tasty Schnitzel', 'A super-tasty Schnitzel - just awesome!', '/assets/schnitzel.png', [
+            new _recipe_model__WEBPACK_IMPORTED_MODULE_0__["Recipe"]('Tasty Schnitzel', 'A super-tasty Schnitzel - just awesome!', './assets/schnitzel.png', [
                 new _shared_ingredient_model__WEBPACK_IMPORTED_MODULE_2__["Ingredient"]('Meat', 2),
                 new _shared_ingredient_model__WEBPACK_IMPORTED_MODULE_2__["Ingredient"]('French Fries', 20)
             ]),
-            new _recipe_model__WEBPACK_IMPORTED_MODULE_0__["Recipe"]('Big Fat Burger', 'What else you need to say?', '/assets/burger.png', [
+            new _recipe_model__WEBPACK_IMPORTED_MODULE_0__["Recipe"]('Big Fat Burger', 'What else you need to say?', './assets/burger.png', [
                 new _shared_ingredient_model__WEBPACK_IMPORTED_MODULE_2__["Ingredient"]('Buns', 2),
                 new _shared_ingredient_model__WEBPACK_IMPORTED_MODULE_2__["Ingredient"]('Meat', 2)
             ])
