@@ -1,0 +1,4 @@
+const firebase_config = {
+    base_url: 'https://<project_name>.firebaseio.com/'
+};
+export default firebase_config;

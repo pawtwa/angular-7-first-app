@@ -16,7 +16,7 @@ export class RecipeService {
     constructor(private shoppingListService: ShoppingListService) {
     }
 
-    private recipes: Recipe[] = [
+    private recipes: Recipe[] = [];/* = [
         new Recipe(
             'Tasty Schnitzel',
             'A super-tasty Schnitzel - just awesome!',
@@ -35,7 +35,7 @@ export class RecipeService {
                 new Ingredient('Meat', 2)
             ]
         )
-    ];
+    ]*/;
 
     getRecipes(): Recipe[] {
       return this.recipes.slice();
@@ -48,6 +48,11 @@ export class RecipeService {
     addRecipe(recipe: Recipe) {
       this.recipes.push(recipe);
       this.recipesChanged.next(this.getRecipes());
+    }
+
+    setRecipes(recipes: Recipe[]) {
+        this.recipes = recipes;
+        this.recipesChanged.next(this.getRecipes());
     }
 
     updateRecipe(index: number, recipe: Recipe) {
@@ -75,6 +80,6 @@ export class RecipeService {
     // }
 
     addIngredientsToShopingList(id: number) {
-        this.shoppingListService.addIngredients(this.getRecipes()[id].ingredients.slice())
+        this.shoppingListService.addIngredients(this.getRecipes()[id].ingredients ? this.getRecipes()[id].ingredients.slice() : [])
     }
 }

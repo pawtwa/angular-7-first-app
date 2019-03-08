@@ -37,3 +37,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# protected config files
+/src/app/shared/*-pconf.ts

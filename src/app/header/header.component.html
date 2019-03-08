@@ -22,8 +22,8 @@
                 <li appDropdown class="dropdown">
                     <a href="#" (click)="$event.preventDefault()" class="dropdown-toggle">Manage <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#" (click)="$event.preventDefault()">Save Data</a></li>
-                        <li><a href="#" (click)="$event.preventDefault()">Fetch Data</a></li>
+                        <li><a href="#" (click)="onSaveData($event)">Save Data</a></li>
+                        <li><a href="#" (click)="onFetchData($event)">Fetch Data</a></li>
                     </ul>
                 </li>
             </ul>
