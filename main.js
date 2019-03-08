@@ -203,12 +203,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _recipes_recipe_start_recipe_start_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./recipes/recipe-start/recipe-start.component */ "./src/app/recipes/recipe-start/recipe-start.component.ts");
 /* harmony import */ var _recipes_recipe_edit_recipe_edit_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./recipes/recipe-edit/recipe-edit.component */ "./src/app/recipes/recipe-edit/recipe-edit.component.ts");
 /* harmony import */ var _recipes_recipe_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./recipes/recipe.service */ "./src/app/recipes/recipe.service.ts");
+/* harmony import */ var _shared_data_storage_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./shared/data-storage.service */ "./src/app/shared/data-storage.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -252,7 +254,7 @@ var AppModule = /** @class */ (function () {
                 _angular_http__WEBPACK_IMPORTED_MODULE_3__["HttpModule"],
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_14__["AppRoutingModule"]
             ],
-            providers: [_shopping_list_shopping_list_service__WEBPACK_IMPORTED_MODULE_13__["ShoppingListService"], _recipes_recipe_service__WEBPACK_IMPORTED_MODULE_17__["RecipeService"]],
+            providers: [_shopping_list_shopping_list_service__WEBPACK_IMPORTED_MODULE_13__["ShoppingListService"], _recipes_recipe_service__WEBPACK_IMPORTED_MODULE_17__["RecipeService"], _shared_data_storage_service__WEBPACK_IMPORTED_MODULE_18__["DataStorageService"]],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
         })
     ], AppModule);
@@ -281,7 +283,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-default\">\r\n    <div class=\"container-fluid\">\r\n        <div class=\"navbar-header\">\r\n            <a href=\"#\" (click)=\"brandClick($event)\" class=\"navbar-brand\">Recipe Book</a>\r\n        </div>\r\n        <div class=\"collapse navbar-collapse\">\r\n            <ul class=\"nav navbar-nav\">\r\n                <li \r\n                    routerLinkActive=\"active\"\r\n                >\r\n                    <!-- <a href=\"#\" (click)=\"onSelect('recipe', $event)\">Recipes</a> -->\r\n                    <a routerLink=\"/recipes\">Recipes</a>\r\n                </li>\r\n                <li \r\n                    routerLinkActive=\"active\"\r\n                >\r\n                    <!-- <a href=\"#\" (click)=\"onSelect('shoppingList', $event)\">Shopping List</a> -->\r\n                    <a routerLink=\"/shopping-list\">Shopping List</a>\r\n                </li>\r\n            </ul>\r\n            <ul class=\"nav navbar-nav navbar-right\">\r\n                <li appDropdown class=\"dropdown\">\r\n                    <a href=\"#\" (click)=\"$event.preventDefault()\" class=\"dropdown-toggle\">Manage <span class=\"caret\"></span></a>\r\n                    <ul class=\"dropdown-menu\">\r\n                        <li><a href=\"#\" (click)=\"$event.preventDefault()\">Save Data</a></li>\r\n                        <li><a href=\"#\" (click)=\"$event.preventDefault()\">Fetch Data</a></li>\r\n                    </ul>\r\n                </li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n</nav>"
+module.exports = "<nav class=\"navbar navbar-default\">\r\n    <div class=\"container-fluid\">\r\n        <div class=\"navbar-header\">\r\n            <a href=\"#\" (click)=\"brandClick($event)\" class=\"navbar-brand\">Recipe Book</a>\r\n        </div>\r\n        <div class=\"collapse navbar-collapse\">\r\n            <ul class=\"nav navbar-nav\">\r\n                <li \r\n                    routerLinkActive=\"active\"\r\n                >\r\n                    <!-- <a href=\"#\" (click)=\"onSelect('recipe', $event)\">Recipes</a> -->\r\n                    <a routerLink=\"/recipes\">Recipes</a>\r\n                </li>\r\n                <li \r\n                    routerLinkActive=\"active\"\r\n                >\r\n                    <!-- <a href=\"#\" (click)=\"onSelect('shoppingList', $event)\">Shopping List</a> -->\r\n                    <a routerLink=\"/shopping-list\">Shopping List</a>\r\n                </li>\r\n            </ul>\r\n            <ul class=\"nav navbar-nav navbar-right\">\r\n                <li appDropdown class=\"dropdown\">\r\n                    <a href=\"#\" (click)=\"$event.preventDefault()\" class=\"dropdown-toggle\">Manage <span class=\"caret\"></span></a>\r\n                    <ul class=\"dropdown-menu\">\r\n                        <li><a href=\"#\" (click)=\"onSaveData($event)\">Save Data</a></li>\r\n                        <li><a href=\"#\" (click)=\"onFetchData($event)\">Fetch Data</a></li>\r\n                    </ul>\r\n                </li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n</nav>"
 
 /***/ }),
 
@@ -297,6 +299,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HeaderComponent", function() { return HeaderComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _shared_data_storage_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/data-storage.service */ "./src/app/shared/data-storage.service.ts");
+/* harmony import */ var _recipes_recipe_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../recipes/recipe.service */ "./src/app/recipes/recipe.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -308,12 +312,19 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+
 var HeaderComponent = /** @class */ (function () {
-    function HeaderComponent(router) {
+    function HeaderComponent(router, dataStorage, recipeService) {
         this.router = router;
+        this.dataStorage = dataStorage;
+        this.recipeService = recipeService;
         this.featureSelected = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
     }
-    HeaderComponent.prototype.ngOnInit = function () {
+    HeaderComponent.prototype.ngOnInit = function () { };
+    HeaderComponent.prototype.ngOnDestroy = function () {
+        this.saveDataSubscription ? this.saveDataSubscription.unsubscribe() : null;
+        this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
     };
     HeaderComponent.prototype.onSelect = function (feature, event) {
         this.featureSelected.emit(feature);
@@ -321,6 +332,19 @@ var HeaderComponent = /** @class */ (function () {
     HeaderComponent.prototype.brandClick = function (event) {
         event.preventDefault();
         this.router.navigate(['/']);
+    };
+    HeaderComponent.prototype.onSaveData = function (event) {
+        event.preventDefault();
+        this.saveDataSubscription ? this.saveDataSubscription.unsubscribe() : null;
+        this.saveDataSubscription = this.dataStorage.storeData(this.recipeService.getRecipes()).subscribe(function () { }, console.log);
+    };
+    HeaderComponent.prototype.onFetchData = function (event) {
+        var _this = this;
+        event.preventDefault();
+        this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
+        this.fetchDataSubscription = this.dataStorage.fetchData().subscribe(function (recipes) {
+            _this.recipeService.setRecipes(recipes);
+        }, console.log);
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
@@ -330,10 +354,13 @@ var HeaderComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-header',
             template: __webpack_require__(/*! ./header.component.html */ "./src/app/header/header.component.html"),
+            providers: [],
             styles: [__webpack_require__(/*! ./header.component.css */ "./src/app/header/header.component.css")]
         }),
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
+            _shared_data_storage_service__WEBPACK_IMPORTED_MODULE_2__["DataStorageService"],
+            _recipes_recipe_service__WEBPACK_IMPORTED_MODULE_3__["RecipeService"]])
     ], HeaderComponent);
     return HeaderComponent;
 }());
@@ -360,7 +387,7 @@ module.exports = "img.recipe-detail-img {\r\n    max-width: 500px;\r\n    max-he
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\r\n    <div class=\"col-xs-12\">\r\n      <img src=\"{{ recipe.imagePath }}\" alt=\"{{ recipe.name }}\" class=\"img-responsive recipe-detail-img\">\r\n    </div>\r\n</div>\r\n<div class=\"row\">\r\n    <div class=\"col-xs-12\">\r\n      <h1>{{ recipe.name }}</h1>\r\n    </div>\r\n</div>\r\n<div class=\"row\">\r\n    <div class=\"col-xs-12\">\r\n      <div appDropdown class=\"btn-group\">\r\n        <button \r\n          type=\"button\" \r\n          class=\"btn btn-primary dropdown-toggle\"\r\n        >Manage Recipe <span class=\"caret\"></span></button>\r\n        <ul class=\"dropdown-menu\">\r\n          <li><a href=\"#\" (click)=\"addToShopingList($event)\">Add Ingredients to Shopping List</a></li>\r\n          <li><a href=\"#\" (click)=\"editRecipe($event)\">Edit Recipe</a></li>\r\n          <li><a href=\"#\" (click)=\"deleteRecipe($event)\">Delete Recipe</a></li>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n</div>\r\n<div class=\"row\">\r\n    <div class=\"col-xs-12\">\r\n      <p><em>{{ recipe.description }}</em></p>\r\n    </div>\r\n  </div>\r\n<div class=\"row\">\r\n  <div class=\"col-xs-12\">\r\n     <ul class=\"list-group\">\r\n      <li\r\n        class=\"list-group-item\"\r\n        *ngFor=\"let ingredient of recipe.ingredients; let i = index\"\r\n      >{{ingredient.name}}: {{ingredient.amount}}</li>\r\n    </ul>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div *ngIf=\"recipe\">\r\n  <div class=\"row\">\r\n      <div class=\"col-xs-12\">\r\n        <img src=\"{{ recipe.imagePath }}\" alt=\"{{ recipe.name }}\" class=\"img-responsive recipe-detail-img\">\r\n      </div>\r\n  </div>\r\n  <div class=\"row\">\r\n      <div class=\"col-xs-12\">\r\n        <h1>{{ recipe.name }}</h1>\r\n      </div>\r\n  </div>\r\n  <div class=\"row\">\r\n      <div class=\"col-xs-12\">\r\n        <div appDropdown class=\"btn-group\">\r\n          <button \r\n            type=\"button\" \r\n            class=\"btn btn-primary dropdown-toggle\"\r\n          >Manage Recipe <span class=\"caret\"></span></button>\r\n          <ul class=\"dropdown-menu\">\r\n            <li><a href=\"#\" (click)=\"addToShopingList($event)\">Add Ingredients to Shopping List</a></li>\r\n            <li><a href=\"#\" (click)=\"editRecipe($event)\">Edit Recipe</a></li>\r\n            <li><a href=\"#\" (click)=\"deleteRecipe($event)\">Delete Recipe</a></li>\r\n          </ul>\r\n        </div>\r\n      </div>\r\n  </div>\r\n  <div class=\"row\">\r\n      <div class=\"col-xs-12\">\r\n        <p><em>{{ recipe.description }}</em></p>\r\n      </div>\r\n    </div>\r\n  <div class=\"row\">\r\n    <div class=\"col-xs-12\">\r\n      <ul class=\"list-group\">\r\n        <li\r\n          class=\"list-group-item\"\r\n          *ngFor=\"let ingredient of recipe.ingredients; let i = index\"\r\n        >{{ingredient.name}}: {{ingredient.amount}}</li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -531,7 +558,6 @@ var RecipeEditComponent = /** @class */ (function () {
         this.router.navigate(['../'], { relativeTo: this.route });
     };
     RecipeEditComponent.prototype.onSubmit = function (event) {
-        console.log(this.recipeForm);
         // const recipe = new Recipe(
         //   this.recipeForm.value['name'],
         //   this.recipeForm.value['description'],
@@ -835,11 +861,9 @@ var Recipe = /** @class */ (function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RecipeService", function() { return RecipeService; });
-/* harmony import */ var _recipe_model__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./recipe.model */ "./src/app/recipes/recipe.model.ts");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _shared_ingredient_model__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/ingredient.model */ "./src/app/shared/ingredient.model.ts");
-/* harmony import */ var _shopping_list_shopping_list_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shopping-list/shopping-list.service */ "./src/app/shopping-list/shopping-list.service.ts");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _shopping_list_shopping_list_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../shopping-list/shopping-list.service */ "./src/app/shopping-list/shopping-list.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -852,26 +876,35 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
-
 var RecipeService = /** @class */ (function () {
     // recipesChanged: EventEmitter<Recipe[]> = new EventEmitter();
     // recipeSelected: EventEmitter<number> = new EventEmitter<number>();
     // private currentRecipeId: number = -1;
     function RecipeService(shoppingListService) {
         this.shoppingListService = shoppingListService;
-        this.recipesChanged = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
-        this.recipes = [
-            new _recipe_model__WEBPACK_IMPORTED_MODULE_0__["Recipe"]('Tasty Schnitzel', 'A super-tasty Schnitzel - just awesome!', './assets/schnitzel.png', [
-                new _shared_ingredient_model__WEBPACK_IMPORTED_MODULE_2__["Ingredient"]('Meat', 3),
-                new _shared_ingredient_model__WEBPACK_IMPORTED_MODULE_2__["Ingredient"]('French Fries', 20)
-            ]),
-            new _recipe_model__WEBPACK_IMPORTED_MODULE_0__["Recipe"]('Big Fat Burger', 'What else you need to say?', './assets/burger.png', [
-                new _shared_ingredient_model__WEBPACK_IMPORTED_MODULE_2__["Ingredient"]('Buns', 2),
-                new _shared_ingredient_model__WEBPACK_IMPORTED_MODULE_2__["Ingredient"]('Meat', 2)
-            ])
-        ];
+        this.recipesChanged = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
+        this.recipes = []; /* = [
+            new Recipe(
+                'Tasty Schnitzel',
+                'A super-tasty Schnitzel - just awesome!',
+                './assets/schnitzel.png',
+                [
+                    new Ingredient('Meat', 3),
+                    new Ingredient('French Fries', 20)
+                ]
+            ),
+            new Recipe(
+                'Big Fat Burger',
+                'What else you need to say?',
+                './assets/burger.png',
+                [
+                    new Ingredient('Buns', 2),
+                    new Ingredient('Meat', 2)
+                ]
+            )
+        ]*/
     }
+    ;
     RecipeService.prototype.getRecipes = function () {
         return this.recipes.slice();
     };
@@ -880,6 +913,10 @@ var RecipeService = /** @class */ (function () {
     };
     RecipeService.prototype.addRecipe = function (recipe) {
         this.recipes.push(recipe);
+        this.recipesChanged.next(this.getRecipes());
+    };
+    RecipeService.prototype.setRecipes = function (recipes) {
+        this.recipes = recipes;
         this.recipesChanged.next(this.getRecipes());
     };
     RecipeService.prototype.updateRecipe = function (index, recipe) {
@@ -903,11 +940,11 @@ var RecipeService = /** @class */ (function () {
     //     return this.currentRecipeId;
     // }
     RecipeService.prototype.addIngredientsToShopingList = function (id) {
-        this.shoppingListService.addIngredients(this.getRecipes()[id].ingredients.slice());
+        this.shoppingListService.addIngredients(this.getRecipes()[id].ingredients ? this.getRecipes()[id].ingredients.slice() : []);
     };
     RecipeService = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-        __metadata("design:paramtypes", [_shopping_list_shopping_list_service__WEBPACK_IMPORTED_MODULE_3__["ShoppingListService"]])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
+        __metadata("design:paramtypes", [_shopping_list_shopping_list_service__WEBPACK_IMPORTED_MODULE_1__["ShoppingListService"]])
     ], RecipeService);
     return RecipeService;
 }());
@@ -949,6 +986,8 @@ module.exports = "<div class=\"row\">\r\n  <div class=\"col-md-5\">\r\n    <app-
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RecipesComponent", function() { return RecipesComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _recipe_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./recipe.service */ "./src/app/recipes/recipe.service.ts");
+/* harmony import */ var _shared_data_storage_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/data-storage.service */ "./src/app/shared/data-storage.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -959,18 +998,27 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 // import { Recipe } from './recipe.model';
 // import { RecipeService } from './recipe.service';
 var RecipesComponent = /** @class */ (function () {
-    // selectedRecipe: Recipe;
-    // selectedRecipeId: number;
-    function RecipesComponent( /*private recipeService: RecipeService*/) {
+    function RecipesComponent(recipeService, dataStorageService) {
+        this.recipeService = recipeService;
+        this.dataStorageService = dataStorageService;
     }
     RecipesComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.fetchDataSubscription = this.dataStorageService.fetchData().subscribe(function (recipes) {
+            _this.recipeService.setRecipes(recipes);
+        }, console.log);
         // this.recipeService.recipeSelected.subscribe((id: number) => {
         //   this.selectedRecipeId = id;
         //   this.selectedRecipe = this.recipeService.getRecipeById(id);
         // });
+    };
+    RecipesComponent.prototype.ngOnDestroy = function () {
+        this.fetchDataSubscription.unsubscribe();
     };
     RecipesComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -978,9 +1026,85 @@ var RecipesComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./recipes.component.html */ "./src/app/recipes/recipes.component.html"),
             styles: [__webpack_require__(/*! ./recipes.component.css */ "./src/app/recipes/recipes.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_recipe_service__WEBPACK_IMPORTED_MODULE_1__["RecipeService"],
+            _shared_data_storage_service__WEBPACK_IMPORTED_MODULE_2__["DataStorageService"]])
     ], RecipesComponent);
     return RecipesComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/shared/data-storage.service.ts":
+/*!************************************************!*\
+  !*** ./src/app/shared/data-storage.service.ts ***!
+  \************************************************/
+/*! exports provided: DataStorageService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataStorageService", function() { return DataStorageService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_RX__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/RX */ "./node_modules/rxjs/RX.js");
+/* harmony import */ var rxjs_RX__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(rxjs_RX__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _shared_firebase_pconf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/firebase-pconf */ "./src/app/shared/firebase-pconf.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var DataStorageService = /** @class */ (function () {
+    function DataStorageService(http) {
+        this.http = http;
+        this.base_url = _shared_firebase_pconf__WEBPACK_IMPORTED_MODULE_4__["default"].base_url;
+    }
+    DataStorageService.prototype.storeData = function (recipes) {
+        var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]({
+            'Content-Type': 'application/json'
+        });
+        return this.http.put(this.getUrlForPath('recipes.json'), recipes, { headers: headers })
+            .map(function (response) {
+            var recipes = response.json();
+            return recipes;
+        })
+            .catch(function (error) {
+            return rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"].throw(error.text());
+        });
+    };
+    DataStorageService.prototype.fetchData = function () {
+        var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]({
+            'Accept': 'application/json'
+        });
+        return this.http.get(this.getUrlForPath('recipes.json'), { headers: headers })
+            .map(function (response) {
+            var recipes = response.json();
+            return recipes;
+        })
+            .catch(function (error) {
+            return rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"].throw(error.text());
+        });
+    };
+    DataStorageService.prototype.getUrlForPath = function (path) {
+        return this.base_url + path;
+    };
+    DataStorageService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
+        __metadata("design:paramtypes", [_angular_http__WEBPACK_IMPORTED_MODULE_1__["Http"]])
+    ], DataStorageService);
+    return DataStorageService;
 }());
 
 
@@ -1033,6 +1157,23 @@ var DropdownDirective = /** @class */ (function () {
     return DropdownDirective;
 }());
 
+
+
+/***/ }),
+
+/***/ "./src/app/shared/firebase-pconf.ts":
+/*!******************************************!*\
+  !*** ./src/app/shared/firebase-pconf.ts ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var firebase_config = {
+    base_url: 'https://ng-recipe-book-91fc7.firebaseio.com/'
+};
+/* harmony default export */ __webpack_exports__["default"] = (firebase_config);
 
 
 /***/ }),
