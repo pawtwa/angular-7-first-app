@@ -3,6 +3,7 @@ import * as firebase from 'firebase';
 
 import { AuthService } from './auth/auth.service';
 import firebase_config from './shared/firebase-pconf';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AppInitService {
@@ -16,22 +17,25 @@ export class AppInitService {
 
   initializeApp(): Promise<any> {
     return new Promise((resolve, reject) => {
-      const auth = this.initializeFirebaseApp().auth();
-      auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
-      auth.onAuthStateChanged((currentUser) => {
-        if (currentUser) {
-          currentUser.getIdToken().then((token) => {
-            this.authService.setToken(token);
-            resolve();
-          });
-        } else {
-          resolve();
-        } 
-      });
+      this.initializeFirebaseApp(resolve, reject);
     });
   }
 
-  private initializeFirebaseApp(): firebase.app.App {
-    return firebase.initializeApp(firebase_config);
+  private initializeFirebaseApp(resolve?: (value?: any | PromiseLike<any>) => void, reject?: (reason?: any) => void): firebase.app.App {
+    const app: firebase.app.App = firebase.initializeApp(firebase_config);
+    firebase.auth(app).setPersistence(firebase.auth.Auth.Persistence.SESSION);
+    firebase.auth(app).onAuthStateChanged((currentUser) => {
+      if (currentUser) {
+        currentUser.getIdToken().then((token) => {
+          this.authService.setToken(token);
+          resolve();
+        });
+      } else {
+        resolve();
+      } 
+    }, (error) => {
+      reject(error);
+    });
+    return app;
   }
 }
