@@ -37,6 +37,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var firebase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase */ "./node_modules/firebase/dist/index.cjs.js");
 /* harmony import */ var firebase__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(firebase__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _auth_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth/auth.service */ "./src/app/auth/auth.service.ts");
+/* harmony import */ var _shared_firebase_pconf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./shared/firebase-pconf */ "./src/app/shared/firebase-pconf.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -46,6 +47,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -60,26 +62,27 @@ var AppInitService = /** @class */ (function () {
     AppInitService.prototype.initializeApp = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            var auth = _this.initializeFirebaseApp().auth();
-            auth.setPersistence(firebase__WEBPACK_IMPORTED_MODULE_1__["auth"].Auth.Persistence.SESSION);
-            auth.onAuthStateChanged(function (currentUser) {
-                if (currentUser) {
-                    currentUser.getIdToken().then(function (token) {
-                        _this.authService.setToken(token);
-                        resolve();
-                    });
-                }
-                else {
-                    resolve();
-                }
-            });
+            _this.initializeFirebaseApp(resolve, reject);
         });
     };
-    AppInitService.prototype.initializeFirebaseApp = function () {
-        return firebase__WEBPACK_IMPORTED_MODULE_1__["initializeApp"]({
-            apiKey: "AIzaSyA63NbxlJfmHWz6DyJehSkUNVDpoPknzf0",
-            authDomain: "ng-recipe-book-91fc7.firebaseapp.com"
+    AppInitService.prototype.initializeFirebaseApp = function (resolve, reject) {
+        var _this = this;
+        var app = firebase__WEBPACK_IMPORTED_MODULE_1__["initializeApp"](_shared_firebase_pconf__WEBPACK_IMPORTED_MODULE_3__["default"]);
+        firebase__WEBPACK_IMPORTED_MODULE_1__["auth"](app).setPersistence(firebase__WEBPACK_IMPORTED_MODULE_1__["auth"].Auth.Persistence.SESSION);
+        firebase__WEBPACK_IMPORTED_MODULE_1__["auth"](app).onAuthStateChanged(function (currentUser) {
+            if (currentUser) {
+                currentUser.getIdToken().then(function (token) {
+                    _this.authService.setToken(token);
+                    resolve();
+                });
+            }
+            else {
+                resolve();
+            }
+        }, function (error) {
+            reject(error);
         });
+        return app;
     };
     AppInitService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
@@ -619,7 +622,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2\">\n    <h2>Login</h2>\n    <hr />\n    <form (ngSubmit)=\"onSignin(f)\" #f=\"ngForm\">\n      <div class=\"form-group\">\n        <label for=\"email\">Mail</label>\n        <input name=\"email\" type=\"email\" ngModel class=\"form-control\" />\n      </div>\n      <div class=\"form-group\">\n        <label for=\"password\">Password</label>\n        <input name=\"password\" type=\"password\" ngModel class=\"form-control\" />\n      </div>\n      <button class=\"btn btn-primary\" type=\"submit\">Sign In</button>\n    </form>\n  </div>\n</div>"
+module.exports = "<div class=\"row\">\r\n  <div class=\"col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2\">\r\n    <h2>Login</h2>\r\n    <hr />\r\n    <form (ngSubmit)=\"onSignin(f)\" #f=\"ngForm\">\r\n      <div class=\"form-group\">\r\n        <label for=\"email\">Mail</label>\r\n        <input name=\"email\" type=\"email\" ngModel class=\"form-control\" />\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label for=\"password\">Password</label>\r\n        <input name=\"password\" type=\"password\" ngModel class=\"form-control\" />\r\n      </div>\r\n      <button class=\"btn btn-primary\" type=\"submit\">Sign In</button>\r\n    </form>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -697,7 +700,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2\">\n    <h2>Register</h2>\n    <hr />\n    <form (ngSubmit)=\"onSignup(f)\" #f=\"ngForm\">\n      <div class=\"form-group\">\n        <label for=\"email\">Mail</label>\n        <input name=\"email\" type=\"email\" ngModel class=\"form-control\" />\n      </div>\n      <div class=\"form-group\">\n        <label for=\"password\">Password</label>\n        <input name=\"password\" type=\"password\" ngModel class=\"form-control\" />\n      </div>\n      <button class=\"btn btn-primary\" type=\"submit\">Sign Up</button>\n    </form>\n  </div>\n</div>"
+module.exports = "<div class=\"row\">\r\n  <div class=\"col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2\">\r\n    <h2>Register</h2>\r\n    <hr />\r\n    <form (ngSubmit)=\"onSignup(f)\" #f=\"ngForm\">\r\n      <div class=\"form-group\">\r\n        <label for=\"email\">Mail</label>\r\n        <input name=\"email\" type=\"email\" ngModel class=\"form-control\" />\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label for=\"password\">Password</label>\r\n        <input name=\"password\" type=\"password\" ngModel class=\"form-control\" />\r\n      </div>\r\n      <button class=\"btn btn-primary\" type=\"submit\">Sign Up</button>\r\n    </form>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -775,7 +778,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1 class=\"alert alert-danger\">\n  You need to login to see the recipes!\n</h1>\n"
+module.exports = "<h1 class=\"alert alert-danger\">\r\n  You need to login to see the recipes!\r\n</h1>\r\n"
 
 /***/ }),
 
@@ -1653,7 +1656,6 @@ var DataStorageService = /** @class */ (function () {
     function DataStorageService(http, authService) {
         this.http = http;
         this.authService = authService;
-        this.base_url = _shared_firebase_pconf__WEBPACK_IMPORTED_MODULE_4__["default"].base_url;
     }
     DataStorageService.prototype.storeData = function (recipes) {
         if (this.authService.isAuthenticated()) {
@@ -1694,7 +1696,7 @@ var DataStorageService = /** @class */ (function () {
         }
     };
     DataStorageService.prototype.getUrlForPath = function (path) {
-        return this.base_url + path;
+        return _shared_firebase_pconf__WEBPACK_IMPORTED_MODULE_4__["default"].databaseURL.replace(/\/$/, "") + '/' + path;
     };
     DataStorageService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
@@ -1768,7 +1770,12 @@ var DropdownDirective = /** @class */ (function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var firebase_config = {
-    base_url: 'https://ng-recipe-book-91fc7.firebaseio.com/'
+    apiKey: "AIzaSyA63NbxlJfmHWz6DyJehSkUNVDpoPknzf0",
+    authDomain: "ng-recipe-book-91fc7.firebaseapp.com",
+    databaseURL: "https://ng-recipe-book-91fc7.firebaseio.com",
+    projectId: "ng-recipe-book-91fc7",
+    storageBucket: "ng-recipe-book-91fc7.appspot.com",
+    messagingSenderId: "367696760244"
 };
 /* harmony default export */ __webpack_exports__["default"] = (firebase_config);
 
@@ -2111,7 +2118,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\www\nodejs\angular\angular-7-first-app\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! F:\www\nodejs\angular\angular-7-first-app-1\src\main.ts */"./src/main.ts");
 
 
 /***/ })
