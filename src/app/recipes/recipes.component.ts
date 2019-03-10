@@ -3,6 +3,7 @@ import { RecipeService } from './recipe.service';
 import { DataStorageService } from '../shared/data-storage.service';
 import { Subscription } from 'rxjs';
 import { Recipe } from './recipe.model';
+import { AuthService } from '../auth/auth.service';
 // import { Recipe } from './recipe.model';
 // import { RecipeService } from './recipe.service';
 
@@ -19,13 +20,16 @@ export class RecipesComponent implements OnInit, OnDestroy {
 
   constructor(
     private recipeService: RecipeService,
-    private dataStorageService: DataStorageService
+    private dataStorageService: DataStorageService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
-    this.fetchDataSubscription = this.dataStorageService.fetchData().subscribe((recipes: Recipe[]) => {
-      this.recipeService.setRecipes(recipes);
-    }, console.log);
+    if (this.authService.isAuthenticated()) {
+      this.fetchDataSubscription = this.dataStorageService.fetchData().subscribe((recipes: Recipe[]) => {
+        this.recipeService.setRecipes(recipes);
+      }, console.log);
+    }
     // this.recipeService.recipeSelected.subscribe((id: number) => {
     //   this.selectedRecipeId = id;
     //   this.selectedRecipe = this.recipeService.getRecipeById(id);
@@ -33,6 +37,6 @@ export class RecipesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.fetchDataSubscription.unsubscribe();
+    this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
   }
 }

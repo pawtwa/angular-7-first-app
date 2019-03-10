@@ -4,6 +4,7 @@ import { DataStorageService } from '../shared/data-storage.service';
 import { RecipeService } from '../recipes/recipe.service';
 import { Recipe } from '../recipes/recipe.model';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -16,13 +17,18 @@ import { Subscription } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
   @Output() featureSelected = new EventEmitter<string>();
 
+  get isAuthenticated() {
+    return this.authService.isAuthenticated();
+  }
+
   saveDataSubscription: Subscription;
   fetchDataSubscription: Subscription;
 
   constructor(
     private router: Router,
     private dataStorage: DataStorageService,
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {}
@@ -52,6 +58,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
     this.fetchDataSubscription = this.dataStorage.fetchData().subscribe((recipes: Recipe[]) => {
       this.recipeService.setRecipes(recipes);
+      this.router.navigate(['/']);
     }, console.log);
+  }
+
+  onLogout(event) {
+    event.preventDefault();
+    this.authService.logoutUser().then(() => {
+      this.recipeService.setRecipes([]);
+      this.router.navigate(['/signin']);
+    });
   }
 }

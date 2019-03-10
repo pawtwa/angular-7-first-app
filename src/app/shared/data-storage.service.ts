@@ -5,44 +5,55 @@ import 'rxjs/RX';
 
 import firebase_config from '../shared/firebase-pconf';
 import { Recipe } from '../recipes/recipe.model';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class DataStorageService {
-  private base_url: string;
 
-  constructor(private http: Http) {
-    this.base_url = firebase_config.base_url;
-  }
+  constructor(
+    private http: Http,
+    private authService: AuthService
+  ) {}
 
   storeData(recipes: Recipe[]): Observable<any> {
-    const headers = new Headers({
-      'Content-Type': 'application/json'
-    });
-    return this.http.put(this.getUrlForPath('recipes.json'), recipes, {headers: headers})
-      .map((response: Response) => {
-        const recipes: Recipe[] = response.json();
-        return recipes;
-      })
-      .catch((error: Response) => {
-        return Observable.throw(error.text());
+    if (this.authService.isAuthenticated()) {
+      let authToken = this.authService.getToken();
+      const headers = new Headers({
+        'Content-Type': 'application/json'
       });
+      return this.http.put(this.getUrlForPath('recipes.json?auth=' + authToken), recipes, { headers: headers })
+        .map((response: Response) => {
+          const recipes: Recipe[] = response.json();
+          return recipes;
+        })
+        .catch((error: Response) => {
+          return Observable.throw(error.text());
+        });
+    } else {
+      return Observable.throw('not auth');
+    }
   }
 
   fetchData(): Observable<any> {
-    const headers = new Headers({
-      'Accept': 'application/json'
-    });
-    return this.http.get(this.getUrlForPath('recipes.json'), {headers: headers})
-      .map((response: Response) => {
-        const recipes: Recipe[] = response.json();
-        return recipes;
-      })
-      .catch((error: Response) => {
-        return Observable.throw(error.text());
+    if (this.authService.isAuthenticated()) {
+      let authToken = this.authService.getToken();
+      const headers = new Headers({
+        'Accept': 'application/json'
       });
+      return this.http.get(this.getUrlForPath('recipes.json?auth=' + authToken), { headers: headers })
+        .map((response: Response) => {
+          const recipes: Recipe[] = response.json();
+          return recipes;
+        })
+        .catch((error: Response) => {
+          return Observable.throw(error.text());
+        });
+    } else {
+      return Observable.throw('not auth');
+    }
   }
 
   private getUrlForPath(path: string): string {
-    return this.base_url + path;
+    return firebase_config.databaseURL.replace(/\/$/, "") + '/' + path;
   }
 }
