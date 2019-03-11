@@ -8,6 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "deploy": "ng build --base-href=\"/angular-7-first-app/\" --deploy-url=\"\" && gh-pages -d dist/my-first-app",
     "deploy_prod": "ng build --prod --base-href=\"/angular-7-first-app/\" --deploy-url=\"\" && gh-pages -d dist/my-first-app"
   },
   "private": true,
