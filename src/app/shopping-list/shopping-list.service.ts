@@ -7,8 +7,8 @@ export class ShoppingListService {
     ingredientListSelectedItem: Subject<number | null> = new Subject();
 
     private ingredients: Ingredient[] = [
-        new Ingredient('Apples', 5),
-        new Ingredient('Tomatos', 3)
+        // new Ingredient('Apples', 5),
+        // new Ingredient('Tomatos', 3)
     ];
 
     ingredientListItemSelected(id: number | null): void {

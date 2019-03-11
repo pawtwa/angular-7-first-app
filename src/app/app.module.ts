@@ -3,13 +3,14 @@
  */
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 /**
  * Custom modules
  */
 import { RecipesModule } from './recipes/recipes.module';
+import { ShoppingListModule } from './shopping-list/shopping-list.module';
+import { AuthModule } from './auth/auth.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLoadModule } from './app-load.module';
 import { SharedModule } from './shared/shared.module';
@@ -19,18 +20,11 @@ import { SharedModule } from './shared/shared.module';
  */
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { SignupComponent } from './auth/signup/signup.component';
-import { SigninComponent } from './auth/signin/signin.component';
-import { UnauthenticatedComponent } from './auth/unauthenticated/unauthenticated.component';
 
 /**
  * Custom services
  */
-import { DataStorageService } from './shared/data-storage.service';
-import { AuthService } from './auth/auth.service';
-import { AuthGuardService } from './auth/auth-guard.service';
-import { AuthGuardChildService } from './auth/auth-guard-child.service';
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
+
 
 /**
  * Custom directives
@@ -45,17 +39,10 @@ import { ShoppingListModule } from './shopping-list/shopping-list.module';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    SignupComponent,
-    SigninComponent,
-    UnauthenticatedComponent
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
-    /**
-     * `FormsModule` is temporarily needed for `SignupComponent` & `SigninComponent`
-     */
-    FormsModule,
     HttpModule,
     /**
      * You need to position your `RecipesModule`  prior to the `AppRoutingModule`.
@@ -63,16 +50,12 @@ import { ShoppingListModule } from './shopping-list/shopping-list.module';
      */
     RecipesModule.forRoot(),
     ShoppingListModule.forRoot(),
+    AuthModule.forRoot(),
     AppRoutingModule,
     AppLoadModule,
-    SharedModule
+    SharedModule.forRoot()
   ],
-  providers: [
-    DataStorageService,
-    AuthService,
-    AuthGuardService,
-    AuthGuardChildService
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

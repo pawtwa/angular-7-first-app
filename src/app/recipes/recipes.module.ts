@@ -29,7 +29,7 @@ import { RecipeService } from './recipe.service';
 
   ],
   providers: [
-    RecipeService
+    
   ]
 })
 export class RecipesModule {

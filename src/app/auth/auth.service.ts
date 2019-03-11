@@ -6,7 +6,7 @@ import 'firebase/auth';
 export class AuthService {
   private token: string;
 
-  constructor() { }
+  constructor() {}
 
   signupUser(email: string, password: string): Promise<any> {
     return firebase.auth().createUserWithEmailAndPassword(email, password)

@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
     FormsModule
   ],
   providers: [
-    ShoppingListService
+    
   ]
 })
 export class ShoppingListModule {
