@@ -369,13 +369,16 @@ Apache-2.0
  
 
 
-@angular/core
+@angular/forms
+MIT
+
+@angular/platform-browser
 MIT
 
 @angular/common
 MIT
 
-@angular/platform-browser
+@angular/http
 MIT
 
 @angular/router
@@ -587,8 +590,10 @@ Apache-2.0
  
 
 
-@angular/http
+@angular/core
 MIT
+
+firebase/auth
 
 @firebase/auth
 Apache-2.0
@@ -795,11 +800,6 @@ Apache-2.0
    See the License for the specific language governing permissions and
    limitations under the License.
 
-
-firebase/auth
-
-@angular/forms
-MIT
 
 zone.js
 MIT
