@@ -1,4 +1,9 @@
 const firebase_config = {
-    base_url: 'https://<project_name>.firebaseio.com/'
+    apiKey: "<api_key>",
+    authDomain: "<project_id>.firebaseapp.com",
+    databaseURL: "https://<project_id>.firebaseio.com",
+    projectId: "<project_id>",
+    storageBucket: "<project_id>.appspot.com",
+    messagingSenderId: "<messaging_sender_id>"
 };
 export default firebase_config;
