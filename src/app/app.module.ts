@@ -63,14 +63,13 @@ import { AuthGuardChildService } from './auth/auth-guard-child.service';
      * You need to position your `RecipesModule`  prior to the `AppRoutingModule`.
      * This is required to ensure that the Catch-all/ wildcard routes work correctly.
      */
-    RecipesModule,
+    RecipesModule.forRoot(),
     AppRoutingModule,
     AppLoadModule,
     SharedModule
   ],
   providers: [
     ShoppingListService,
-    RecipeService,
     DataStorageService,
     AuthService,
     AuthGuardService,
