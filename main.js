@@ -34,10 +34,11 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppInitService", function() { return AppInitService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var firebase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase */ "./node_modules/firebase/dist/index.cjs.js");
-/* harmony import */ var firebase__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(firebase__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _auth_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth/auth.service */ "./src/app/auth/auth.service.ts");
-/* harmony import */ var _shared_firebase_pconf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./shared/firebase-pconf */ "./src/app/shared/firebase-pconf.ts");
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/index.cjs.js");
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(firebase_app__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/index.esm.js");
+/* harmony import */ var _auth_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth/auth.service */ "./src/app/auth/auth.service.ts");
+/* harmony import */ var _shared_firebase_pconf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./shared/firebase-pconf */ "./src/app/shared/firebase-pconf.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -47,6 +48,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -67,9 +69,9 @@ var AppInitService = /** @class */ (function () {
     };
     AppInitService.prototype.initializeFirebaseApp = function (resolve, reject) {
         var _this = this;
-        var app = firebase__WEBPACK_IMPORTED_MODULE_1__["initializeApp"](_shared_firebase_pconf__WEBPACK_IMPORTED_MODULE_3__["default"]);
-        firebase__WEBPACK_IMPORTED_MODULE_1__["auth"](app).setPersistence(firebase__WEBPACK_IMPORTED_MODULE_1__["auth"].Auth.Persistence.SESSION);
-        firebase__WEBPACK_IMPORTED_MODULE_1__["auth"](app).onAuthStateChanged(function (currentUser) {
+        var app = firebase_app__WEBPACK_IMPORTED_MODULE_1__["initializeApp"](_shared_firebase_pconf__WEBPACK_IMPORTED_MODULE_4__["default"]);
+        firebase_app__WEBPACK_IMPORTED_MODULE_1__["auth"](app).setPersistence(firebase_app__WEBPACK_IMPORTED_MODULE_1__["auth"].Auth.Persistence.SESSION);
+        firebase_app__WEBPACK_IMPORTED_MODULE_1__["auth"](app).onAuthStateChanged(function (currentUser) {
             if (currentUser) {
                 currentUser.getIdToken().then(function (token) {
                     _this.authService.setToken(token);
@@ -86,7 +88,7 @@ var AppInitService = /** @class */ (function () {
     };
     AppInitService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_auth_auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"]])
+        __metadata("design:paramtypes", [_auth_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"]])
     ], AppInitService);
     return AppInitService;
 }());
@@ -153,27 +155,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _shopping_list_shopping_list_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./shopping-list/shopping-list.component */ "./src/app/shopping-list/shopping-list.component.ts");
-/* harmony import */ var _recipes_recipes_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./recipes/recipes.component */ "./src/app/recipes/recipes.component.ts");
-/* harmony import */ var _recipes_recipe_start_recipe_start_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./recipes/recipe-start/recipe-start.component */ "./src/app/recipes/recipe-start/recipe-start.component.ts");
-/* harmony import */ var _recipes_recipe_detail_recipe_detail_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./recipes/recipe-detail/recipe-detail.component */ "./src/app/recipes/recipe-detail/recipe-detail.component.ts");
-/* harmony import */ var _recipes_recipe_edit_recipe_edit_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./recipes/recipe-edit/recipe-edit.component */ "./src/app/recipes/recipe-edit/recipe-edit.component.ts");
-/* harmony import */ var _auth_signup_signup_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./auth/signup/signup.component */ "./src/app/auth/signup/signup.component.ts");
-/* harmony import */ var _auth_signin_signin_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./auth/signin/signin.component */ "./src/app/auth/signin/signin.component.ts");
-/* harmony import */ var _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./auth/auth-guard.service */ "./src/app/auth/auth-guard.service.ts");
-/* harmony import */ var _auth_unauthenticated_unauthenticated_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./auth/unauthenticated/unauthenticated.component */ "./src/app/auth/unauthenticated/unauthenticated.component.ts");
-/* harmony import */ var _auth_auth_guard_child_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./auth/auth-guard-child.service */ "./src/app/auth/auth-guard-child.service.ts");
+/* harmony import */ var _auth_signup_signup_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth/signup/signup.component */ "./src/app/auth/signup/signup.component.ts");
+/* harmony import */ var _auth_signin_signin_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./auth/signin/signin.component */ "./src/app/auth/signin/signin.component.ts");
+/* harmony import */ var _auth_unauthenticated_unauthenticated_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./auth/unauthenticated/unauthenticated.component */ "./src/app/auth/unauthenticated/unauthenticated.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
-
-
-
-
 
 
 
@@ -187,30 +177,6 @@ var appRoutes = [
         pathMatch: 'full'
     },
     {
-        path: 'recipes',
-        component: _recipes_recipes_component__WEBPACK_IMPORTED_MODULE_3__["RecipesComponent"],
-        canActivate: [_auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_9__["AuthGuardService"]],
-        canActivateChild: [_auth_auth_guard_child_service__WEBPACK_IMPORTED_MODULE_11__["AuthGuardChildService"]],
-        children: [
-            {
-                path: '',
-                component: _recipes_recipe_start_recipe_start_component__WEBPACK_IMPORTED_MODULE_4__["RecipeStartComponent"]
-            },
-            {
-                path: 'new',
-                component: _recipes_recipe_edit_recipe_edit_component__WEBPACK_IMPORTED_MODULE_6__["RecipeEditComponent"],
-            },
-            {
-                path: ':id',
-                component: _recipes_recipe_detail_recipe_detail_component__WEBPACK_IMPORTED_MODULE_5__["RecipeDetailComponent"]
-            },
-            {
-                path: ':id/edit',
-                component: _recipes_recipe_edit_recipe_edit_component__WEBPACK_IMPORTED_MODULE_6__["RecipeEditComponent"],
-            }
-        ]
-    },
-    {
         path: 'shopping-list',
         component: _shopping_list_shopping_list_component__WEBPACK_IMPORTED_MODULE_2__["ShoppingListComponent"]
         // children: [
@@ -222,15 +188,15 @@ var appRoutes = [
     },
     {
         path: 'signup',
-        component: _auth_signup_signup_component__WEBPACK_IMPORTED_MODULE_7__["SignupComponent"]
+        component: _auth_signup_signup_component__WEBPACK_IMPORTED_MODULE_3__["SignupComponent"]
     },
     {
         path: 'signin',
-        component: _auth_signin_signin_component__WEBPACK_IMPORTED_MODULE_8__["SigninComponent"]
+        component: _auth_signin_signin_component__WEBPACK_IMPORTED_MODULE_4__["SigninComponent"]
     },
     {
         path: 'unauthenticated',
-        component: _auth_unauthenticated_unauthenticated_component__WEBPACK_IMPORTED_MODULE_10__["UnauthenticatedComponent"]
+        component: _auth_unauthenticated_unauthenticated_component__WEBPACK_IMPORTED_MODULE_5__["UnauthenticatedComponent"]
     }
 ];
 var AppRoutingModule = /** @class */ (function () {
@@ -246,10 +212,7 @@ var AppRoutingModule = /** @class */ (function () {
             exports: [
                 _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"]
             ],
-            providers: [
-                _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_9__["AuthGuardService"],
-                _auth_auth_guard_child_service__WEBPACK_IMPORTED_MODULE_11__["AuthGuardChildService"]
-            ]
+            providers: []
         })
     ], AppRoutingModule);
     return AppRoutingModule;
@@ -277,7 +240,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-header (featureSelected)=\"onNavigate($event)\"></app-header>\r\n<div class=\"container\">\r\n  <div class=\"row\">\r\n    <div class=\"col-md-12\">\r\n        <router-outlet></router-outlet>\r\n      <!-- <app-recipes *ngIf=\"leadedFeature === 'recipe'\"></app-recipes>\r\n      <app-shopping-list *ngIf=\"leadedFeature === 'shoppingList'\"></app-shopping-list> -->\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<app-header (featureSelected)=\"onNavigate($event)\"></app-header>\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n        <router-outlet></router-outlet>\n      <!-- <app-recipes *ngIf=\"leadedFeature === 'recipe'\"></app-recipes>\n      <app-shopping-list *ngIf=\"leadedFeature === 'shoppingList'\"></app-shopping-list> -->\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -340,32 +303,45 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _header_header_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./header/header.component */ "./src/app/header/header.component.ts");
-/* harmony import */ var _recipes_recipes_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./recipes/recipes.component */ "./src/app/recipes/recipes.component.ts");
-/* harmony import */ var _recipes_recipe_list_recipe_list_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./recipes/recipe-list/recipe-list.component */ "./src/app/recipes/recipe-list/recipe-list.component.ts");
-/* harmony import */ var _recipes_recipe_detail_recipe_detail_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./recipes/recipe-detail/recipe-detail.component */ "./src/app/recipes/recipe-detail/recipe-detail.component.ts");
-/* harmony import */ var _recipes_recipe_list_recipe_item_recipe_item_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./recipes/recipe-list/recipe-item/recipe-item.component */ "./src/app/recipes/recipe-list/recipe-item/recipe-item.component.ts");
-/* harmony import */ var _shopping_list_shopping_list_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./shopping-list/shopping-list.component */ "./src/app/shopping-list/shopping-list.component.ts");
-/* harmony import */ var _shopping_list_shopping_edit_shopping_edit_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./shopping-list/shopping-edit/shopping-edit.component */ "./src/app/shopping-list/shopping-edit/shopping-edit.component.ts");
-/* harmony import */ var _shared_dropdown_directive__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./shared/dropdown.directive */ "./src/app/shared/dropdown.directive.ts");
-/* harmony import */ var _shopping_list_shopping_list_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./shopping-list/shopping-list.service */ "./src/app/shopping-list/shopping-list.service.ts");
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
-/* harmony import */ var _recipes_recipe_start_recipe_start_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./recipes/recipe-start/recipe-start.component */ "./src/app/recipes/recipe-start/recipe-start.component.ts");
-/* harmony import */ var _recipes_recipe_edit_recipe_edit_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./recipes/recipe-edit/recipe-edit.component */ "./src/app/recipes/recipe-edit/recipe-edit.component.ts");
-/* harmony import */ var _recipes_recipe_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./recipes/recipe.service */ "./src/app/recipes/recipe.service.ts");
-/* harmony import */ var _shared_data_storage_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./shared/data-storage.service */ "./src/app/shared/data-storage.service.ts");
-/* harmony import */ var _auth_signup_signup_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./auth/signup/signup.component */ "./src/app/auth/signup/signup.component.ts");
-/* harmony import */ var _auth_signin_signin_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./auth/signin/signin.component */ "./src/app/auth/signin/signin.component.ts");
-/* harmony import */ var _auth_auth_service__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./auth/auth.service */ "./src/app/auth/auth.service.ts");
-/* harmony import */ var _app_load_module__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./app-load.module */ "./src/app/app-load.module.ts");
-/* harmony import */ var _auth_unauthenticated_unauthenticated_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./auth/unauthenticated/unauthenticated.component */ "./src/app/auth/unauthenticated/unauthenticated.component.ts");
+/* harmony import */ var _recipes_recipes_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./recipes/recipes.module */ "./src/app/recipes/recipes.module.ts");
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
+/* harmony import */ var _app_load_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app-load.module */ "./src/app/app-load.module.ts");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _header_header_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./header/header.component */ "./src/app/header/header.component.ts");
+/* harmony import */ var _shopping_list_shopping_list_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./shopping-list/shopping-list.component */ "./src/app/shopping-list/shopping-list.component.ts");
+/* harmony import */ var _shopping_list_shopping_edit_shopping_edit_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./shopping-list/shopping-edit/shopping-edit.component */ "./src/app/shopping-list/shopping-edit/shopping-edit.component.ts");
+/* harmony import */ var _auth_signup_signup_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./auth/signup/signup.component */ "./src/app/auth/signup/signup.component.ts");
+/* harmony import */ var _auth_signin_signin_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./auth/signin/signin.component */ "./src/app/auth/signin/signin.component.ts");
+/* harmony import */ var _auth_unauthenticated_unauthenticated_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./auth/unauthenticated/unauthenticated.component */ "./src/app/auth/unauthenticated/unauthenticated.component.ts");
+/* harmony import */ var _shopping_list_shopping_list_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./shopping-list/shopping-list.service */ "./src/app/shopping-list/shopping-list.service.ts");
+/* harmony import */ var _recipes_recipe_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./recipes/recipe.service */ "./src/app/recipes/recipe.service.ts");
+/* harmony import */ var _shared_data_storage_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./shared/data-storage.service */ "./src/app/shared/data-storage.service.ts");
+/* harmony import */ var _auth_auth_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./auth/auth.service */ "./src/app/auth/auth.service.ts");
+/* harmony import */ var _shared_dropdown_directive__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./shared/dropdown.directive */ "./src/app/shared/dropdown.directive.ts");
+/* harmony import */ var _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./auth/auth-guard.service */ "./src/app/auth/auth-guard.service.ts");
+/* harmony import */ var _auth_auth_guard_child_service__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./auth/auth-guard-child.service */ "./src/app/auth/auth-guard-child.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+/**
+ * Core parts
+ */
+
+
+
+
+/**
+ * Custom modules
+ */
+
+
+
+/**
+ * Custom components
+ */
 
 
 
@@ -373,54 +349,58 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+/**
+ * Custom services
+ */
 
 
 
 
+/**
+ * Custom directives
+ */
 
 
 
-
-
-
-
-
-
-
-
-
-
+/**
+ * Custom pipes
+ */
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
-                _app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"],
-                _header_header_component__WEBPACK_IMPORTED_MODULE_5__["HeaderComponent"],
-                _recipes_recipes_component__WEBPACK_IMPORTED_MODULE_6__["RecipesComponent"],
-                _recipes_recipe_list_recipe_list_component__WEBPACK_IMPORTED_MODULE_7__["RecipeListComponent"],
-                _recipes_recipe_detail_recipe_detail_component__WEBPACK_IMPORTED_MODULE_8__["RecipeDetailComponent"],
-                _recipes_recipe_list_recipe_item_recipe_item_component__WEBPACK_IMPORTED_MODULE_9__["RecipeItemComponent"],
-                _shopping_list_shopping_list_component__WEBPACK_IMPORTED_MODULE_10__["ShoppingListComponent"],
-                _shopping_list_shopping_edit_shopping_edit_component__WEBPACK_IMPORTED_MODULE_11__["ShoppingEditComponent"],
-                _shared_dropdown_directive__WEBPACK_IMPORTED_MODULE_12__["DropdownDirective"],
-                _recipes_recipe_start_recipe_start_component__WEBPACK_IMPORTED_MODULE_15__["RecipeStartComponent"],
-                _recipes_recipe_edit_recipe_edit_component__WEBPACK_IMPORTED_MODULE_16__["RecipeEditComponent"],
-                _auth_signup_signup_component__WEBPACK_IMPORTED_MODULE_19__["SignupComponent"],
-                _auth_signin_signin_component__WEBPACK_IMPORTED_MODULE_20__["SigninComponent"],
-                _auth_unauthenticated_unauthenticated_component__WEBPACK_IMPORTED_MODULE_23__["UnauthenticatedComponent"]
+                _app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"],
+                _header_header_component__WEBPACK_IMPORTED_MODULE_8__["HeaderComponent"],
+                _shopping_list_shopping_list_component__WEBPACK_IMPORTED_MODULE_9__["ShoppingListComponent"],
+                _shopping_list_shopping_edit_shopping_edit_component__WEBPACK_IMPORTED_MODULE_10__["ShoppingEditComponent"],
+                _auth_signup_signup_component__WEBPACK_IMPORTED_MODULE_11__["SignupComponent"],
+                _auth_signin_signin_component__WEBPACK_IMPORTED_MODULE_12__["SigninComponent"],
+                _auth_unauthenticated_unauthenticated_component__WEBPACK_IMPORTED_MODULE_13__["UnauthenticatedComponent"],
+                _shared_dropdown_directive__WEBPACK_IMPORTED_MODULE_18__["DropdownDirective"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ReactiveFormsModule"],
                 _angular_http__WEBPACK_IMPORTED_MODULE_3__["HttpModule"],
-                _app_routing_module__WEBPACK_IMPORTED_MODULE_14__["AppRoutingModule"],
-                _app_load_module__WEBPACK_IMPORTED_MODULE_22__["AppLoadModule"]
+                /**
+                 * You need to position your `RecipesModule`  prior to the `AppRoutingModule`.
+                 * This is required to ensure that the Catch-all/ wildcard routes work correctly.
+                 */
+                _recipes_recipes_module__WEBPACK_IMPORTED_MODULE_4__["RecipesModule"],
+                _app_routing_module__WEBPACK_IMPORTED_MODULE_5__["AppRoutingModule"],
+                _app_load_module__WEBPACK_IMPORTED_MODULE_6__["AppLoadModule"]
             ],
-            providers: [_shopping_list_shopping_list_service__WEBPACK_IMPORTED_MODULE_13__["ShoppingListService"], _recipes_recipe_service__WEBPACK_IMPORTED_MODULE_17__["RecipeService"], _shared_data_storage_service__WEBPACK_IMPORTED_MODULE_18__["DataStorageService"], _auth_auth_service__WEBPACK_IMPORTED_MODULE_21__["AuthService"]],
-            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
+            providers: [
+                _shopping_list_shopping_list_service__WEBPACK_IMPORTED_MODULE_14__["ShoppingListService"],
+                _recipes_recipe_service__WEBPACK_IMPORTED_MODULE_15__["RecipeService"],
+                _shared_data_storage_service__WEBPACK_IMPORTED_MODULE_16__["DataStorageService"],
+                _auth_auth_service__WEBPACK_IMPORTED_MODULE_17__["AuthService"],
+                _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_19__["AuthGuardService"],
+                _auth_auth_guard_child_service__WEBPACK_IMPORTED_MODULE_20__["AuthGuardChildService"]
+            ],
+            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
         })
     ], AppModule);
     return AppModule;
@@ -549,8 +529,9 @@ var AuthGuardService = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthService", function() { return AuthService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var firebase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase */ "./node_modules/firebase/dist/index.cjs.js");
-/* harmony import */ var firebase__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(firebase__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/index.cjs.js");
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(firebase_app__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/index.esm.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -562,18 +543,19 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var AuthService = /** @class */ (function () {
     function AuthService() {
     }
     AuthService.prototype.signupUser = function (email, password) {
-        return firebase__WEBPACK_IMPORTED_MODULE_1__["auth"]().createUserWithEmailAndPassword(email, password)
+        return firebase_app__WEBPACK_IMPORTED_MODULE_1__["auth"]().createUserWithEmailAndPassword(email, password)
             .catch(function (error) { return console.log(error); });
     };
     AuthService.prototype.signinUser = function (email, password) {
         var _this = this;
-        return firebase__WEBPACK_IMPORTED_MODULE_1__["auth"]().signInWithEmailAndPassword(email, password)
+        return firebase_app__WEBPACK_IMPORTED_MODULE_1__["auth"]().signInWithEmailAndPassword(email, password)
             .then(function (response) {
-            firebase__WEBPACK_IMPORTED_MODULE_1__["auth"]().currentUser.getIdToken().then(function (token) {
+            firebase_app__WEBPACK_IMPORTED_MODULE_1__["auth"]().currentUser.getIdToken().then(function (token) {
                 _this.token = token;
             });
         })
@@ -581,7 +563,7 @@ var AuthService = /** @class */ (function () {
     };
     AuthService.prototype.logoutUser = function () {
         this.token = null;
-        return firebase__WEBPACK_IMPORTED_MODULE_1__["auth"]().signOut();
+        return firebase_app__WEBPACK_IMPORTED_MODULE_1__["auth"]().signOut();
     };
     AuthService.prototype.getToken = function () {
         return this.token;
@@ -1531,6 +1513,89 @@ var RecipeService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/recipes/recipes-routing.module.ts":
+/*!***************************************************!*\
+  !*** ./src/app/recipes/recipes-routing.module.ts ***!
+  \***************************************************/
+/*! exports provided: RecipesRoutingModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RecipesRoutingModule", function() { return RecipesRoutingModule; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _recipes_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./recipes.component */ "./src/app/recipes/recipes.component.ts");
+/* harmony import */ var _auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../auth/auth-guard.service */ "./src/app/auth/auth-guard.service.ts");
+/* harmony import */ var _auth_auth_guard_child_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../auth/auth-guard-child.service */ "./src/app/auth/auth-guard-child.service.ts");
+/* harmony import */ var _recipe_start_recipe_start_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./recipe-start/recipe-start.component */ "./src/app/recipes/recipe-start/recipe-start.component.ts");
+/* harmony import */ var _recipe_edit_recipe_edit_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./recipe-edit/recipe-edit.component */ "./src/app/recipes/recipe-edit/recipe-edit.component.ts");
+/* harmony import */ var _recipe_detail_recipe_detail_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./recipe-detail/recipe-detail.component */ "./src/app/recipes/recipe-detail/recipe-detail.component.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+var recipesRoutes = [
+    {
+        path: 'recipes',
+        component: _recipes_component__WEBPACK_IMPORTED_MODULE_3__["RecipesComponent"],
+        canActivate: [_auth_auth_guard_service__WEBPACK_IMPORTED_MODULE_4__["AuthGuardService"]],
+        canActivateChild: [_auth_auth_guard_child_service__WEBPACK_IMPORTED_MODULE_5__["AuthGuardChildService"]],
+        children: [
+            {
+                path: '',
+                component: _recipe_start_recipe_start_component__WEBPACK_IMPORTED_MODULE_6__["RecipeStartComponent"]
+            },
+            {
+                path: 'new',
+                component: _recipe_edit_recipe_edit_component__WEBPACK_IMPORTED_MODULE_7__["RecipeEditComponent"],
+            },
+            {
+                path: ':id',
+                component: _recipe_detail_recipe_detail_component__WEBPACK_IMPORTED_MODULE_8__["RecipeDetailComponent"]
+            },
+            {
+                path: ':id/edit',
+                component: _recipe_edit_recipe_edit_component__WEBPACK_IMPORTED_MODULE_7__["RecipeEditComponent"],
+            }
+        ]
+    },
+];
+var RecipesRoutingModule = /** @class */ (function () {
+    function RecipesRoutingModule() {
+    }
+    RecipesRoutingModule = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+            declarations: [],
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
+                _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forChild(recipesRoutes)
+            ],
+            exports: [
+                _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"]
+            ],
+            providers: []
+        })
+    ], RecipesRoutingModule);
+    return RecipesRoutingModule;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/recipes/recipes.component.css":
 /*!***********************************************!*\
   !*** ./src/app/recipes/recipes.component.css ***!
@@ -1614,6 +1679,70 @@ var RecipesComponent = /** @class */ (function () {
             _auth_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"]])
     ], RecipesComponent);
     return RecipesComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/recipes/recipes.module.ts":
+/*!*******************************************!*\
+  !*** ./src/app/recipes/recipes.module.ts ***!
+  \*******************************************/
+/*! exports provided: RecipesModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RecipesModule", function() { return RecipesModule; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _recipes_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./recipes.component */ "./src/app/recipes/recipes.component.ts");
+/* harmony import */ var _recipe_start_recipe_start_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./recipe-start/recipe-start.component */ "./src/app/recipes/recipe-start/recipe-start.component.ts");
+/* harmony import */ var _recipe_list_recipe_list_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./recipe-list/recipe-list.component */ "./src/app/recipes/recipe-list/recipe-list.component.ts");
+/* harmony import */ var _recipe_detail_recipe_detail_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./recipe-detail/recipe-detail.component */ "./src/app/recipes/recipe-detail/recipe-detail.component.ts");
+/* harmony import */ var _recipe_edit_recipe_edit_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./recipe-edit/recipe-edit.component */ "./src/app/recipes/recipe-edit/recipe-edit.component.ts");
+/* harmony import */ var _recipe_list_recipe_item_recipe_item_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./recipe-list/recipe-item/recipe-item.component */ "./src/app/recipes/recipe-list/recipe-item/recipe-item.component.ts");
+/* harmony import */ var _recipes_routing_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./recipes-routing.module */ "./src/app/recipes/recipes-routing.module.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+var RecipesModule = /** @class */ (function () {
+    function RecipesModule() {
+    }
+    RecipesModule = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+            declarations: [
+                _recipes_component__WEBPACK_IMPORTED_MODULE_3__["RecipesComponent"],
+                _recipe_start_recipe_start_component__WEBPACK_IMPORTED_MODULE_4__["RecipeStartComponent"],
+                _recipe_list_recipe_list_component__WEBPACK_IMPORTED_MODULE_5__["RecipeListComponent"],
+                _recipe_detail_recipe_detail_component__WEBPACK_IMPORTED_MODULE_6__["RecipeDetailComponent"],
+                _recipe_edit_recipe_edit_component__WEBPACK_IMPORTED_MODULE_7__["RecipeEditComponent"],
+                _recipe_list_recipe_item_recipe_item_component__WEBPACK_IMPORTED_MODULE_8__["RecipeItemComponent"]
+            ],
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ReactiveFormsModule"],
+                _recipes_routing_module__WEBPACK_IMPORTED_MODULE_9__["RecipesRoutingModule"]
+            ],
+            exports: []
+        })
+    ], RecipesModule);
+    return RecipesModule;
 }());
 
 
@@ -1822,7 +1951,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\r\n  <div class=\"col-xs-12\">\r\n    <form (ngSubmit)=\"onAddEditItem(f)\" #f=\"ngForm\">\r\n      <div class=\"row\">\r\n        <div class=\"col-sm-5 form-group\" [class.has-error]=\"nameInputError\">\r\n          <label for=\"name\">Name</label>\r\n          <input \r\n            type=\"text\" \r\n            id=\"name\" \r\n            class=\"form-control\"\r\n            name=\"name\"\r\n            ngModel\r\n            required\r\n          >\r\n        </div>\r\n        <div class=\"col-sm-2 form-group\" [class.has-error]=\"amountInputError\">\r\n            <label for=\"amount\">Amount</label>\r\n            <input \r\n              type=\"number\" \r\n              id=\"amount\" \r\n              class=\"form-control\"\r\n              name=\"amount\"\r\n              ngModel\r\n              required\r\n              pattern=\"^[1-9]+[0-9]*$\"\r\n            >\r\n          </div>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-xs-12\">\r\n          <button\r\n            class=\"btn btn-success\"\r\n            type=\"submit\"\r\n            [disabled]=\"!f.valid\"\r\n          >{{ ingredientListSelectedId !== null ? 'Edit ('+(ingredientListSelectedId + 1)+')' : 'Add' }}</button>\r\n          <button\r\n            class=\"btn btn-danger\"\r\n            type=\"button\"\r\n            (click)=\"onDeleteClick($event)\"\r\n            [disabled]=\"!f.valid\"\r\n          >Delete</button>\r\n          <button class=\"btn btn-secondary\" type=\"button\" (click)=\"onClearClick($event)\">Clear</button>\r\n        </div>\r\n      </div>\r\n    </form>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"row\">\r\n  <div class=\"col-xs-12\">\r\n    <form (ngSubmit)=\"onAddEditItem(f)\" #f=\"ngForm\">\r\n      <div class=\"row\">\r\n        <div class=\"col-sm-5 form-group\">\r\n          <label for=\"name\">Name</label>\r\n          <input \r\n            type=\"text\" \r\n            id=\"name\" \r\n            class=\"form-control\"\r\n            name=\"name\"\r\n            ngModel\r\n            required\r\n          >\r\n        </div>\r\n        <div class=\"col-sm-2 form-group\">\r\n            <label for=\"amount\">Amount</label>\r\n            <input \r\n              type=\"number\" \r\n              id=\"amount\" \r\n              class=\"form-control\"\r\n              name=\"amount\"\r\n              ngModel\r\n              required\r\n              pattern=\"^[1-9]+[0-9]*$\"\r\n            >\r\n          </div>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-xs-12\">\r\n          <button\r\n            class=\"btn btn-success\"\r\n            type=\"submit\"\r\n            [disabled]=\"!f.valid\"\r\n          >{{ ingredientListSelectedId !== null ? 'Edit ('+(ingredientListSelectedId + 1)+')' : 'Add' }}</button>\r\n          <button\r\n            class=\"btn btn-danger\"\r\n            type=\"button\"\r\n            (click)=\"onDeleteClick($event)\"\r\n            [disabled]=\"!f.valid\"\r\n          >Delete</button>\r\n          <button class=\"btn btn-secondary\" type=\"button\" (click)=\"onClearClick($event)\">Clear</button>\r\n        </div>\r\n      </div>\r\n    </form>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -2118,7 +2247,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! F:\www\nodejs\angular\angular-7-first-app-1\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\Paweł Twardziak\Documents\Udemy\Angular7-course\prj-start\src\main.ts */"./src/main.ts");
 
 
 /***/ })
