@@ -17,6 +17,7 @@ export class AuthGuardChildService implements CanActivateChild {
         this.router.navigate(['/unauthenticated']);
       });
     }
+    console.log('canActivateChild', isAuth);
     return isAuth;
   }
 }

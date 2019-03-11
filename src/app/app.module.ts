@@ -20,11 +20,12 @@ import { SharedModule } from './shared/shared.module';
  */
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
+import { HomeComponent } from './home/home.component';
 
 /**
  * Custom services
  */
-
+import { RecipeService } from './recipes/recipe.service';
 
 /**
  * Custom directives
@@ -39,7 +40,8 @@ import { HeaderComponent } from './header/header.component';
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -48,14 +50,16 @@ import { HeaderComponent } from './header/header.component';
      * You need to position your `RecipesModule`  prior to the `AppRoutingModule`.
      * This is required to ensure that the Catch-all/ wildcard routes work correctly.
      */
-    RecipesModule.forRoot(),
+    // RecipesModule.forRoot(),
     ShoppingListModule.forRoot(),
     AuthModule.forRoot(),
     AppRoutingModule,
     AppLoadModule,
     SharedModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    RecipeService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

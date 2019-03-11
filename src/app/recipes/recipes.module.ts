@@ -9,7 +9,7 @@ import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { RecipeItemComponent } from './recipe-list/recipe-item/recipe-item.component';
 import { RecipesRoutingModule } from './recipes-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import { RecipeService } from './recipe.service';
+// import { RecipeService } from './recipe.service';
 
 @NgModule({
   declarations: [
@@ -33,10 +33,10 @@ import { RecipeService } from './recipe.service';
   ]
 })
 export class RecipesModule {
-  static forRoot() {
-    return {
-      ngModule: RecipesModule,
-      providers: [ RecipeService ]
-    }
-  }
+  // static forRoot() {
+  //   return {
+  //     ngModule: RecipesModule,
+  //     providers: [ RecipeService ]
+  //   }
+  // }
 }
