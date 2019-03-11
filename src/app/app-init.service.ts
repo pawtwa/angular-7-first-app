@@ -1,14 +1,23 @@
 import { Injectable } from '@angular/core';
+import { Subscription } from 'rxjs';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
 import { AuthService } from './auth/auth.service';
 import firebase_config from './shared/firebase-pconf';
+import { RecipeService } from './recipes/recipe.service';
+import { DataStorageService } from './shared/data-storage.service';
+import { Recipe } from './recipes/recipe.model';
 
 @Injectable()
 export class AppInitService {
+  private fetchDataSubscription: Subscription;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private recipeService: RecipeService,
+    private dataStorageService: DataStorageService
+  ) {}
 
   appInits() {
     console.log('init service 2');
@@ -28,7 +37,15 @@ export class AppInitService {
       if (currentUser) {
         currentUser.getIdToken().then((token) => {
           this.authService.setToken(token);
-          resolve();
+          this.fetchDataSubscription = this.dataStorageService.fetchData().subscribe((recipes: Recipe[]) => {
+            this.recipeService.setRecipes(recipes);
+            this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
+            resolve();
+          }, (error) => {
+            console.log(error);
+            this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
+            resolve();
+          });
         });
       } else {
         resolve();

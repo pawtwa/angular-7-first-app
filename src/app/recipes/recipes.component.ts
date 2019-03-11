@@ -16,7 +16,7 @@ import { AuthService } from '../auth/auth.service';
 export class RecipesComponent implements OnInit, OnDestroy {
   // selectedRecipe: Recipe;
   // selectedRecipeId: number;
-  fetchDataSubscription: Subscription;
+  // fetchDataSubscription: Subscription;
 
   constructor(
     private recipeService: RecipeService,
@@ -25,11 +25,15 @@ export class RecipesComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    if (this.authService.isAuthenticated()) {
-      this.fetchDataSubscription = this.dataStorageService.fetchData().subscribe((recipes: Recipe[]) => {
-        this.recipeService.setRecipes(recipes);
-      }, console.log);
-    }
+    /**
+     * `AppLoadModule` fetches the data during app initialization
+     */
+    // if (this.authService.isAuthenticated()) {
+    //   this.fetchDataSubscription = this.dataStorageService.fetchData().subscribe((recipes: Recipe[]) => {
+    //     this.recipeService.setRecipes(recipes);
+    //   }, console.log);
+    // }
+
     // this.recipeService.recipeSelected.subscribe((id: number) => {
     //   this.selectedRecipeId = id;
     //   this.selectedRecipe = this.recipeService.getRecipeById(id);
@@ -37,6 +41,6 @@ export class RecipesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
+    // this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
   }
 }
