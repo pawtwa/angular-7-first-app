@@ -1,10 +1,10 @@
 import { Component, OnInit, EventEmitter, Output, Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataStorageService } from '../shared/data-storage.service';
-import { RecipeService } from '../recipes/recipe.service';
-import { Recipe } from '../recipes/recipe.model';
+import { DataStorageService } from '../../shared/data-storage.service';
+import { RecipeService } from '../../recipes/recipe.service';
+import { Recipe } from '../../recipes/recipe.model';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-header',

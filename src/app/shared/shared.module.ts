@@ -24,4 +24,11 @@ export class SharedModule {
       providers: [ DataStorageService ]
     }
   }
+
+  static forCore() {
+    return {
+      ngModule: SharedModule,
+      providers: [ DataStorageService ]
+    }
+  }
 }
