@@ -15,22 +15,20 @@ export class AuthGuardService implements CanActivate, CanLoad {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const isAuth = this.authService.isAuthenticated();
     if (!isAuth) {
-      timer(200).subscribe((_) => {
+      timer(100).subscribe((_) => {
         this.router.navigate(['/unauthenticated']);
       });
     }
-    console.log('canActivate', isAuth);
     return isAuth;
   }
 
   canLoad(route: Route, segments: UrlSegment[]): boolean | Observable<boolean> | Promise<boolean> {
     const isAuth = this.authService.isAuthenticated();
     if (!isAuth) {
-      timer(200).subscribe((_) => {
+      timer(100).subscribe((_) => {
         this.router.navigate(['/unauthenticated']);
       });
     }
-    console.log('canLoad', isAuth);
     return isAuth;
   }
 }

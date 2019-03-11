@@ -13,11 +13,10 @@ export class AuthGuardChildService implements CanActivateChild {
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     const isAuth = this.authService.isAuthenticated();
     if (!isAuth) {
-      timer(200).subscribe((_) => {
+      timer(100).subscribe((_) => {
         this.router.navigate(['/unauthenticated']);
       });
     }
-    console.log('canActivateChild', isAuth);
     return isAuth;
   }
 }
