@@ -12,6 +12,7 @@ import { HttpModule } from '@angular/http';
 import { RecipesModule } from './recipes/recipes.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLoadModule } from './app-load.module';
+import { SharedModule } from './shared/shared.module';
 
 /**
  * Custom components
@@ -31,13 +32,13 @@ import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { RecipeService } from './recipes/recipe.service';
 import { DataStorageService } from './shared/data-storage.service';
 import { AuthService } from './auth/auth.service';
+import { AuthGuardService } from './auth/auth-guard.service';
+import { AuthGuardChildService } from './auth/auth-guard-child.service';
 
 /**
  * Custom directives
  */
-import { DropdownDirective } from './shared/dropdown.directive';
-import { AuthGuardService } from './auth/auth-guard.service';
-import { AuthGuardChildService } from './auth/auth-guard-child.service';
+
 
 /**
  * Custom pipes
@@ -52,9 +53,7 @@ import { AuthGuardChildService } from './auth/auth-guard-child.service';
     ShoppingEditComponent,
     SignupComponent,
     SigninComponent,
-    UnauthenticatedComponent,
-
-    DropdownDirective
+    UnauthenticatedComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +65,8 @@ import { AuthGuardChildService } from './auth/auth-guard-child.service';
      */
     RecipesModule,
     AppRoutingModule,
-    AppLoadModule
+    AppLoadModule,
+    SharedModule
   ],
   providers: [
     ShoppingListService,
