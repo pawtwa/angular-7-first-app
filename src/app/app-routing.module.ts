@@ -18,32 +18,6 @@ const appRoutes: Routes = [
         pathMatch: 'full'
     },
     {
-        path: 'recipes',
-        component: RecipesComponent,
-        canActivate: [AuthGuardService],
-        canActivateChild: [AuthGuardChildService],
-        children: [
-            {
-                path: '',
-                component: RecipeStartComponent
-            },
-            {
-                path: 'new',
-                component: RecipeEditComponent,
-                //canActivate: [AuthGuardService]
-            },
-            {
-                path: ':id',
-                component: RecipeDetailComponent
-            },
-            {
-                path: ':id/edit',
-                component: RecipeEditComponent,
-                //canActivate: [AuthGuardService]
-            }
-        ]
-    },
-    {
         path: 'shopping-list',
         component: ShoppingListComponent
         // children: [
@@ -76,10 +50,7 @@ const appRoutes: Routes = [
     exports: [
         RouterModule
     ],
-    providers: [
-        AuthGuardService,
-        AuthGuardChildService
-    ]
+    providers: []
 })
 export class AppRoutingModule
 {

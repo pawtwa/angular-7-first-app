@@ -1,55 +1,81 @@
+/**
+ * Core parts
+ */
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+/**
+ * Custom modules
+ */
+import { RecipesModule } from './recipes/recipes.module';
+import { AppRoutingModule } from './app-routing.module';
+import { AppLoadModule } from './app-load.module';
+
+/**
+ * Custom components
+ */
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { RecipesComponent } from './recipes/recipes.component';
-import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component';
-import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
-import { RecipeItemComponent } from './recipes/recipe-list/recipe-item/recipe-item.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
-import { DropdownDirective } from './shared/dropdown.directive';
-import { ShoppingListService } from './shopping-list/shopping-list.service';
-import { AppRoutingModule } from './app-routing.module';
-import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
-import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
-import { RecipeService } from './recipes/recipe.service';
-import { DataStorageService } from './shared/data-storage.service';
 import { SignupComponent } from './auth/signup/signup.component';
 import { SigninComponent } from './auth/signin/signin.component';
-import { AuthService } from './auth/auth.service';
-import { AppLoadModule } from './app-load.module';
 import { UnauthenticatedComponent } from './auth/unauthenticated/unauthenticated.component';
+
+/**
+ * Custom services
+ */
+import { ShoppingListService } from './shopping-list/shopping-list.service';
+import { RecipeService } from './recipes/recipe.service';
+import { DataStorageService } from './shared/data-storage.service';
+import { AuthService } from './auth/auth.service';
+
+/**
+ * Custom directives
+ */
+import { DropdownDirective } from './shared/dropdown.directive';
+import { AuthGuardService } from './auth/auth-guard.service';
+import { AuthGuardChildService } from './auth/auth-guard-child.service';
+
+/**
+ * Custom pipes
+ */
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    RecipesComponent,
-    RecipeListComponent,
-    RecipeDetailComponent,
-    RecipeItemComponent,
     ShoppingListComponent,
     ShoppingEditComponent,
-    DropdownDirective,
-    RecipeStartComponent,
-    RecipeEditComponent,
     SignupComponent,
     SigninComponent,
-    UnauthenticatedComponent
+    UnauthenticatedComponent,
+
+    DropdownDirective
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule,
     HttpModule,
+    /**
+     * You need to position your `RecipesModule`  prior to the `AppRoutingModule`.
+     * This is required to ensure that the Catch-all/ wildcard routes work correctly.
+     */
+    RecipesModule,
     AppRoutingModule,
     AppLoadModule
   ],
-  providers: [ShoppingListService, RecipeService, DataStorageService, AuthService],
+  providers: [
+    ShoppingListService,
+    RecipeService,
+    DataStorageService,
+    AuthService,
+    AuthGuardService,
+    AuthGuardChildService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

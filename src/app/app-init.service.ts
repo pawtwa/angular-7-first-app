@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 
 import { AuthService } from './auth/auth.service';
 import firebase_config from './shared/firebase-pconf';
-import { Observable } from 'rxjs';
 
 @Injectable()
 export class AppInitService {
