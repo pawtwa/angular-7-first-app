@@ -19,8 +19,6 @@ import { SharedModule } from './shared/shared.module';
  */
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
-import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { UnauthenticatedComponent } from './auth/unauthenticated/unauthenticated.component';
@@ -28,12 +26,11 @@ import { UnauthenticatedComponent } from './auth/unauthenticated/unauthenticated
 /**
  * Custom services
  */
-import { ShoppingListService } from './shopping-list/shopping-list.service';
-import { RecipeService } from './recipes/recipe.service';
 import { DataStorageService } from './shared/data-storage.service';
 import { AuthService } from './auth/auth.service';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { AuthGuardChildService } from './auth/auth-guard-child.service';
+import { ShoppingListModule } from './shopping-list/shopping-list.module';
 
 /**
  * Custom directives
@@ -49,14 +46,15 @@ import { AuthGuardChildService } from './auth/auth-guard-child.service';
   declarations: [
     AppComponent,
     HeaderComponent,
-    ShoppingListComponent,
-    ShoppingEditComponent,
     SignupComponent,
     SigninComponent,
     UnauthenticatedComponent
   ],
   imports: [
     BrowserModule,
+    /**
+     * `FormsModule` is temporarily needed for `SignupComponent` & `SigninComponent`
+     */
     FormsModule,
     HttpModule,
     /**
@@ -64,12 +62,12 @@ import { AuthGuardChildService } from './auth/auth-guard-child.service';
      * This is required to ensure that the Catch-all/ wildcard routes work correctly.
      */
     RecipesModule.forRoot(),
+    ShoppingListModule.forRoot(),
     AppRoutingModule,
     AppLoadModule,
     SharedModule
   ],
   providers: [
-    ShoppingListService,
     DataStorageService,
     AuthService,
     AuthGuardService,
