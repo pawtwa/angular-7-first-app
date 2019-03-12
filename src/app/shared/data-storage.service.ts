@@ -18,7 +18,7 @@ export class DataStorageService {
 
   storeData(recipes: Recipe[]): Observable<any> {
     if (this.authService.isAuthenticated()) {
-      let authToken = this.authService.getToken();
+      // let authToken = this.authService.getToken();
       const headers = new HttpHeaders({
         'Content-Type': 'application/json'
       });
@@ -30,7 +30,7 @@ export class DataStorageService {
           headers: headers,
           responseType: 'json',
           reportProgress: true,
-          params: (new HttpParams()).set('auth', authToken)
+          // params: (new HttpParams()).set('auth', authToken)
         }
       );
       // return this.httpClient.put<Recipe[]>(this.getUrlForPath('recipes.json'), recipes, { 
@@ -52,7 +52,7 @@ export class DataStorageService {
 
   fetchData(): Observable<any> {
     if (this.authService.isAuthenticated()) {
-      let authToken = this.authService.getToken();
+      // let authToken = this.authService.getToken();
       const headers = new HttpHeaders({
         'Accept': 'application/json'
       });
@@ -60,7 +60,8 @@ export class DataStorageService {
         headers: headers,
         observe: 'body',
         responseType: 'json',
-        params: (new HttpParams()).set('auth', authToken)
+        reportProgress: true
+        // params: (new HttpParams()).set('auth', authToken)
       })
         .map((recipes) => {
           return recipes;
