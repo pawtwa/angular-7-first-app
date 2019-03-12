@@ -378,9 +378,6 @@ MIT
 @angular/common
 MIT
 
-@angular/http
-MIT
-
 @angular/router
 MIT
 
