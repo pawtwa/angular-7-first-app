@@ -4,7 +4,7 @@ import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Subject } from 'rxjs';
 
 @Injectable()
-export class RecipeService {
+export class RecipesService {
     recipesChanged: Subject<Recipe[]> = new Subject<Recipe[]>();
 
   // recipesChanged: EventEmitter<Recipe[]> = new EventEmitter();
@@ -12,8 +12,9 @@ export class RecipeService {
 
   // private currentRecipeId: number = -1;
 
-    constructor(private shoppingListService: ShoppingListService) {
-    }
+    constructor(
+      private shoppingListService: ShoppingListService
+    ) {}
 
     private recipes: Recipe[] = [
         // new Recipe(

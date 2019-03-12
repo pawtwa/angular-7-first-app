@@ -9,7 +9,6 @@ import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { RecipeItemComponent } from './recipe-list/recipe-item/recipe-item.component';
 import { RecipesRoutingModule } from './recipes-routing.module';
 import { SharedModule } from '../shared/shared.module';
-// import { RecipeService } from './recipe.service';
 
 @NgModule({
   declarations: [
@@ -29,14 +28,22 @@ import { SharedModule } from '../shared/shared.module';
 
   ],
   providers: [
-    
+    /**
+     * `RecipesService` should not be provided this way because of `RecipesModule` lazy loading
+     * Other modules use the service
+     */
+    // RecipesService
   ]
 })
 export class RecipesModule {
+  /**
+   * `RecipesService` should not be provided this way because of `RecipesModule` lazy loading
+   * Other modules use the service
+   */
   // static forRoot() {
   //   return {
   //     ngModule: RecipesModule,
-  //     providers: [ RecipeService ]
+  //     providers: [ RecipesService ]
   //   }
   // }
 }

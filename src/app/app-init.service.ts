@@ -5,7 +5,7 @@ import 'firebase/auth';
 
 import { AuthService } from './auth/auth.service';
 import firebase_config from './shared/firebase-pconf';
-import { RecipeService } from './recipes/recipe.service';
+import { RecipesService } from './recipes/recipes.service';
 import { DataStorageService } from './shared/data-storage.service';
 import { Recipe } from './recipes/recipe.model';
 
@@ -15,7 +15,7 @@ export class AppInitService {
 
   constructor(
     private authService: AuthService,
-    private recipeService: RecipeService,
+    private recipesService: RecipesService,
     private dataStorageService: DataStorageService
   ) {}
 
@@ -38,7 +38,7 @@ export class AppInitService {
         currentUser.getIdToken().then((token) => {
           this.authService.setToken(token);
           this.fetchDataSubscription = this.dataStorageService.fetchData().subscribe((recipes: Recipe[]) => {
-            this.recipeService.setRecipes(recipes);
+            this.recipesService.setRecipes(recipes);
             this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
             resolve();
           }, (error) => {

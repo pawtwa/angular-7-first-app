@@ -1,9 +1,8 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit } from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
-import {RecipeService} from '../recipe.service';
+import {RecipesService} from '../recipes.service';
 import {Recipe} from '../recipe.model';
-import {Ingredient} from '../../shared/ingredient.model';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -20,7 +19,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private recipeService: RecipeService,
+    private recipesService: RecipesService,
     private router: Router
   ) { }
 
@@ -30,7 +29,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         this.id = +params['id'];
         this.editMode = !isNaN(this.id) && this.id >= 0;
         if (this.editMode) {
-          this.editedRecipe = this.recipeService.getRecipeById(this.id);
+          this.editedRecipe = this.recipesService.getRecipeById(this.id);
         }
       }
     );
@@ -84,9 +83,9 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     //   this.recipeForm.value['ingredients'],
     // );
     if (this.editMode) {
-      this.recipeService.updateRecipe(this.id, this.recipeForm.value);
+      this.recipesService.updateRecipe(this.id, this.recipeForm.value);
     } else {
-      this.recipeService.addRecipe(this.recipeForm.value);
+      this.recipesService.addRecipe(this.recipeForm.value);
     }
     this.onCancel(event);
   }

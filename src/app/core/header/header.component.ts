@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataStorageService } from '../../shared/data-storage.service';
-import { RecipeService } from '../../recipes/recipe.service';
+import { RecipesService } from '../../recipes/recipes.service';
 import { Recipe } from '../../recipes/recipe.model';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private dataStorage: DataStorageService,
-    private recipeService: RecipeService,
+    private recipesService: RecipesService,
     private authService: AuthService
   ) { }
 
@@ -50,14 +50,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onSaveData(event) {
     event.preventDefault();
     this.saveDataSubscription ? this.saveDataSubscription.unsubscribe() : null;
-    this.saveDataSubscription = this.dataStorage.storeData(this.recipeService.getRecipes()).subscribe(() => {}, console.log);
+    this.saveDataSubscription = this.dataStorage.storeData(this.recipesService.getRecipes()).subscribe(() => {}, console.log);
   }
 
   onFetchData(event) {
     event.preventDefault();
     this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
     this.fetchDataSubscription = this.dataStorage.fetchData().subscribe((recipes: Recipe[]) => {
-      this.recipeService.setRecipes(recipes);
+      this.recipesService.setRecipes(recipes);
       this.router.navigate(['/']);
     }, console.log);
   }
@@ -65,7 +65,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onLogout(event) {
     event.preventDefault();
     this.authService.logoutUser().then(() => {
-      this.recipeService.setRecipes([]);
+      this.recipesService.setRecipes([]);
       this.router.navigate(['/']);
     });
   }
