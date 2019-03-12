@@ -14,7 +14,10 @@ const appRoutes: Routes = [
     {
         path: 'recipes',
         loadChildren: './recipes/recipes.module#RecipesModule',
-        canLoad: [AuthGuardService]
+        /**
+         * https://angular.io/guide/router#canload-blocks-preload
+         */
+        // canLoad: [AuthGuardService]
     },
     {
         path: 'shopping-list',
