@@ -21,7 +21,6 @@ const recipesRoutes: Routes = [
         {
             path: 'new',
             component: RecipeEditComponent,
-            //canActivate: [AuthGuardService]
         },
         {
             path: ':id',
@@ -30,7 +29,6 @@ const recipesRoutes: Routes = [
         {
             path: ':id/edit',
             component: RecipeEditComponent,
-            //canActivate: [AuthGuardService]
         }
     ]
   },
