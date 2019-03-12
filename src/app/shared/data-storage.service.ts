@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -12,23 +12,38 @@ import { AuthService } from '../auth/auth.service';
 export class DataStorageService {
 
   constructor(
-    private http: Http,
+    private httpClient: HttpClient,
     private authService: AuthService
   ) {}
 
   storeData(recipes: Recipe[]): Observable<any> {
     if (this.authService.isAuthenticated()) {
       let authToken = this.authService.getToken();
-      const headers = new Headers({
+      const headers = new HttpHeaders({
         'Content-Type': 'application/json'
       });
-      return this.http.put(this.getUrlForPath('recipes.json?auth=' + authToken), recipes, { headers: headers })
-        .map((response: Response) => {
-          const recipes: Recipe[] = response.json();
+      const req = new HttpRequest(
+        'PUT', 
+        this.getUrlForPath('recipes.json'),
+        recipes,
+        { 
+          headers: headers,
+          responseType: 'json',
+          reportProgress: true,
+          params: (new HttpParams()).set('auth', authToken)
+        }
+      );
+      // return this.httpClient.put<Recipe[]>(this.getUrlForPath('recipes.json'), recipes, { 
+      //   headers: headers,
+      //   observe: 'body',
+      //   params: (new HttpParams()).set('auth', authToken)
+      // })
+      return this.httpClient.request<Recipe[]>(req)
+        .map((recipes) => {
           return recipes;
         })
-        .catch((error: Response) => {
-          return Observable.throw(error.text());
+        .catch((error: any) => {
+          return Observable.throw(error);
         });
     } else {
       return Observable.throw('not auth');
@@ -38,16 +53,20 @@ export class DataStorageService {
   fetchData(): Observable<any> {
     if (this.authService.isAuthenticated()) {
       let authToken = this.authService.getToken();
-      const headers = new Headers({
+      const headers = new HttpHeaders({
         'Accept': 'application/json'
       });
-      return this.http.get(this.getUrlForPath('recipes.json?auth=' + authToken), { headers: headers })
-        .map((response: Response) => {
-          const recipes: Recipe[] = response.json();
+      return this.httpClient.get<Recipe[]>(this.getUrlForPath('recipes.json'), { 
+        headers: headers,
+        observe: 'body',
+        responseType: 'json',
+        params: (new HttpParams()).set('auth', authToken)
+      })
+        .map((recipes) => {
           return recipes;
         })
-        .catch((error: Response) => {
-          return Observable.throw(error.text());
+        .catch((error: any) => {
+          return Observable.throw(error.body);
         });
     } else {
       return Observable.throw('not auth');

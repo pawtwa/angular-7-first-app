@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onSaveData(event) {
     event.preventDefault();
     this.saveDataSubscription ? this.saveDataSubscription.unsubscribe() : null;
-    this.saveDataSubscription = this.dataStorage.storeData(this.recipesService.getRecipes()).subscribe(() => {}, console.log);
+    this.saveDataSubscription = this.dataStorage.storeData(this.recipesService.getRecipes()).subscribe((response) => {}, console.log);
   }
 
   onFetchData(event) {
@@ -58,7 +58,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
     this.fetchDataSubscription = this.dataStorage.fetchData().subscribe((recipes: Recipe[]) => {
       this.recipesService.setRecipes(recipes);
-      this.router.navigate(['/']);
+      this.router.navigate(['/recipes']);
     }, console.log);
   }
 
