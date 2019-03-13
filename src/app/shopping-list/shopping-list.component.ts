@@ -3,6 +3,9 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from './shopping-list.service';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { InitialShoppingListStateInterface } from './ngrx/shooping-list.reducer';
 
 @Component({
   selector: 'app-shopping-list',
@@ -10,19 +13,23 @@ import { ShoppingListService } from './shopping-list.service';
   styleUrls: ['./shopping-list.component.css']
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
-  ingredients: Ingredient[];
+  shoppingListState: Observable<InitialShoppingListStateInterface>;
 
   private subscription: Subscription;
 
-  constructor(private shoppingListService: ShoppingListService) { }
+  constructor(
+    private shoppingListService: ShoppingListService,
+    private store: Store<InitialShoppingListStateInterface>
+  ) { }
 
   ngOnInit() {
     this.fetchIngredients();
-    this.subscription = this.shoppingListService.ingredientsChanged.subscribe((ingredients) => this.ingredients = ingredients);
+    //this.subscription = this.shoppingListService.ingredientsChanged.subscribe((ingredients) => this.ingredients = ingredients);
   }
 
   fetchIngredients () {
-    this.ingredients = this.shoppingListService.getIngredients();
+    this.shoppingListState = this.store.select('shoppingList');
+    //this.shoppingListService.getIngredients();
   }
 
   onClick(id, event) {
@@ -31,6 +38,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    // this.subscription ? this.subscription.unsubscribe() : null;
   }
 }

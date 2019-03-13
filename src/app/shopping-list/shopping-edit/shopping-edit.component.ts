@@ -3,6 +3,9 @@ import { Ingredient } from 'src/app/shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list.service';
 import {FormGroup, NgForm} from '@angular/forms';
 import {Subscription} from 'rxjs';
+import { Store } from '@ngrx/store';
+import { InitialShoppingListStateInterface } from '../ngrx/shooping-list.reducer';
+import { AddIngredient, UpdateIngredient } from '../ngrx/shopping-list.actions';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -21,7 +24,10 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   ingredientListSelectedItemSubscription: Subscription;
   ingredientListSelectedId: number | null;
 
-  constructor(private shoppingListService: ShoppingListService) {
+  constructor(
+    private shoppingListService: ShoppingListService,
+    private store: Store<InitialShoppingListStateInterface>
+  ) {
     // this.nameInputError = false;
     // this.amountInputError = false;
   }
@@ -48,7 +54,9 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.ingredientListSelectedItemSubscription.unsubscribe();
+    this.ingredientListSelectedItemSubscription 
+      ? this.ingredientListSelectedItemSubscription.unsubscribe() 
+      : null;
   }
 
   onDeleteClick(event: UIEvent): void {
@@ -63,9 +71,11 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     const value = form.value;
     const ingredient = new Ingredient(value.name, value.amount);
     if (this.ingredientListSelectedId !== null) {
-      this.shoppingListService.editSelectedIngredient(ingredient, this.ingredientListSelectedId);
+      // this.shoppingListService.editSelectedIngredient(ingredient, this.ingredientListSelectedId);
+      this.store.dispatch(new UpdateIngredient({ingredient: ingredient, id: this.ingredientListSelectedId}));
     } else {
-      this.shoppingListService.addIngredient(ingredient);
+      // this.shoppingListService.addIngredient(ingredient);
+      this.store.dispatch(new AddIngredient(ingredient));
     }
     this.shoppingListService.ingredientListItemSelected(null);
   }

@@ -4,6 +4,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
 
 /**
  * Custom modules
@@ -31,6 +32,12 @@ import { AppComponent } from './app.component';
  */
 
 
+ /**
+ * Custom NgRx reducers
+ */
+import shoppingListReducer from './shopping-list/ngrx/shooping-list.reducer';
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -40,7 +47,10 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     ShoppingListModule.forRoot(),
     AuthModule.forRoot(),
-    CoreModule
+    CoreModule,
+    StoreModule.forRoot({
+      shoppingList: shoppingListReducer
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
