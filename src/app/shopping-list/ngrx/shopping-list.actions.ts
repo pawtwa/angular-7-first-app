@@ -6,6 +6,9 @@ export const ADD_INGREDIENTS = 'ADD_INGREDIENTS';
 export const UPDATE_INGREDIENT = 'UPDATE_INGREDIENT';
 export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
 
+export const SET_EDITED_INGREDIENT = 'SET_EDITED_INGREDIENT';
+export const CLEAR_EDITED_INGREDIENT = 'CLEAR_EDITED_INGREDIENT';
+
 export class AddIngredient implements Action {
     readonly type: string = ADD_INGREDIENT;
     
@@ -30,4 +33,20 @@ export class DeleteIngredient implements Action {
     constructor(public payload: number) { }
 }
 
-export type ShoppingListActionsType = AddIngredient | AddIngredients | UpdateIngredient | DeleteIngredient;
+export class SetEditedIngredient implements Action {
+    readonly type: string = SET_EDITED_INGREDIENT;
+    
+    constructor(public payload: number) { }
+}
+
+export class ClearEditedIngredient implements Action {
+    readonly type: string = CLEAR_EDITED_INGREDIENT;
+}
+
+export type ShoppingListActionsType = 
+    AddIngredient 
+    | AddIngredients 
+    | UpdateIngredient 
+    | DeleteIngredient
+    | SetEditedIngredient
+    | ClearEditedIngredient;

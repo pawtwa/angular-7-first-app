@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-
-import { Ingredient } from '../shared/ingredient.model';
-import { ShoppingListService } from './shopping-list.service';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { InitialShoppingListStateInterface } from './ngrx/shooping-list.reducer';
+
+import { ShoppingListService } from './shopping-list.service';
+import { ShoppingListStateInterface } from './ngrx/shooping-list.reducer';
+import { AppStateInterface } from '../app.reducer';
+import { SetEditedIngredient } from './ngrx/shopping-list.actions';
 
 @Component({
   selector: 'app-shopping-list',
@@ -13,31 +14,28 @@ import { InitialShoppingListStateInterface } from './ngrx/shooping-list.reducer'
   styleUrls: ['./shopping-list.component.css']
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
-  shoppingListState: Observable<InitialShoppingListStateInterface>;
-
-  private subscription: Subscription;
+  shoppingListState: Observable<ShoppingListStateInterface>;
+  shoppingListStateSubscription: Subscription;
 
   constructor(
     private shoppingListService: ShoppingListService,
-    private store: Store<InitialShoppingListStateInterface>
+    private store: Store<AppStateInterface>
   ) { }
 
   ngOnInit() {
-    this.fetchIngredients();
-    //this.subscription = this.shoppingListService.ingredientsChanged.subscribe((ingredients) => this.ingredients = ingredients);
-  }
-
-  fetchIngredients () {
     this.shoppingListState = this.store.select('shoppingList');
-    //this.shoppingListService.getIngredients();
+    this.shoppingListStateSubscription = this.shoppingListState.subscribe((shoppingListState) => {
+      this.shoppingListService.setIngredients(shoppingListState.ingredients);
+      this.shoppingListService.setEditedIngredient(shoppingListState.editedIngredient);
+    });
   }
 
   onClick(id, event) {
     event.preventDefault();
-    this.shoppingListService.ingredientListItemSelected(+id);
+    this.store.dispatch(new SetEditedIngredient(id));
   }
 
   ngOnDestroy() {
-    // this.subscription ? this.subscription.unsubscribe() : null;
+    this.shoppingListStateSubscription ? this.shoppingListStateSubscription.unsubscribe() : null;
   }
 }

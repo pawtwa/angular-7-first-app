@@ -1,19 +1,32 @@
-import { Action } from "@ngrx/store";
 import { Ingredient } from "../../shared/ingredient.model";
 import * as ShoppingListActions from '../ngrx/shopping-list.actions';
 
-export interface InitialShoppingListStateInterface {
-    ingredients: Ingredient[]
+export interface EditedIngredientInterface {
+    id: number,
+    ingredient: Ingredient
 }
 
-const initialState: InitialShoppingListStateInterface = {
+export interface ShoppingListStateInterface {
+    ingredients: Ingredient[],
+    editedIngredient: EditedIngredientInterface
+}
+
+const initialState: ShoppingListStateInterface = {
     ingredients: [
         new Ingredient('Apples', 5),
         new Ingredient('Tomatos', 3)
-    ]
+    ],
+    editedIngredient: {
+        id: -1,
+        ingredient: null
+    }
 }
 
-export default function shoppingListReducer(state = initialState, action: ShoppingListActions.ShoppingListActionsType) {
+export default function shoppingListReducer(state: ShoppingListStateInterface = initialState, action: ShoppingListActions.ShoppingListActionsType) {
+    const editedIngredientOnClear: EditedIngredientInterface = {
+        id: -1,
+        ingredient: null
+    }
     switch (action.type) {
         case ShoppingListActions.ADD_INGREDIENT: 
             return {
@@ -40,7 +53,8 @@ export default function shoppingListReducer(state = initialState, action: Shoppi
                 ...state,
                 ingredients: [
                     ...ingredientsUpdate
-                ]
+                ],
+                editedIngredient: editedIngredientOnClear
             };
         case ShoppingListActions.DELETE_INGREDIENT:
             const ingredientsDelete = [...state.ingredients];
@@ -50,8 +64,25 @@ export default function shoppingListReducer(state = initialState, action: Shoppi
                 ...state,
                 ingredients: [
                     ...ingredientsDelete
-                ]
+                ],
+                editedIngredient: editedIngredientOnClear
             };
+        case ShoppingListActions.SET_EDITED_INGREDIENT:
+            const idEditedIngredient: number = (<ShoppingListActions.SetEditedIngredient>action).payload;
+            const editedIngredientItem = state.ingredients[idEditedIngredient];
+            const editedIngredient: EditedIngredientInterface = {
+                id: idEditedIngredient,
+                ingredient: editedIngredientItem
+            }
+            return {
+                ...state,
+                editedIngredient: editedIngredient
+            }
+        case ShoppingListActions.CLEAR_EDITED_INGREDIENT:
+            return {
+                ...state,
+                editedIngredient: editedIngredientOnClear
+            }
         default:
             return state;
     }

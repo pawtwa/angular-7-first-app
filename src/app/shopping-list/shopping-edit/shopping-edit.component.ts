@@ -1,11 +1,13 @@
-import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
-import { Ingredient } from 'src/app/shared/ingredient.model';
-import { ShoppingListService } from '../shopping-list.service';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import {FormGroup, NgForm} from '@angular/forms';
-import {Subscription} from 'rxjs';
 import { Store } from '@ngrx/store';
-import { InitialShoppingListStateInterface } from '../ngrx/shooping-list.reducer';
-import { AddIngredient, UpdateIngredient } from '../ngrx/shopping-list.actions';
+
+import { ShoppingListService } from '../shopping-list.service';
+import { EditedIngredientInterface } from '../ngrx/shooping-list.reducer';
+import { AppStateInterface } from 'src/app/app.reducer';
+import { ClearEditedIngredient, DeleteIngredient, UpdateIngredient, AddIngredient } from '../ngrx/shopping-list.actions';
+import { Ingredient } from 'src/app/shared/ingredient.model';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -13,87 +15,64 @@ import { AddIngredient, UpdateIngredient } from '../ngrx/shopping-list.actions';
   styleUrls: ['./shopping-edit.component.css']
 })
 export class ShoppingEditComponent implements OnInit, OnDestroy {
-  // @ViewChild('nameInput') nameInput: ElementRef<HTMLInputElement>;
-  // @ViewChild('amountInput') amountInput: ElementRef<HTMLInputElement>;
-  //
-  // nameInputError: boolean;
-  // amountInputError: boolean;
-
   @ViewChild('f') form: NgForm;
 
-  ingredientListSelectedItemSubscription: Subscription;
-  ingredientListSelectedId: number | null;
+  private editedIngredient: EditedIngredientInterface;
+  private editedIngredientSubscription: Subscription;
 
   constructor(
     private shoppingListService: ShoppingListService,
-    private store: Store<InitialShoppingListStateInterface>
-  ) {
-    // this.nameInputError = false;
-    // this.amountInputError = false;
-  }
+    private store: Store<AppStateInterface>
+  ) {}
 
   ngOnInit(): void {
-    this.resetIngredientListSelected();
-    this.ingredientListSelectedItemSubscription = this.shoppingListService.ingredientListSelectedItem.subscribe(id => {
-      if (id === null) {
-        this.resetIngredientListSelected();
-      } else {
-        this.setIngredientListSelected(id, this.shoppingListService.getIngredient(id));
-      }
-    });
-  }
-
-  setIngredientListSelected(id: number, ingredient: Ingredient) {
-    this.ingredientListSelectedId = id;
-    this.form.setValue(ingredient);
-  }
-
-  resetIngredientListSelected() {
-    this.ingredientListSelectedId = null;
-    this.form.reset();
+    /**
+     * We can subscribe it by using a statement `this.store.select('shoppingList')` 
+     * but since it is subscribed in the parent `ShoppingListComponent` component 
+     * we should not subscribe it here and should use the `ShoppingListService` 
+     * as it is the `ShoppingListComponent` component service for the app
+     * and the service tracks changes of the component
+     */
+    this.editedIngredient = this.shoppingListService.getEditedIngredient();
+    this.editedIngredientSubscription = this.shoppingListService.editedIngredientSubject.subscribe(this.editedIngredientFn);
   }
 
   ngOnDestroy(): void {
-    this.ingredientListSelectedItemSubscription 
-      ? this.ingredientListSelectedItemSubscription.unsubscribe() 
-      : null;
+    this.editedIngredientSubscription ? this.editedIngredientSubscription.unsubscribe() : null;
+    this.store.dispatch(new ClearEditedIngredient());
   }
 
-  onDeleteClick(event: UIEvent): void {
-    this.shoppingListService.deleteSelectedIngredient(this.ingredientListSelectedId);
-  }
-
-  onClearClick(event: UIEvent): void {
-    this.resetIngredientListSelected();
+  editedIngredientFn = (editedIngredient: EditedIngredientInterface) => {
+    this.editedIngredient = editedIngredient;
+    if (this.editedIngredient.id >= 0) {
+      this.form.setValue(this.editedIngredient.ingredient);
+    } else {
+      this.form.reset();
+    }
   }
 
   onAddEditItem(form: FormGroup): void {
     const value = form.value;
     const ingredient = new Ingredient(value.name, value.amount);
-    if (this.ingredientListSelectedId !== null) {
-      // this.shoppingListService.editSelectedIngredient(ingredient, this.ingredientListSelectedId);
-      this.store.dispatch(new UpdateIngredient({ingredient: ingredient, id: this.ingredientListSelectedId}));
-    } else {
-      // this.shoppingListService.addIngredient(ingredient);
-      this.store.dispatch(new AddIngredient(ingredient));
-    }
-    this.shoppingListService.ingredientListItemSelected(null);
+    this.editedIngredient.id >= 0 
+      ? this.store.dispatch(new UpdateIngredient({id: this.editedIngredient.id, ingredient: ingredient}))
+      : this.store.dispatch(new AddIngredient(ingredient));
+    /**
+     * Implicit clearing during `UpdateIngredient` action
+     */
+    // this.store.dispatch(new ClearEditedIngredient());
   }
 
-  // onAddClick(event: UIEvent) {
-  //   this.nameInputError = false;
-  //   this.amountInputError = false;
-  //   if (this.nameInput.nativeElement.value.trim().length && this.amountInput.nativeElement.value.length) {
-  //     const newIngredient: Ingredient = new Ingredient(
-  //       String(this.nameInput.nativeElement.value),
-  //       Number(this.amountInput.nativeElement.value)
-  //     );
-  //     this.shoppingListService.addIngredient(newIngredient);
-  //     this.nameInput.nativeElement.value = null;
-  //     this.amountInput.nativeElement.value = null;
-  //   } else {
-  //     this.nameInputError = !this.nameInput.nativeElement.value.trim().length;
-  //     this.amountInputError = !this.amountInput.nativeElement.value.length;
-  //   }
-  // }
+  onDeleteClick(event: MouseEvent): void {
+    const id = this.editedIngredient.id;
+    this.store.dispatch(new DeleteIngredient(id));
+    /**
+     * Implicit clearing during `DeleteIngredient` action
+     */
+    // this.store.dispatch(new ClearEditedIngredient());
+  }
+
+  onClearClick(event: MouseEvent): void {
+    this.store.dispatch(new ClearEditedIngredient());
+  }
 }

@@ -5,8 +5,9 @@ import { Store } from '@ngrx/store';
 
 import { Recipe } from '../recipe.model';
 import { RecipesService } from '../recipes.service';
-import { InitialShoppingListStateInterface } from 'src/app/shopping-list/ngrx/shooping-list.reducer';
-import { AddIngredients } from 'src/app/shopping-list/ngrx/shopping-list.actions';
+import { ShoppingListStateInterface } from 'src/app/shopping-list/ngrx/shooping-list.reducer';
+import { AddIngredients, DeleteIngredient } from 'src/app/shopping-list/ngrx/shopping-list.actions';
+import { AppStateInterface } from 'src/app/app.reducer';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -23,7 +24,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     private recipesService: RecipesService,
     private route: ActivatedRoute,
     private router: Router,
-    private store: Store<InitialShoppingListStateInterface>
+    private store: Store<AppStateInterface>
   ) { }
 
   ngOnInit() {

@@ -2,7 +2,7 @@ import { Recipe } from './recipe.model';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { InitialShoppingListStateInterface } from '../shopping-list/ngrx/shooping-list.reducer';
+import { ShoppingListStateInterface } from '../shopping-list/ngrx/shooping-list.reducer';
 import { DeleteIngredient, UpdateIngredient } from '../shopping-list/ngrx/shopping-list.actions';
 
 @Injectable()
@@ -11,12 +11,11 @@ export class RecipesService {
 
   // recipesChanged: EventEmitter<Recipe[]> = new EventEmitter();
   // recipeSelected: EventEmitter<number> = new EventEmitter<number>();
-
-  // private currentRecipeId: number = -1;
+  private currentRecipeId: number = -1;
 
   constructor(
     // private shoppingListService: ShoppingListService,
-    // private store: Store<InitialShoppingListStateInterface>
+    // private store: Store<AppStateInterface>
   ) { }
 
   private recipes: Recipe[] = [
@@ -73,10 +72,10 @@ export class RecipesService {
     // }
   }
 
-  // setRecipeCurrentId(id: number) {
-  //     this.currentRecipeId = id;
-  //     this.recipeSelected.emit(this.currentRecipeId);
-  // }
+  setRecipeCurrentId(id: number) {
+      this.currentRecipeId = id;
+      // this.recipeSelected.emit(this.currentRecipeId);
+  }
 
   // getRecipeCurrentId() {
   //     return this.currentRecipeId;
