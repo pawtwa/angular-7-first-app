@@ -587,6 +587,9 @@ Apache-2.0
  
 
 
+@ngrx/store
+MIT
+
 @angular/core
 MIT
 
