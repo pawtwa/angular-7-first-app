@@ -17,7 +17,7 @@ import { Ingredient } from 'src/app/shared/ingredient.model';
 export class ShoppingEditComponent implements OnInit, OnDestroy {
   @ViewChild('f') form: NgForm;
 
-  private editedIngredient: EditedIngredientInterface;
+  editedIngredient: EditedIngredientInterface;
   private editedIngredientSubscription: Subscription;
 
   constructor(
