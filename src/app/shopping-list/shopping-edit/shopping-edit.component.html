@@ -31,7 +31,7 @@
           <button
             class="btn btn-success"
             type="submit"
-            [disabled]="editedIngredient.id < 0 || !f.valid"
+            [disabled]="editedIngredient.id < 0 && !f.valid"
           >{{ editedIngredient.id >= 0 ? 'Update ('+(editedIngredient.id + 1)+')' : 'Add' }}</button>
           <button
             class="btn btn-danger"
