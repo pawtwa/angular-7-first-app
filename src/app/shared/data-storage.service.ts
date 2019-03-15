@@ -9,7 +9,7 @@ import firebase_config from '../shared/firebase-pconf';
 import { Recipe } from '../recipes/recipe.model';
 import { Store } from '@ngrx/store';
 import { AuthStateInterface } from '../auth/ngrx/auth.reducers';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { AppStateInterface } from '../app.reducer';
 
 @Injectable()
@@ -22,6 +22,7 @@ export class DataStorageService {
 
   storeData(recipes: Recipe[]): Observable<any> {
     return this.store.select('auth').pipe(
+      take(1),
       switchMap((auth: AuthStateInterface) => {
         if (auth.authenticated) {
           const headers = new HttpHeaders({
@@ -45,7 +46,7 @@ export class DataStorageService {
               return Observable.throw(error);
             });
         } else {
-          return Observable.throw('not auth');
+          return Observable.throw('not auth #1');
         }
       })
     )
@@ -53,6 +54,7 @@ export class DataStorageService {
 
   fetchData(): Observable<any> {
     return this.store.select('auth').pipe(
+      take(1),
       switchMap((auth: AuthStateInterface) => {
         if (auth.authenticated) {
           const headers = new HttpHeaders({
@@ -71,7 +73,7 @@ export class DataStorageService {
               return Observable.throw(error);
             });
         } else {
-          return Observable.throw('not auth');
+          return Observable.throw('not auth #2');
         }
       })
     );

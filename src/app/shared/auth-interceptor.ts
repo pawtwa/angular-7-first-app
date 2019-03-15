@@ -2,7 +2,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from "@angular/c
 import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
 import { AuthStateInterface } from "../auth/ngrx/auth.reducers";
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take, tap } from 'rxjs/operators';
 import { AppStateInterface } from "../app.reducer";
 
 export class AuthInterceptor implements HttpInterceptor {
@@ -16,6 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
     ): Observable<HttpEvent<any>> {
         return this.store.select('auth')
             .pipe(
+                take(1),
                 switchMap((auth: AuthStateInterface) => {
                     const copiedReq = req.clone({
                         params: req.params.set('auth', auth.token)
