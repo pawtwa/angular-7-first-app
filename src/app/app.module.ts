@@ -35,8 +35,7 @@ import { AppComponent } from './app.component';
  /**
  * Custom NgRx reducers
  */
-import shoppingListReducer from './shopping-list/ngrx/shooping-list.reducer';
-
+import { reducer } from './app.reducer';
 
 @NgModule({
   declarations: [
@@ -49,7 +48,7 @@ import shoppingListReducer from './shopping-list/ngrx/shooping-list.reducer';
     AuthModule.forRoot(),
     CoreModule,
     StoreModule.forRoot({
-      shoppingList: shoppingListReducer
+      appState: reducer
     })
   ],
   providers: [],

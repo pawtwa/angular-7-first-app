@@ -1,5 +1,6 @@
 import { Ingredient } from "../../shared/ingredient.model";
 import * as ShoppingListActions from '../ngrx/shopping-list.actions';
+import { combineReducers, compose } from "@ngrx/store";
 
 export interface EditedIngredientInterface {
     id: number,
@@ -22,7 +23,7 @@ const initialState: ShoppingListStateInterface = {
     }
 }
 
-export default function shoppingListReducer(state: ShoppingListStateInterface = initialState, action: ShoppingListActions.ShoppingListActionsType) {
+export default function shoppingListReducer(state: ShoppingListStateInterface = initialState, action: ShoppingListActions.ShoppingListActionsType): ShoppingListStateInterface {
     const editedIngredientOnClear: EditedIngredientInterface = {
         id: -1,
         ingredient: null

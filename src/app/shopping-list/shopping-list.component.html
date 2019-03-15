@@ -7,7 +7,7 @@
         href="#" 
         class="list-group-item" 
         style="cursor: pointer;"
-        *ngFor="let ingredient of (shoppingListState | async).ingredients; let i = index"
+        *ngFor="let ingredient of (appState | async).shoppingList.ingredients; let i = index"
         (click)="onClick(i,$event)"
       >
         {{ ingredient.name }} {{ ingredient.amount }}
