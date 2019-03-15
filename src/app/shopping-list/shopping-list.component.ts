@@ -14,8 +14,8 @@ import { SetEditedIngredient } from './ngrx/shopping-list.actions';
   styleUrls: ['./shopping-list.component.css']
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
-  appState: Observable<AppStateInterface>;
-  appStateSubscription: Subscription;
+  shoppingListState: Observable<ShoppingListStateInterface>;
+  shoppingListStateSubscription: Subscription;
 
   constructor(
     private shoppingListService: ShoppingListService,
@@ -23,10 +23,10 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ) { } 
 
   ngOnInit() {
-    this.appState = this.store.select('appState');
-    this.appStateSubscription = this.appState.subscribe((appState) => {
-      this.shoppingListService.setIngredients(appState.shoppingList.ingredients);
-      this.shoppingListService.setEditedIngredient(appState.shoppingList.editedIngredient);
+    this.shoppingListState = this.store.select('appState').map(appState => appState.shoppingList);
+    this.shoppingListStateSubscription = this.shoppingListState.subscribe((shoppingList) => {
+      this.shoppingListService.setIngredients(shoppingList.ingredients);
+      this.shoppingListService.setEditedIngredient(shoppingList.editedIngredient);
     });
   }
 
@@ -36,6 +36,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.appStateSubscription ? this.appStateSubscription.unsubscribe() : null;
+    this.shoppingListStateSubscription ? this.shoppingListStateSubscription.unsubscribe() : null;
   }
 }
