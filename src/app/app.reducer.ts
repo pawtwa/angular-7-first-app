@@ -1,16 +1,13 @@
 import shoppingListReducer, { ShoppingListStateInterface } from "./shopping-list/ngrx/shooping-list.reducer";
-import { combineReducers, compose } from "@ngrx/store";
-import { ShoppingListActionsType } from "./shopping-list/ngrx/shopping-list.actions";
+import { ActionReducerMap } from "@ngrx/store";
+import { AuthStateInterface, authReducer } from "./auth/ngrx/auth.reducers";
 
 export interface AppStateInterface {
-    shoppingList: ShoppingListStateInterface
+    shoppingList: ShoppingListStateInterface,
+    auth: AuthStateInterface
 }
 
-export const reducers = {
-    shoppingList: shoppingListReducer
+export const appReducers: ActionReducerMap<AppStateInterface> = {
+    shoppingList: shoppingListReducer,
+    auth: authReducer
 };
-
-export const rootReducer = compose(combineReducers)(reducers)
-export function reducer(state, action) {
-  return rootReducer(state, action);
-}

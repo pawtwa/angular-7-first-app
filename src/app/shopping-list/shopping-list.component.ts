@@ -23,7 +23,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ) { } 
 
   ngOnInit() {
-    this.shoppingListState = this.store.select('appState').map(appState => appState.shoppingList);
+    this.shoppingListState = this.store.select('shoppingList');
     this.shoppingListStateSubscription = this.shoppingListState.subscribe((shoppingList) => {
       this.shoppingListService.setIngredients(shoppingList.ingredients);
       this.shoppingListService.setEditedIngredient(shoppingList.editedIngredient);

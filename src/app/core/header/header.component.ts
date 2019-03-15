@@ -1,10 +1,14 @@
 import { Component, OnInit, EventEmitter, Output, Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Subscription, Observable } from 'rxjs';
+
 import { DataStorageService } from '../../shared/data-storage.service';
 import { RecipesService } from '../../recipes/recipes.service';
 import { Recipe } from '../../recipes/recipe.model';
-import { Subscription } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
+import { AppStateInterface } from 'src/app/app.reducer';
+import { AuthStateInterface } from 'src/app/auth/ngrx/auth.reducers';
 
 @Component({
   selector: 'app-header',
@@ -17,9 +21,7 @@ import { AuthService } from '../../auth/auth.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   @Output() featureSelected = new EventEmitter<string>();
 
-  get isAuthenticated() {
-    return this.authService.isAuthenticated();
-  }
+  authState: Observable<AuthStateInterface>;
 
   saveDataSubscription: Subscription;
   fetchDataSubscription: Subscription;
@@ -28,21 +30,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private dataStorage: DataStorageService,
     private recipesService: RecipesService,
-    private authService: AuthService
+    private authService: AuthService,
+    private store: Store<AppStateInterface>
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authState = this.store.select('auth');
+  }
 
   ngOnDestroy() {
     this.saveDataSubscription ? this.saveDataSubscription.unsubscribe() : null;
     this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
   }
 
-  onSelect(feature: string, event) {
+  onSelect(feature: string, event: MouseEvent) {
     this.featureSelected.emit(feature);
   }
 
-  brandClick(event: UIEvent) {
+  brandClick(event: MouseEvent) {
     event.preventDefault();
     this.router.navigate(['/']);
   }

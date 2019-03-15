@@ -35,7 +35,7 @@ import { AppComponent } from './app.component';
  /**
  * Custom NgRx reducers
  */
-import { reducer } from './app.reducer';
+import { appReducers } from './app.reducer';
 
 @NgModule({
   declarations: [
@@ -47,9 +47,7 @@ import { reducer } from './app.reducer';
     ShoppingListModule.forRoot(),
     AuthModule.forRoot(),
     CoreModule,
-    StoreModule.forRoot({
-      appState: reducer
-    })
+    StoreModule.forRoot(appReducers)
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -19,16 +19,16 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li *ngIf="!isAuthenticated">
+                <li *ngIf="!(authState | async).authenticated">
                     <a routerLink='/signup'>Register</a>
                 </li>
-                <li *ngIf="!isAuthenticated">
+                <li *ngIf="!(authState | async).authenticated">
                     <a routerLink='/signin'>Login</a>
                 </li>
-                <li *ngIf="isAuthenticated">
+                <li *ngIf="(authState | async).authenticated">
                     <a href="#" (click)="onLogout($event)">Logout</a>
                 </li>
-                <li appDropdown class="dropdown" *ngIf="isAuthenticated">
+                <li appDropdown class="dropdown" *ngIf="(authState | async).authenticated">
                     <a href="#" (click)="$event.preventDefault()" class="dropdown-toggle">Manage <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#" (click)="onSaveData($event)">Save Data</a></li>

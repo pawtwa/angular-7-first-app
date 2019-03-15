@@ -2,27 +2,24 @@ import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import { Store } from '@ngrx/store';
 
-import { AuthService } from './auth/auth.service';
 import firebase_config from './shared/firebase-pconf';
 import { RecipesService } from './recipes/recipes.service';
 import { DataStorageService } from './shared/data-storage.service';
 import { Recipe } from './recipes/recipe.model';
+import { SetToken, Signin } from './auth/ngrx/auth.actions';
+import { AppStateInterface } from './app.reducer';
 
 @Injectable()
 export class AppInitService {
   private fetchDataSubscription: Subscription;
 
   constructor(
-    private authService: AuthService,
     private recipesService: RecipesService,
-    private dataStorageService: DataStorageService
+    private dataStorageService: DataStorageService,
+    private store: Store<AppStateInterface>
   ) {}
-
-  appInits() {
-    console.log('init service 2');
-    return this.initializeApp(); 
-  }
 
   initializeApp(): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -36,7 +33,8 @@ export class AppInitService {
     firebase.auth(app).onAuthStateChanged((currentUser) => {
       if (currentUser) {
         currentUser.getIdToken().then((token) => {
-          this.authService.setToken(token);
+          this.store.dispatch(new Signin());
+          this.store.dispatch(new SetToken(token));
           this.fetchDataSubscription = this.dataStorageService.fetchData().subscribe((recipes: Recipe[]) => {
             this.recipesService.setRecipes(recipes);
             this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;

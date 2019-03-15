@@ -9,6 +9,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../shared/auth-interceptor';
 import { AuthService } from '../auth/auth.service';
 import { LoggingInterceptor } from '../shared/logging-interceptor';
+import { Store } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { LoggingInterceptor } from '../shared/logging-interceptor';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      deps: [ AuthService ],
+      deps: [ Store ],
       multi: true
     },
     {
