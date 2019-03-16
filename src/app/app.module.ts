@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 /**
  * Custom modules
@@ -33,9 +34,10 @@ import { AppComponent } from './app.component';
 
 
  /**
- * Custom NgRx reducers
+ * Custom NgRx reducers & effects
  */
 import { appReducer } from './app.reducer';
+import { AuthEffects } from './auth/ngrx/auth.effects';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,10 @@ import { appReducer } from './app.reducer';
     CoreModule,
     StoreModule.forRoot({
       appState: appReducer
-    })
+    }),
+    EffectsModule.forRoot([
+      AuthEffects
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

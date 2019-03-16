@@ -28,10 +28,17 @@ export function authReducer(state: AuthStateInterface = initialState, action: Au
                 ...state,
                 authenticated: true
             }
-        case AuthActions.SET_AS_UNAUTHENTICATED:
+        /**
+         * only for side effects type
+         */
+        // case AuthActions.TRY_SIGNUP:
+        //     return {
+        //         ...state
+        //     }
+        case AuthActions.SIGNUP:
             return {
                 ...state,
-                authenticated: false
+                authenticated: true
             }
         case AuthActions.SIGNUP:
             return {
