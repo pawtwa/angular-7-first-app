@@ -19,16 +19,16 @@ export class AuthGuardService implements CanActivate, CanLoad {
     const isAuth = this.store.select('appState')
       .pipe(
         take(1),
-        map((appState: AppStateInterface): AuthStateInterface => appState.auth)
-      )
-      .map((auth: AuthStateInterface) => {
-        if (!auth.authenticated) {
-          timer(100).subscribe((_) => {
-            this.router.navigate(['/unauthenticated']);
-          });
-        }
-        return auth.authenticated;
-      });
+        map((appState: AppStateInterface): AuthStateInterface => appState.auth),
+        map((auth: AuthStateInterface) => {
+          if (!auth.authenticated) {
+            timer(100).subscribe((_) => {
+              this.router.navigate(['/unauthenticated']);
+            });
+          }
+          return auth.authenticated;
+        })
+      );
     return isAuth;
   }
 
@@ -36,16 +36,16 @@ export class AuthGuardService implements CanActivate, CanLoad {
     const isAuth = this.store.select('appState')
       .pipe(
         take(1),
-        map((appState: AppStateInterface): AuthStateInterface => appState.auth)
-      )
-      .map((auth: AuthStateInterface) => {
-        if (!auth.authenticated) {
-          timer(100).subscribe((_) => {
-            this.router.navigate(['/unauthenticated']);
-          });
-        }
-        return auth.authenticated
-      });
+        map((appState: AppStateInterface): AuthStateInterface => appState.auth),
+        map((auth: AuthStateInterface) => {
+          if (!auth.authenticated) {
+            timer(100).subscribe((_) => {
+              this.router.navigate(['/unauthenticated']);
+            });
+          }
+          return auth.authenticated
+        })
+      );
     return isAuth;
   }
 }

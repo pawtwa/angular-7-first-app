@@ -1,6 +1,6 @@
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse } from "@angular/common/http";
 import { Observable } from "rxjs";
-import 'rxjs/add/operator/do';
+import { tap } from "rxjs/operators";
 
 export class LoggingInterceptor implements HttpInterceptor {
     constructor() {}
@@ -9,11 +9,14 @@ export class LoggingInterceptor implements HttpInterceptor {
         req: HttpRequest<any>, 
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
-        return next.handle(req).do((event: HttpEvent<any>) => {
-            // if (event.type === 0) {
-            //     req.params.set('auth', this.authService.getToken())
-            // }
-            // console.log('LoggingInterceptor', event, req);
-        });
+        return next.handle(req).pipe(
+            tap((event: HttpEvent<any>) => {
+                //     // if (event.type === 0) {
+                //     //     req.params.set('auth', this.authService.getToken())
+                //     // }
+                //     // console.log('LoggingInterceptor', event, req);
+                // 
+            })
+        );
     }
 }

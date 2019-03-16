@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { Observable, timer } from 'rxjs';
+import { Observable, timer, pipe } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AuthStateInterface } from './ngrx/auth.reducers';
 import { AppStateInterface } from '../app.reducer';
@@ -17,14 +17,16 @@ export class AuthGuardChildService implements CanActivateChild {
     const isAuth = this.store.select('appState').pipe(
       take(1),
       map((appState: AppStateInterface): AuthStateInterface => appState.auth)
-    ).map((auth: AuthStateInterface) => {
-      if (!auth.authenticated) {
-        timer(100).subscribe((_) => {
-          this.router.navigate(['/unauthenticated']);
-        });
-      }
-      return auth.authenticated;
-    });
+    ).pipe(
+      map((auth: AuthStateInterface) => {
+        if (!auth.authenticated) {
+          timer(100).subscribe((_) => {
+            this.router.navigate(['/unauthenticated']);
+          });
+        }
+        return auth.authenticated;
+      })
+    );
     return isAuth;
   }
 }

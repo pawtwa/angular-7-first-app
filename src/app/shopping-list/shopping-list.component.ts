@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { ShoppingListService } from './shopping-list.service';
 import { ShoppingListStateInterface } from './ngrx/shooping-list.reducer';
 import { AppStateInterface } from '../app.reducer';
 import { SetEditedIngredient } from './ngrx/shopping-list.actions';
-import { AuthStateInterface } from '../auth/ngrx/auth.reducers';
 
 @Component({
   selector: 'app-shopping-list',
@@ -24,7 +24,9 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ) { } 
 
   ngOnInit() {
-    this.shoppingListState = this.store.select('appState').map((appState: AppStateInterface): ShoppingListStateInterface => appState.shoppingList);
+    this.shoppingListState = this.store.select('appState').pipe(
+      map((appState: AppStateInterface): ShoppingListStateInterface => appState.shoppingList)
+    );
     this.shoppingListStateSubscription = this.shoppingListState.subscribe((shoppingList) => {
       this.shoppingListService.setIngredients(shoppingList.ingredients);
       this.shoppingListService.setEditedIngredient(shoppingList.editedIngredient);

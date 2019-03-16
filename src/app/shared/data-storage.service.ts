@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import { Observable, throwError } from 'rxjs';
 
 import firebase_config from '../shared/firebase-pconf';
 import { Recipe } from '../recipes/recipe.model';
 import { Store } from '@ngrx/store';
 import { AuthStateInterface } from '../auth/ngrx/auth.reducers';
-import { switchMap, take, map } from 'rxjs/operators';
+import { switchMap, take, map, catchError } from 'rxjs/operators';
 import { AppStateInterface } from '../app.reducer';
 
 @Injectable()
@@ -40,12 +37,14 @@ export class DataStorageService {
             }
           );
           return this.httpClient.request<Recipe[]>(req)
-            .map((recipes) => {
-              return recipes;
-            })
-            .catch((error: any) => {
-              return Observable.throw(error);
-            });
+            .pipe(
+              catchError((error, caugth) => {
+                return throwError(error);
+              })
+              // map((recipes) => {
+              //   return recipes;
+              // })
+            );
         } else {
           return Observable.throw('not auth #1');
         }
@@ -67,13 +66,14 @@ export class DataStorageService {
             observe: 'body',
             responseType: 'json',
             reportProgress: true
-          })
-            .map((recipes) => {
-              return recipes;
+          }).pipe(
+            catchError((error, caugth) => {
+              return throwError(error);
             })
-            .catch((error: any) => {
-              return Observable.throw(error);
-            });
+            // map((recipes) => {
+            //   return recipes;
+            // })
+          );
         } else {
           return Observable.throw('not auth #2');
         }
