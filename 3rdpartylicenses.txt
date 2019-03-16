@@ -798,6 +798,9 @@ Apache-2.0
 
 firebase/auth
 
+@ngrx/effects
+MIT
+
 @firebase/util
 Apache-2.0
 
