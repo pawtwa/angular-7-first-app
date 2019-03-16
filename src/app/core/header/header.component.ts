@@ -7,9 +7,9 @@ import { map } from 'rxjs/operators';
 import { DataStorageService } from '../../shared/data-storage.service';
 import { RecipesService } from '../../recipes/recipes.service';
 import { Recipe } from '../../recipes/recipe.model';
-import { AuthService } from '../../auth/auth.service';
 import { AppStateInterface } from 'src/app/app.reducer';
 import { AuthStateInterface } from 'src/app/auth/ngrx/auth.reducers';
+import { Logout, TryLogout } from 'src/app/auth/ngrx/auth.actions';
 
 @Component({
   selector: 'app-header',
@@ -31,7 +31,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private dataStorage: DataStorageService,
     private recipesService: RecipesService,
-    private authService: AuthService,
     private store: Store<AppStateInterface>
   ) { }
 
@@ -70,9 +69,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onLogout(event) {
     event.preventDefault();
-    this.authService.logoutUser().then(() => {
-      this.recipesService.setRecipes([]);
-      this.router.navigate(['/']);
-    });
+    this.store.dispatch(new TryLogout());
+    // this.authService.logoutUser().then(() => {
+    //   this.recipesService.setRecipes([]);
+    //   this.router.navigate(['/']);
+    // });
   }
 }

@@ -7,7 +7,6 @@ import { AppLoadModule } from '../app-load.module';
 import { RecipesService } from '../recipes/recipes.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../shared/auth-interceptor';
-import { AuthService } from '../auth/auth.service';
 import { LoggingInterceptor } from '../shared/logging-interceptor';
 import { Store } from '@ngrx/store';
 
@@ -38,7 +37,7 @@ import { Store } from '@ngrx/store';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoggingInterceptor,
-      deps: [ AuthService ],
+      deps: [],
       multi: true
     }
   ]

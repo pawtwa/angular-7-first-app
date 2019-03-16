@@ -1,10 +1,12 @@
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
-import { TRY_SIGNUP, TrySignup, SIGNUP, SET_TOKEN } from './auth.actions';
 import { map, switchMap, mergeMap } from 'rxjs/operators';
-import { from } from 'rxjs';
+import { from, of, throwError } from 'rxjs';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import { Router } from '@angular/router';
+
+import { TRY_SIGNUP, TrySignup, SIGNUP, SET_TOKEN, TrySignin, SIGNIN, TRY_SIGNIN, TryLogout, LOGOUT, CLEAR_TOKEN, TRY_LOGOUT } from './auth.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -30,6 +32,7 @@ export class AuthEffects {
             );
         }),
         mergeMap((token: string) => {
+            this.router.navigate(['/recipes']);
             return [
                 {
                     type: SIGNUP
@@ -42,7 +45,79 @@ export class AuthEffects {
         })
     );
 
-    constructor(private actions$: Actions) {
+    @Effect({
+        /**
+         * if set to `false` the last operator must return `null`
+         */
+        dispatch: true
+    })
+    authSignin = this.actions$.pipe(
+        ofType(TRY_SIGNIN),
+        map((action: TrySignin) => {
+            return action.payload;
+        }),
+        switchMap((authData: { username: string, password: string }) => {
+            return from(
+                firebase.auth().signInWithEmailAndPassword(authData.username, authData.password)
+            )
+        }),
+        switchMap(() => {
+            return from(
+                firebase.auth().currentUser.getIdToken()
+            );
+        }),
+        mergeMap((token: string) => {
+            this.router.navigate(['/recipes']);
+            return [
+                {
+                    type: SIGNIN
+                },
+                {
+                    type: SET_TOKEN,
+                    payload: token
+                }
+            ];
+        })
+    );
+
+    @Effect({
+        /**
+         * if set to `false` the last operator must return `null`
+         */
+        dispatch: true
+    })
+    authLogout = this.actions$.pipe(
+        ofType(TRY_LOGOUT),
+        switchMap(() => {
+            return from(
+                firebase.auth().signOut()
+            )
+        }),
+        switchMap(() => {
+            return from(
+                firebase.auth().currentUser ? firebase.auth().currentUser.getIdToken() : of(null)
+            );
+        }),
+        mergeMap((token: string | null) => {
+            if (typeof token === 'string' && token.length) {
+                return throwError('logout error #1');
+            }
+            this.router.navigate(['/']);
+            return [
+                {
+                    type: LOGOUT
+                },
+                {
+                    type: CLEAR_TOKEN
+                }
+            ];
+        })
+    );
+
+    constructor(
+        private router: Router,
+        private actions$: Actions
+    ) {
 
     }
 }
