@@ -801,6 +801,9 @@ firebase/auth
 @ngrx/effects
 MIT
 
+@ngrx/router-store
+MIT
+
 @firebase/util
 Apache-2.0
 
