@@ -4,6 +4,7 @@ import { Observable, timer } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AuthStateInterface } from './ngrx/auth.reducers';
 import { AppStateInterface } from '../app.reducer';
+import { map, take } from 'rxjs/operators';
 
 @Injectable()
 export class AuthGuardChildService implements CanActivateChild {
@@ -13,7 +14,10 @@ export class AuthGuardChildService implements CanActivateChild {
   ) { }
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    const isAuth = this.store.select('auth').map((auth: AuthStateInterface) => {
+    const isAuth = this.store.select('appState').pipe(
+      take(1),
+      map((appState: AppStateInterface): AuthStateInterface => appState.auth)
+    ).map((auth: AuthStateInterface) => {
       if (!auth.authenticated) {
         timer(100).subscribe((_) => {
           this.router.navigate(['/unauthenticated']);

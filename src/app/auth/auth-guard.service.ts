@@ -5,7 +5,7 @@ import { Route } from '@angular/compiler/src/core';
 import { Store } from '@ngrx/store';
 import { AuthStateInterface } from './ngrx/auth.reducers';
 import { AppStateInterface } from '../app.reducer';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthGuardService implements CanActivate, CanLoad {
@@ -16,9 +16,10 @@ export class AuthGuardService implements CanActivate, CanLoad {
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const isAuth = this.store.select('auth')
+    const isAuth = this.store.select('appState')
       .pipe(
-        take(1)
+        take(1),
+        map((appState: AppStateInterface): AuthStateInterface => appState.auth)
       )
       .map((auth: AuthStateInterface) => {
         if (!auth.authenticated) {
@@ -32,9 +33,10 @@ export class AuthGuardService implements CanActivate, CanLoad {
   }
 
   canLoad(route: Route, segments: UrlSegment[]): boolean | Observable<boolean> | Promise<boolean> {
-    const isAuth = this.store.select('auth')
+    const isAuth = this.store.select('appState')
       .pipe(
-        take(1)
+        take(1),
+        map((appState: AppStateInterface): AuthStateInterface => appState.auth)
       )
       .map((auth: AuthStateInterface) => {
         if (!auth.authenticated) {

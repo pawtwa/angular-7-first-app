@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output, Injectable, OnDestroy } from '
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { DataStorageService } from '../../shared/data-storage.service';
 import { RecipesService } from '../../recipes/recipes.service';
@@ -35,7 +36,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.authState = this.store.select('auth');
+    this.authState = this.store.select('appState').pipe(map((appState: AppStateInterface): AuthStateInterface => appState.auth));
   }
 
   ngOnDestroy() {

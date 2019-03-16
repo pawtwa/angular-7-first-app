@@ -7,6 +7,7 @@ import { ShoppingListService } from './shopping-list.service';
 import { ShoppingListStateInterface } from './ngrx/shooping-list.reducer';
 import { AppStateInterface } from '../app.reducer';
 import { SetEditedIngredient } from './ngrx/shopping-list.actions';
+import { AuthStateInterface } from '../auth/ngrx/auth.reducers';
 
 @Component({
   selector: 'app-shopping-list',
@@ -23,7 +24,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ) { } 
 
   ngOnInit() {
-    this.shoppingListState = this.store.select('shoppingList');
+    this.shoppingListState = this.store.select('appState').map((appState: AppStateInterface): ShoppingListStateInterface => appState.shoppingList);
     this.shoppingListStateSubscription = this.shoppingListState.subscribe((shoppingList) => {
       this.shoppingListService.setIngredients(shoppingList.ingredients);
       this.shoppingListService.setEditedIngredient(shoppingList.editedIngredient);
