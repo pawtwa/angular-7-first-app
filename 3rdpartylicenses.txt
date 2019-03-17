@@ -352,6 +352,9 @@ MIT
 @angular/forms
 MIT
 
+@ngrx/effects
+MIT
+
 @firebase/polyfill
 Apache-2.0
 
@@ -591,9 +594,6 @@ Apache-2.0
 
 
 firebase/auth
-
-@ngrx/effects
-MIT
 
 @ngrx/router-store
 MIT
