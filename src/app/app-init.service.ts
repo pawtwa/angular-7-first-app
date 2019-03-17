@@ -1,23 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Subscription } from 'rxjs';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import { Store } from '@ngrx/store';
 
 import firebase_config from './shared/firebase-pconf';
-import { RecipesService } from './recipes/recipes.service';
-import { DataStorageService } from './shared/data-storage.service';
-import { Recipe } from './recipes/recipe.model';
 import { SetToken, Signin } from './auth/ngrx/auth.actions';
 import { AppStateInterface } from './app.reducer';
 
 @Injectable()
 export class AppInitService {
-  private fetchDataSubscription: Subscription;
 
   constructor(
-    private recipesService: RecipesService,
-    private dataStorageService: DataStorageService,
     private store: Store<AppStateInterface>
   ) {}
 
@@ -35,15 +28,19 @@ export class AppInitService {
         currentUser.getIdToken().then((token) => {
           this.store.dispatch(new Signin());
           this.store.dispatch(new SetToken(token));
-          this.fetchDataSubscription = this.dataStorageService.fetchData().subscribe((recipes: Recipe[]) => {
-            this.recipesService.setRecipes(recipes);
-            this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
-            resolve();
-          }, (error) => {
-            console.error(error);
-            this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
-            resolve();
-          });
+          /**
+           * to na razie nie zadziała, bo moduł `RecipesModule` ze storem jest lazy loading
+           */
+          // this.fetchDataSubscription = this.dataStorageService.fetchData().subscribe((recipes: Recipe[]) => {
+          //   this.store.dispatch(new AddRecipes(recipes));
+          //   this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
+          //   resolve();
+          // }, (error) => {
+          //   console.error(error);
+          //   this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
+          //   resolve();
+          // });
+          resolve();
         });
       } else {
         resolve();

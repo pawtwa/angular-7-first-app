@@ -3,7 +3,7 @@ import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
 import { switchMap, take } from 'rxjs/operators';
 
-import { AuthStateInterface } from "../auth/ngrx/auth.reducers";
+import { AuthStateInterface } from "../auth/ngrx/auth.reducer";
 import { AppStateInterface } from "../app.reducer";
 
 export class AuthInterceptor implements HttpInterceptor {

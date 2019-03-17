@@ -5,7 +5,7 @@ import { Route } from '@angular/compiler/src/core';
 import { Store } from '@ngrx/store';
 import { take, map } from 'rxjs/operators';
 
-import { AuthStateInterface } from './ngrx/auth.reducers';
+import { AuthStateInterface } from './ngrx/auth.reducer';
 import { AppStateInterface } from '../app.reducer';
 
 @Injectable()

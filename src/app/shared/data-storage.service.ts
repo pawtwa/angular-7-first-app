@@ -5,7 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import firebase_config from '../shared/firebase-pconf';
 import { Recipe } from '../recipes/recipe.model';
 import { Store } from '@ngrx/store';
-import { AuthStateInterface } from '../auth/ngrx/auth.reducers';
+import { AuthStateInterface } from '../auth/ngrx/auth.reducer';
 import { switchMap, take, catchError } from 'rxjs/operators';
 import { AppStateInterface } from '../app.reducer';
 
@@ -74,6 +74,6 @@ export class DataStorageService {
   }
 
   private getUrlForPath(path: string): string {
-    return firebase_config.databaseURL.replace(/\/$/, "") + '/' + path;
+    return firebase_config.databaseURL.replace(/\/$/, "") + '/' + path + '';
   }
 }

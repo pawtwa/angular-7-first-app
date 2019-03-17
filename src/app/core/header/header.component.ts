@@ -1,15 +1,16 @@
 import { Component, OnInit, EventEmitter, Output, Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { take, switchMap, catchError } from 'rxjs/operators';
 
 import { DataStorageService } from '../../shared/data-storage.service';
-import { RecipesService } from '../../recipes/recipes.service';
 import { Recipe } from '../../recipes/recipe.model';
 import { AppStateInterface } from 'src/app/app.reducer';
-import { AuthStateInterface } from 'src/app/auth/ngrx/auth.reducers';
-import { Logout, TryLogout } from 'src/app/auth/ngrx/auth.actions';
+import { AuthStateInterface } from 'src/app/auth/ngrx/auth.reducer';
+import { TryLogout } from 'src/app/auth/ngrx/auth.actions';
+import { FetchRecipes } from 'src/app/recipes/ngrx/recipes.actions';
+import { RecipesStateInterface } from 'src/app/recipes/ngrx/recipes.reducer';
 
 @Component({
   selector: 'app-header',
@@ -24,13 +25,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   authState: Observable<AuthStateInterface>;
 
-  saveDataSubscription: Subscription;
-  fetchDataSubscription: Subscription;
-
   constructor(
     private router: Router,
     private dataStorage: DataStorageService,
-    private recipesService: RecipesService,
     private store: Store<AppStateInterface>
   ) { }
 
@@ -38,10 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authState = this.store.select('auth');
   }
 
-  ngOnDestroy() {
-    this.saveDataSubscription ? this.saveDataSubscription.unsubscribe() : null;
-    this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
-  }
+  ngOnDestroy() { }
 
   onSelect(feature: string, event: MouseEvent) {
     this.featureSelected.emit(feature);
@@ -54,25 +48,42 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onSaveData(event) {
     event.preventDefault();
-    this.saveDataSubscription ? this.saveDataSubscription.unsubscribe() : null;
-    this.saveDataSubscription = this.dataStorage.storeData(this.recipesService.getRecipes()).subscribe((response) => {}, console.log);
+    this.store.select('recipes')
+      .pipe(
+        take(1),
+        switchMap((recipesState: RecipesStateInterface) => {
+          return this.dataStorage.storeData(recipesState.recipes);
+        }),
+        catchError((error, caught) => {
+          return throwError(error);
+        })
+      ).subscribe(
+        () => { },
+        (error) => {
+          console.error('error `onSaveData`', error);
+        }
+      );
   }
 
   onFetchData(event) {
     event.preventDefault();
-    this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
-    this.fetchDataSubscription = this.dataStorage.fetchData().subscribe((recipes: Recipe[]) => {
-      this.recipesService.setRecipes(recipes);
-      this.router.navigate(['/recipes']);
-    }, console.log);
+    this.dataStorage.fetchData()
+      .pipe(
+        take(1)
+      )
+      .subscribe(
+        (recipes: Recipe[]) => {
+          this.store.dispatch(new FetchRecipes(recipes));
+          this.router.navigate(['/recipes']);
+        },
+        (error) => {
+          console.error('error `onFetchData`', error);
+        }
+      );
   }
 
   onLogout(event) {
     event.preventDefault();
     this.store.dispatch(new TryLogout());
-    // this.authService.logoutUser().then(() => {
-    //   this.recipesService.setRecipes([]);
-    //   this.router.navigate(['/']);
-    // });
   }
 }

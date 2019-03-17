@@ -4,7 +4,7 @@ import { Observable, timer } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { map, take } from 'rxjs/operators';
 
-import { AuthStateInterface } from './ngrx/auth.reducers';
+import { AuthStateInterface } from './ngrx/auth.reducer';
 import { AppStateInterface } from '../app.reducer';
 
 @Injectable()

@@ -1,6 +1,6 @@
 import { ShoppingListStateInterface, shoppingListReducer } from "./shopping-list/ngrx/shooping-list.reducer";
 import { ActionReducerMap } from "@ngrx/store";
-import { AuthStateInterface, authReducer } from "./auth/ngrx/auth.reducers";
+import { AuthStateInterface, authReducer } from "./auth/ngrx/auth.reducer";
 
 export interface AppStateInterface {
     shoppingList: ShoppingListStateInterface,

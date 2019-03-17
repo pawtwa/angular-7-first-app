@@ -10,7 +10,7 @@
         *ngFor="let ingredient of (shoppingListState | async).ingredients; let i = index"
         (click)="onClick(i,$event)"
       >
-        {{ ingredient.name }} {{ ingredient.amount }}
+        <strong>{{ i + 1 }}:</strong> {{ ingredient.name }} {{ ingredient.amount }}
       </a>
     </ul>
   </div>

@@ -11,20 +11,17 @@ export interface ShoppingListStateInterface {
     editedIngredient: EditedIngredientInterface
 }
 
+const editedIngredientOnClear: EditedIngredientInterface = {
+    id: -1,
+    ingredient: null
+}
+
 const initialState: ShoppingListStateInterface = {
     ingredients: [
         new Ingredient('Apples', 5),
         new Ingredient('Tomatos', 3)
     ],
-    editedIngredient: {
-        id: -1,
-        ingredient: null
-    }
-}
-
-const editedIngredientOnClear: EditedIngredientInterface = {
-    id: -1,
-    ingredient: null
+    editedIngredient: editedIngredientOnClear
 }
 
 export function shoppingListReducer(state: ShoppingListStateInterface = initialState, action: ShoppingListActions.ShoppingListActionsType): ShoppingListStateInterface {
@@ -59,7 +56,7 @@ export function shoppingListReducer(state: ShoppingListStateInterface = initialS
             };
         case ShoppingListActions.DELETE_INGREDIENT:
             const ingredientsDelete = [...state.ingredients];
-            const idDelete: number = (<ShoppingListActions.UpdateIngredient>action).payload.id;
+            const idDelete: number = (<ShoppingListActions.DeleteIngredient>action).payload;
             ingredientsDelete.splice(idDelete, 1);
             return {
                 ...state,

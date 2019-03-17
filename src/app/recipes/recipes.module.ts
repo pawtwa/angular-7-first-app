@@ -9,6 +9,8 @@ import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { RecipeItemComponent } from './recipe-list/recipe-item/recipe-item.component';
 import { RecipesRoutingModule } from './recipes-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { StoreModule } from '@ngrx/store';
+import { recipesReducer } from './ngrx/recipes.reducer';
 
 @NgModule({
   declarations: [
@@ -22,28 +24,10 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     ReactiveFormsModule,
     RecipesRoutingModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forFeature('recipes', recipesReducer)
   ],
-  exports: [
-
-  ],
-  providers: [
-    /**
-     * `RecipesService` should not be provided this way because of `RecipesModule` lazy loading
-     * Other modules use the service
-     */
-    // RecipesService
-  ]
+  exports: [],
+  providers: []
 })
-export class RecipesModule {
-  /**
-   * `RecipesService` should not be provided this way because of `RecipesModule` lazy loading
-   * Other modules use the service
-   */
-  // static forRoot() {
-  //   return {
-  //     ngModule: RecipesModule,
-  //     providers: [ RecipesService ]
-  //   }
-  // }
-}
+export class RecipesModule { }

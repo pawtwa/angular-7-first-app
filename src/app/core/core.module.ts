@@ -4,7 +4,6 @@ import { HomeComponent } from './home/home.component';
 import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { AppLoadModule } from '../app-load.module';
-import { RecipesService } from '../recipes/recipes.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from '../shared/auth-interceptor';
 import { LoggingInterceptor } from '../shared/logging-interceptor';
@@ -27,7 +26,6 @@ import { Store } from '@ngrx/store';
     HomeComponent
   ],
   providers: [
-    RecipesService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

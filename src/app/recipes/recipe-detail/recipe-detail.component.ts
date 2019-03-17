@@ -4,10 +4,10 @@ import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { Recipe } from '../recipe.model';
-import { RecipesService } from '../recipes.service';
-import { ShoppingListStateInterface } from 'src/app/shopping-list/ngrx/shooping-list.reducer';
-import { AddIngredients, DeleteIngredient } from 'src/app/shopping-list/ngrx/shopping-list.actions';
+import { AddIngredients } from 'src/app/shopping-list/ngrx/shopping-list.actions';
 import { AppStateInterface } from 'src/app/app.reducer';
+import { RecipesStateInterface } from '../ngrx/recipes.reducer';
+import { SetDetailedRecipe, ClearDetiledRecipe, DeleteRecipe } from '../ngrx/recipes.actions';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -19,41 +19,46 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   id: number;
 
   private paramsSubscription: Subscription;
+  private selectRecipesStateSubscription: Subscription;
 
   constructor(
-    private recipesService: RecipesService,
     private route: ActivatedRoute,
     private router: Router,
     private store: Store<AppStateInterface>
   ) { }
 
   ngOnInit() {
+    this.selectRecipesStateSubscription = this.store.select('recipes').subscribe((recipesState: RecipesStateInterface) => {
+      this.recipe = recipesState.detailedRecipe.recipe;
+    });
     this.paramsSubscription = this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
-      this.recipe = this.recipesService.getRecipeById(this.id);
+      this.store.dispatch(new SetDetailedRecipe(this.id));
     });
   }
 
   ngOnDestroy(): void {
-    this.paramsSubscription.unsubscribe();
+    this.paramsSubscription ? this.paramsSubscription.unsubscribe() : null;
+    this.selectRecipesStateSubscription ? this.selectRecipesStateSubscription.unsubscribe() : null;
+    this.store.dispatch(new ClearDetiledRecipe());
   }
 
-  addToShopingList(event: UIEvent) {
+  addToShopingList(event: MouseEvent) {
     event.preventDefault();
-    this.store.dispatch(new AddIngredients(this.recipe.ingredients));
-    // this.recipesService.addIngredientsToShopingList(this.id);
+    this.store.dispatch(new AddIngredients(this.recipe ? this.recipe.ingredients : []));
   }
 
-  editRecipe(event: UIEvent) {
+  editRecipe(event: MouseEvent) {
     event.preventDefault();
     this.router.navigate(['edit'], {
       relativeTo: this.route
     });
   }
 
-  deleteRecipe(event: UIEvent) {
+  deleteRecipe(event: MouseEvent) {
     event.preventDefault();
-    this.recipesService.deleteRecipe(this.id);
+    this.store.dispatch(new DeleteRecipe(this.id));
+    this.store.dispatch(new ClearDetiledRecipe());
     this.router.navigate(['/recipes']);
   }
 }
