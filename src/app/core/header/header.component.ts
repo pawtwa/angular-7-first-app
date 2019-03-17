@@ -36,7 +36,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.authState = this.store.select('auth');
-    //.pipe(map((appState: AppStateInterface): AuthStateInterface => appState.auth));
   }
 
   ngOnDestroy() {

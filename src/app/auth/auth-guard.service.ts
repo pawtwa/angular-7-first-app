@@ -3,9 +3,10 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTr
 import { timer, Observable } from 'rxjs';
 import { Route } from '@angular/compiler/src/core';
 import { Store } from '@ngrx/store';
+import { take, map } from 'rxjs/operators';
+
 import { AuthStateInterface } from './ngrx/auth.reducers';
 import { AppStateInterface } from '../app.reducer';
-import { take, map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthGuardService implements CanActivate, CanLoad {
@@ -19,7 +20,6 @@ export class AuthGuardService implements CanActivate, CanLoad {
     const isAuth = this.store.select('auth')
       .pipe(
         take(1),
-        //map((appState: AppStateInterface): AuthStateInterface => appState.auth),
         map((auth: AuthStateInterface) => {
           if (!auth.authenticated) {
             timer(100).subscribe((_) => {
@@ -36,7 +36,6 @@ export class AuthGuardService implements CanActivate, CanLoad {
     const isAuth = this.store.select('auth')
       .pipe(
         take(1),
-        //map((appState: AppStateInterface): AuthStateInterface => appState.auth),
         map((auth: AuthStateInterface) => {
           if (!auth.authenticated) {
             timer(100).subscribe((_) => {

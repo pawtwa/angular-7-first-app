@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { ShoppingListService } from './shopping-list.service';
 import { ShoppingListStateInterface } from './ngrx/shooping-list.reducer';
@@ -24,9 +23,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ) { } 
 
   ngOnInit() {
-    this.shoppingListState = this.store.select('shoppingList').pipe(
-      //map((appState: AppStateInterface): ShoppingListStateInterface => appState.shoppingList)
-    );
+    this.shoppingListState = this.store.select('shoppingList');
     this.shoppingListStateSubscription = this.shoppingListState.subscribe((shoppingList) => {
       this.shoppingListService.setIngredients(shoppingList.ingredients);
       this.shoppingListService.setEditedIngredient(shoppingList.editedIngredient);

@@ -6,7 +6,7 @@ import firebase_config from '../shared/firebase-pconf';
 import { Recipe } from '../recipes/recipe.model';
 import { Store } from '@ngrx/store';
 import { AuthStateInterface } from '../auth/ngrx/auth.reducers';
-import { switchMap, take, map, catchError } from 'rxjs/operators';
+import { switchMap, take, catchError } from 'rxjs/operators';
 import { AppStateInterface } from '../app.reducer';
 
 @Injectable()
@@ -14,13 +14,12 @@ export class DataStorageService {
 
   constructor(
     private httpClient: HttpClient,
-    private store: Store<AuthStateInterface>
+    private store: Store<AppStateInterface>
   ) {}
 
   storeData(recipes: Recipe[]): Observable<any> {
     return this.store.select('auth').pipe(
       take(1),
-      //map((appState: AppStateInterface): AuthStateInterface => appState.auth),
       switchMap((auth: AuthStateInterface) => {
         if (auth.authenticated) {
           const headers = new HttpHeaders({
@@ -41,9 +40,6 @@ export class DataStorageService {
               catchError((error, caugth) => {
                 return throwError(error);
               })
-              // map((recipes) => {
-              //   return recipes;
-              // })
             );
         } else {
           return Observable.throw('not auth #1');
@@ -55,7 +51,6 @@ export class DataStorageService {
   fetchData(): Observable<any> {
     return this.store.select('auth').pipe(
       take(1),
-      //map((appState: AppStateInterface): AuthStateInterface => appState.auth),
       switchMap((auth: AuthStateInterface) => {
         if (auth.authenticated) {
           const headers = new HttpHeaders({
@@ -70,9 +65,6 @@ export class DataStorageService {
             catchError((error, caugth) => {
               return throwError(error);
             })
-            // map((recipes) => {
-            //   return recipes;
-            // })
           );
         } else {
           return Observable.throw('not auth #2');
