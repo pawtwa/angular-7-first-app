@@ -16,10 +16,10 @@ export class AuthGuardService implements CanActivate, CanLoad {
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const isAuth = this.store.select('appState')
+    const isAuth = this.store.select('auth')
       .pipe(
         take(1),
-        map((appState: AppStateInterface): AuthStateInterface => appState.auth),
+        //map((appState: AppStateInterface): AuthStateInterface => appState.auth),
         map((auth: AuthStateInterface) => {
           if (!auth.authenticated) {
             timer(100).subscribe((_) => {
@@ -33,10 +33,10 @@ export class AuthGuardService implements CanActivate, CanLoad {
   }
 
   canLoad(route: Route, segments: UrlSegment[]): boolean | Observable<boolean> | Promise<boolean> {
-    const isAuth = this.store.select('appState')
+    const isAuth = this.store.select('auth')
       .pipe(
         take(1),
-        map((appState: AppStateInterface): AuthStateInterface => appState.auth),
+        //map((appState: AppStateInterface): AuthStateInterface => appState.auth),
         map((auth: AuthStateInterface) => {
           if (!auth.authenticated) {
             timer(100).subscribe((_) => {

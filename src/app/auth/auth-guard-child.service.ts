@@ -14,10 +14,10 @@ export class AuthGuardChildService implements CanActivateChild {
   ) { }
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    const isAuth = this.store.select('appState').pipe(
+    const isAuth = this.store.select('auth')
+    .pipe(
       take(1),
-      map((appState: AppStateInterface): AuthStateInterface => appState.auth)
-    ).pipe(
+      //map((appState: AppStateInterface): AuthStateInterface => appState.auth)
       map((auth: AuthStateInterface) => {
         if (!auth.authenticated) {
           timer(100).subscribe((_) => {

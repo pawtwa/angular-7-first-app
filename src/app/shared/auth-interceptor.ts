@@ -14,10 +14,10 @@ export class AuthInterceptor implements HttpInterceptor {
         req: HttpRequest<any>, 
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
-        return this.store.select('appState')
+        return this.store.select('auth')
             .pipe(
                 take(1),
-                map((appState: AppStateInterface): AuthStateInterface => appState.auth),
+                //map((appState: AppStateInterface): AuthStateInterface => appState.auth),
                 switchMap((auth: AuthStateInterface) => {
                     const copiedReq = req.clone({
                         params: req.params.set('auth', auth.token)

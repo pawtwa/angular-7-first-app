@@ -27,7 +27,7 @@ const editedIngredientOnClear: EditedIngredientInterface = {
     ingredient: null
 }
 
-export default function shoppingListReducer(state: ShoppingListStateInterface = initialState, action: ShoppingListActions.ShoppingListActionsType): ShoppingListStateInterface {
+export function shoppingListReducer(state: ShoppingListStateInterface = initialState, action: ShoppingListActions.ShoppingListActionsType): ShoppingListStateInterface {
     switch (action.type) {
         case ShoppingListActions.ADD_INGREDIENT: 
             return {

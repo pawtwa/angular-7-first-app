@@ -40,7 +40,7 @@ export class AppInitService {
             this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
             resolve();
           }, (error) => {
-            console.log(error);
+            console.error(error);
             this.fetchDataSubscription ? this.fetchDataSubscription.unsubscribe() : null;
             resolve();
           });

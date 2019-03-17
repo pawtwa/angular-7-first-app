@@ -14,13 +14,13 @@ export class DataStorageService {
 
   constructor(
     private httpClient: HttpClient,
-    private store: Store<AppStateInterface>
+    private store: Store<AuthStateInterface>
   ) {}
 
   storeData(recipes: Recipe[]): Observable<any> {
-    return this.store.select('appState').pipe(
+    return this.store.select('auth').pipe(
       take(1),
-      map((appState: AppStateInterface): AuthStateInterface => appState.auth),
+      //map((appState: AppStateInterface): AuthStateInterface => appState.auth),
       switchMap((auth: AuthStateInterface) => {
         if (auth.authenticated) {
           const headers = new HttpHeaders({
@@ -53,9 +53,9 @@ export class DataStorageService {
   }
 
   fetchData(): Observable<any> {
-    return this.store.select('appState').pipe(
+    return this.store.select('auth').pipe(
       take(1),
-      map((appState: AppStateInterface): AuthStateInterface => appState.auth),
+      //map((appState: AppStateInterface): AuthStateInterface => appState.auth),
       switchMap((auth: AuthStateInterface) => {
         if (auth.authenticated) {
           const headers = new HttpHeaders({

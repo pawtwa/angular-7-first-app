@@ -39,7 +39,7 @@ import { AppComponent } from './app.component';
  /**
  * Custom NgRx reducers & effects
  */
-import { appReducer } from './app.reducer';
+import { appReducers } from './app.reducer';
 import { AuthEffects } from './auth/ngrx/auth.effects';
 
 @NgModule({
@@ -52,9 +52,7 @@ import { AuthEffects } from './auth/ngrx/auth.effects';
     ShoppingListModule.forRoot(),
     AuthModule.forRoot(),
     CoreModule,
-    StoreModule.forRoot({
-      appState: appReducer
-    }),
+    StoreModule.forRoot(appReducers),
     EffectsModule.forRoot([
       AuthEffects
     ]),
