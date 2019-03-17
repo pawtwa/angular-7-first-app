@@ -4,6 +4,8 @@ import { Recipe } from "../recipe.model";
 export const ADD_RECIPE = 'ADD_RECIPE';
 export const ADD_RECIPES = 'ADD_RECIPES';
 export const SET_RECIPES = 'SET_RECIPES';
+export const TRY_FETCH_RECIPES = 'TRY_FETCH_RECIPES';
+export const TRY_STORE_RECIPES = 'TRY_STORE_RECIPES';
 export const FETCH_RECIPES = 'FETCH_RECIPES';
 export const UPDATE_RECIPE = 'UPDATE_RECIPE';
 export const DELETE_RECIPE = 'DELETE_RECIPE';
@@ -29,6 +31,14 @@ export class SetRecipes implements Action {
     readonly type: string = SET_RECIPES;
 
     constructor(public payload: Recipe[]) {}
+}
+
+export class TryFetchRecipes implements Action {
+    readonly type: string = TRY_FETCH_RECIPES;
+}
+
+export class TryStoreRecipes implements Action {
+    readonly type: string = TRY_STORE_RECIPES;
 }
 
 export class FetchRecipes implements Action {
@@ -73,6 +83,8 @@ export type RecipesActionsType =
     AddRecipe
     | AddRecipes
     | SetRecipes
+    | TryFetchRecipes
+    | TryStoreRecipes
     | FetchRecipes
     | SetEditedRecipe
     | SetDetailedRecipe

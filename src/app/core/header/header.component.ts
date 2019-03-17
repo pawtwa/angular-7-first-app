@@ -1,16 +1,12 @@
 import { Component, OnInit, EventEmitter, Output, Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, throwError } from 'rxjs';
-import { take, switchMap, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
-import { DataStorageService } from '../../shared/data-storage.service';
-import { Recipe } from '../../recipes/recipe.model';
 import { AppStateInterface } from 'src/app/app.reducer';
 import { AuthStateInterface } from 'src/app/auth/ngrx/auth.reducer';
 import { TryLogout } from 'src/app/auth/ngrx/auth.actions';
-import { FetchRecipes } from 'src/app/recipes/ngrx/recipes.actions';
-import { RecipesStateInterface } from 'src/app/recipes/ngrx/recipes.reducer';
+import { TryFetchRecipes, TryStoreRecipes } from 'src/app/recipes/ngrx/recipes.actions';
 
 @Component({
   selector: 'app-header',
@@ -27,7 +23,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private dataStorage: DataStorageService,
     private store: Store<AppStateInterface>
   ) { }
 
@@ -48,38 +43,40 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onSaveData(event) {
     event.preventDefault();
-    this.store.select('recipes')
-      .pipe(
-        take(1),
-        switchMap((recipesState: RecipesStateInterface) => {
-          return this.dataStorage.storeData(recipesState.recipes);
-        }),
-        catchError((error, caught) => {
-          return throwError(error);
-        })
-      ).subscribe(
-        () => { },
-        (error) => {
-          console.error('error `onSaveData`', error);
-        }
-      );
+    this.store.dispatch(new TryStoreRecipes());
+    // this.store.select('recipes')
+    //   .pipe(
+    //     take(1),
+    //     switchMap((recipesState: RecipesStateInterface) => {
+    //       return this.dataStorage.storeData(recipesState.recipes);
+    //     }),
+    //     catchError((error, caught) => {
+    //       return throwError(error);
+    //     })
+    //   ).subscribe(
+    //     () => { },
+    //     (error) => {
+    //       console.error('error `onSaveData`', error);
+    //     }
+    //   );
   }
 
   onFetchData(event) {
     event.preventDefault();
-    this.dataStorage.fetchData()
-      .pipe(
-        take(1)
-      )
-      .subscribe(
-        (recipes: Recipe[]) => {
-          this.store.dispatch(new FetchRecipes(recipes));
-          this.router.navigate(['/recipes']);
-        },
-        (error) => {
-          console.error('error `onFetchData`', error);
-        }
-      );
+    this.store.dispatch(new TryFetchRecipes());
+    // this.dataStorage.fetchData()
+    //   .pipe(
+    //     take(1)
+    //   )
+    //   .subscribe(
+    //     (recipes: Recipe[]) => {
+    //       this.store.dispatch(new FetchRecipes(recipes));
+    //       this.router.navigate(['/recipes']);
+    //     },
+    //     (error) => {
+    //       console.error('error `onFetchData`', error);
+    //     }
+    //   );
   }
 
   onLogout(event) {
