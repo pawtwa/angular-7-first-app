@@ -23,15 +23,18 @@ export class AuthEffects {
         }),
         switchMap((authData: { username: string, password: string }) => {
             return from(
-                firebase.auth().createUserWithEmailAndPassword(authData.username, authData.password)
+                firebase.auth().createUserWithEmailAndPassword(authData.username, authData.password).catch(console.error)
             )
         }),
         switchMap(() => {
             return from(
-                firebase.auth().currentUser.getIdToken()
+                firebase.auth().currentUser ? firebase.auth().currentUser.getIdToken() : of('')
             );
         }),
         mergeMap((token: string) => {
+            if (typeof token !== 'string' || !token.length) {
+                return [];
+            }
             this.router.navigate(['/recipes']);
             return [
                 {
@@ -58,15 +61,18 @@ export class AuthEffects {
         }),
         switchMap((authData: { username: string, password: string }) => {
             return from(
-                firebase.auth().signInWithEmailAndPassword(authData.username, authData.password)
+                firebase.auth().signInWithEmailAndPassword(authData.username, authData.password).catch(console.error)
             )
         }),
         switchMap(() => {
             return from(
-                firebase.auth().currentUser.getIdToken()
+                firebase.auth().currentUser ? firebase.auth().currentUser.getIdToken() : of('')
             );
         }),
         mergeMap((token: string) => {
+            if (typeof token !== 'string' || !token.length) {
+                return [];
+            }
             this.router.navigate(['/recipes']);
             return [
                 {
@@ -90,17 +96,17 @@ export class AuthEffects {
         ofType(TRY_LOGOUT),
         switchMap(() => {
             return from(
-                firebase.auth().signOut()
+                firebase.auth().signOut().catch(console.error)
             )
         }),
         switchMap(() => {
             return from(
-                firebase.auth().currentUser ? firebase.auth().currentUser.getIdToken() : of(null)
+                firebase.auth().currentUser ? firebase.auth().currentUser.getIdToken() : of('')
             );
         }),
         mergeMap((token: string | null) => {
             if (typeof token === 'string' && token.length) {
-                return throwError('logout error #1');
+                return [];
             }
             this.router.navigate(['/']);
             return [
