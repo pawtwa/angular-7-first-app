@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 import { DropdownDirective } from './dropdown.directive';
 
@@ -8,10 +9,12 @@ import { DropdownDirective } from './dropdown.directive';
     DropdownDirective
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    BrowserAnimationsModule
   ],
   exports: [
     CommonModule,
+    BrowserAnimationsModule,
     DropdownDirective
   ],
   providers: []

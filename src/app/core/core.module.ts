@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { Store } from '@ngrx/store';
+
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
-import { SharedModule } from '../shared/shared.module';
-import { AppRoutingModule } from '../app-routing.module';
-import { AppLoadModule } from '../app-load.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from '../shared/auth-interceptor';
-import { LoggingInterceptor } from '../shared/logging-interceptor';
-import { Store } from '@ngrx/store';
+import { SharedModule } from './../shared/shared.module';
+import { AppRoutingModule } from './../app-routing.module';
+import { AppLoadModule } from './../app-load.module';
+import { AuthInterceptor } from './../shared/auth-interceptor';
+import { LoggingInterceptor } from './../shared/logging-interceptor';
 
 @NgModule({
   declarations: [
@@ -15,10 +16,9 @@ import { Store } from '@ngrx/store';
     HomeComponent
   ],
   imports: [
-    SharedModule,
+    SharedModule.forCore(),
     AppRoutingModule,
-    AppLoadModule,
-    SharedModule.forCore()
+    AppLoadModule
   ],
   exports: [
     AppRoutingModule,
